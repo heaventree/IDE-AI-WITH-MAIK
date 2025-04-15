@@ -7,38 +7,54 @@ interface ThemeContextProps {
   toggleTheme: () => void;
 }
 
-const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
+// Create context with a default value to avoid null checks
+const ThemeContext = createContext<ThemeContextProps>({
+  theme: "light",
+  toggleTheme: () => {}
+});
+
+// Safe localStorage functions
+const safeGetItem = (key: string): string | null => {
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      return localStorage.getItem(key);
+    }
+  } catch (e) {
+    console.warn("Error accessing localStorage:", e);
+  }
+  return null;
+};
+
+const safeSetItem = (key: string, value: string): void => {
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem(key, value);
+    }
+  } catch (e) {
+    console.warn("Error writing to localStorage:", e);
+  }
+};
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useState<Theme>("light");
   
   // Initialize theme after component mounts to avoid SSR issues
   useEffect(() => {
-    try {
-      // Try to get theme from localStorage
-      const savedTheme = localStorage?.getItem("theme") as Theme | null;
-      
-      // If saved, use it
-      if (savedTheme && (savedTheme === "light" || savedTheme === "dark")) {
-        setTheme(savedTheme);
-      } else if (typeof window !== 'undefined' && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        // Otherwise use system preference
-        setTheme("dark");
-      }
-    } catch (error) {
-      console.warn("Could not access localStorage for theme:", error);
+    // Try to get theme from localStorage safely
+    const savedTheme = safeGetItem("theme") as Theme | null;
+    
+    // If saved, use it
+    if (savedTheme && (savedTheme === "light" || savedTheme === "dark")) {
+      setTheme(savedTheme);
+    } else if (typeof window !== 'undefined' && window.matchMedia?.("(prefers-color-scheme: dark)")?.matches) {
+      // Otherwise use system preference if available
+      setTheme("dark");
     }
   }, []);
 
   // Update localStorage when theme changes
   useEffect(() => {
-    try {
-      if (typeof localStorage !== 'undefined') {
-        localStorage.setItem("theme", theme);
-      }
-    } catch (error) {
-      console.warn("Could not save theme to localStorage:", error);
-    }
+    safeSetItem("theme", theme);
   }, [theme]);
 
   const toggleTheme = () => {
@@ -53,9 +69,5 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 };
 
 export const useTheme = (): ThemeContextProps => {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error("useTheme must be used within a ThemeProvider");
-  }
-  return context;
+  return useContext(ThemeContext);
 };
