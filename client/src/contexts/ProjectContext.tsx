@@ -9,7 +9,7 @@ import { useToast } from '@/hooks/use-toast';
 
 interface ProjectContextProps {
   projectState: ProjectState;
-  initializeProject: () => Promise<void>;
+  initializeProject: () => Promise<void | (() => void)>;
   openFile: (path: string) => void;
   closeFile: (path: string) => void;
   saveFile: (path: string, content: string) => Promise<void>;
@@ -19,7 +19,7 @@ interface ProjectContextProps {
   renameFile: (oldPath: string, newPath: string) => Promise<void>;
   setActiveFile: (path: string | null) => void;
   executeCommand: (command: string) => Promise<{stdout: string, stderr: string, exitCode: number}>;
-  runProject: () => Promise<void>;
+  runProject: () => Promise<any>;
   createBackup: (options?: Partial<BackupOptions>) => Promise<void>;
   restoreBackup: (backupId: string) => Promise<void>;
 }

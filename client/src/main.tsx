@@ -1,22 +1,20 @@
 import { createRoot } from "react-dom/client";
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import "./index.css";
 import { ThemeProvider, useTheme } from "./contexts/ThemeContext";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
-import { ProjectProvider } from "./contexts/ProjectContext";
 
-// Create a simple component that just uses the ThemeContext
-function SimpleContent() {
-  // Use the theme context only
+// Simple app component with ThemeProvider
+function SimpleApp() {
   const { theme, toggleTheme } = useTheme();
 
   return (
     <div className={theme === "dark" ? "dark" : ""}>
       <div className="font-sans antialiased bg-neutral-100 text-neutral-900 dark:bg-dark-400 dark:text-white min-h-screen p-8">
         <h1 className="text-3xl font-bold mb-4">Bolt DIY Enhanced</h1>
-        <p className="mb-4">This is a simplified version of the app with all providers.</p>
+        <p className="mb-4">This is a simplified test version.</p>
         <button 
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mb-4"
           onClick={toggleTheme}
@@ -25,22 +23,20 @@ function SimpleContent() {
         </button>
         
         <div className="mt-8 p-4 bg-gray-100 dark:bg-gray-800 rounded">
-          <p>Testing with all providers (Theme, Query, Project)</p>
+          <p>Simple test app</p>
         </div>
       </div>
     </div>
   );
 }
 
-// Wrapper component to ensure proper provider structure - critical provider ordering
+// Wrapper component with providers
 function App() {
   return (
     <ThemeProvider>
       <QueryClientProvider client={queryClient}>
-        <ProjectProvider>
-          <SimpleContent />
-          <Toaster />
-        </ProjectProvider>
+        <SimpleApp />
+        <Toaster />
       </QueryClientProvider>
     </ThemeProvider>
   );
@@ -50,7 +46,7 @@ function App() {
 const rootElement = document.getElementById("root");
 
 if (rootElement) {
-  // Render our app with all providers in the correct order
+  // Render our simplified app
   createRoot(rootElement).render(<App />);
 } else {
   console.error("Root element not found");

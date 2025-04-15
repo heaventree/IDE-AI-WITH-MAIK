@@ -9,6 +9,7 @@ import Terminal from "./components/terminal/Terminal";
 import { useTheme } from "./contexts/ThemeContext";
 import { useProject } from "./contexts/ProjectContext";
 
+// IDE component that uses the useProject hook
 function IDE() {
   const { initializeProject } = useProject();
 
@@ -29,18 +30,29 @@ function IDE() {
   );
 }
 
-function App() {
+// Main app layout component
+function AppLayout({ children }: { children: React.ReactNode }) {
+  // Use theme hook here since we know ThemeProvider is available
   const { theme } = useTheme();
-
+  
   return (
     <div className={theme === "dark" ? "dark" : ""}>
       <div className="font-sans antialiased bg-neutral-100 text-neutral-900 dark:bg-dark-400 dark:text-white h-screen">
-        <Switch>
-          <Route path="/" component={IDE} />
-          <Route component={NotFound} />
-        </Switch>
+        {children}
       </div>
     </div>
+  );
+}
+
+// Root App component - doesn't use any hooks directly
+function App() {
+  return (
+    <AppLayout>
+      <Switch>
+        <Route path="/" component={IDE} />
+        <Route component={NotFound} />
+      </Switch>
+    </AppLayout>
   );
 }
 
