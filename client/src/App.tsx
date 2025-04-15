@@ -1,38 +1,44 @@
 import { Switch, Route } from "wouter";
 import NotFound from "@/pages/not-found";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import Header from "./components/layout/Header";
+import Sidebar from "./components/layout/Sidebar";
+import StatusBar from "./components/layout/StatusBar";
+import CodeEditor from "./components/editor/CodeEditor";
+import Terminal from "./components/terminal/Terminal";
+import { useTheme } from "./contexts/ThemeContext";
+import { useProject } from "./contexts/ProjectContext";
 
-// Super simplified App component to debug initialization issues
-function App() {
-  // Use a local state for theme instead of the context
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  
-  // Check system preference on mount
+function IDE() {
+  const { initializeProject } = useProject();
+
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setIsDarkMode(prefersDark);
-    }
-  }, []);
+    initializeProject();
+  }, [initializeProject]);
 
   return (
-    <div className={isDarkMode ? "dark" : ""}>
-      <div className="font-sans antialiased bg-neutral-100 text-neutral-900 dark:bg-dark-400 dark:text-white h-screen p-8">
-        <h1 className="text-3xl font-bold mb-4">Bolt DIY Enhanced</h1>
-        <p className="mb-4">Welcome to the IDE. We're currently resolving initialization issues.</p>
-        <button 
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          onClick={() => setIsDarkMode(!isDarkMode)}
-        >
-          Toggle Dark Mode
-        </button>
-        
-        <div className="hidden">
-          <Switch>
-            <Route path="/" component={() => <div>Home</div>} />
-            <Route component={NotFound} />
-          </Switch>
-        </div>
+    <div className="h-screen flex flex-col overflow-hidden">
+      <Header />
+      <div className="flex-1 flex overflow-hidden">
+        <Sidebar />
+        <CodeEditor />
+      </div>
+      <Terminal />
+      <StatusBar />
+    </div>
+  );
+}
+
+function App() {
+  const { theme } = useTheme();
+
+  return (
+    <div className={theme === "dark" ? "dark" : ""}>
+      <div className="font-sans antialiased bg-neutral-100 text-neutral-900 dark:bg-dark-400 dark:text-white h-screen">
+        <Switch>
+          <Route path="/" component={IDE} />
+          <Route component={NotFound} />
+        </Switch>
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import { WebContainerService } from '../services/WebContainerService';
 import { BackupService } from '../services/BackupService';
 import { StorageService } from '../services/StorageService';
 import { SyncService } from '../services/SyncService';
+// Use the hook again since we've fixed the provider order
 import { useToast } from '@/hooks/use-toast';
 
 interface ProjectContextProps {
@@ -40,6 +41,7 @@ const ProjectContext = createContext<ProjectContextProps | undefined>(undefined)
 
 export const ProjectProvider = ({ children }: { children: ReactNode }) => {
   const [projectState, setProjectState] = useState<ProjectState>(defaultProjectState);
+  // Using the hook since we fixed the provider order
   const { toast } = useToast();
 
   // Initialize project
