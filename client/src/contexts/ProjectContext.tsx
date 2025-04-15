@@ -6,20 +6,6 @@ import { StorageService } from '../services/StorageService';
 import { SyncService } from '../services/SyncService';
 import { useToast } from '@/hooks/use-toast';
 
-// Define the default project state
-const defaultProjectState: ProjectState = {
-  files: {},
-  openFiles: [],
-  activeFile: null,
-  unsavedChanges: new Set<string>(),
-  containerStatus: 'idle',
-  backupStatus: {
-    lastBackup: null,
-    syncStatus: 'synced',
-    targets: ['local']
-  }
-};
-
 // Define the shape of our context
 export interface ProjectContextProps {
   projectState: ProjectState;
@@ -38,7 +24,8 @@ export interface ProjectContextProps {
   restoreBackup: (backupId: string) => Promise<void>;
 }
 
-const defaultProjectState: ProjectState = {
+// Set initial default state
+const defaultState: ProjectState = {
   files: {},
   openFiles: [],
   activeFile: null,
@@ -51,11 +38,12 @@ const defaultProjectState: ProjectState = {
   }
 };
 
+// Create context
 const ProjectContext = createContext<ProjectContextProps | undefined>(undefined);
 
+// Provider component
 export const ProjectProvider = ({ children }: { children: ReactNode }) => {
-  const [projectState, setProjectState] = useState<ProjectState>(defaultProjectState);
-  // Using the hook since we fixed the provider order
+  const [projectState, setProjectState] = useState<ProjectState>(defaultState);
   const { toast } = useToast();
 
   // Initialize project
@@ -532,72 +520,32 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [toast]);
 
-  // Sync with cloud services (GitHub, OneDrive)
-  useEffect(() => {
-    const syncInterval = setInterval(async () => {
-      if (projectState.backupStatus.targets.includes('github') || 
-          projectState.backupStatus.targets.includes('onedrive')) {
-        try {
-          setProjectState(prev => ({
-            ...prev,
-            backupStatus: {
-              ...prev.backupStatus,
-              syncStatus: 'syncing'
-            }
-          }));
-          
-          // Sync with cloud services
-          await SyncService.syncWithCloud(
-            Object.values(projectState.files).filter(file => file.type === 'file'),
-            projectState.backupStatus.targets as ('github' | 'onedrive')[]
-          );
-          
-          setProjectState(prev => ({
-            ...prev,
-            backupStatus: {
-              ...prev.backupStatus,
-              lastBackup: new Date(),
-              syncStatus: 'synced'
-            }
-          }));
-        } catch (error) {
-          console.error('Cloud sync failed:', error);
-          setProjectState(prev => ({
-            ...prev,
-            backupStatus: {
-              ...prev.backupStatus,
-              syncStatus: 'error'
-            }
-          }));
-        }
-      }
-    }, 60 * 60 * 1000); // Hourly sync
-    
-    return () => clearInterval(syncInterval);
-  }, [projectState.files, projectState.backupStatus.targets]);
+  // Provider value
+  const value: ProjectContextProps = {
+    projectState,
+    initializeProject,
+    openFile,
+    closeFile,
+    saveFile,
+    createFile,
+    createFolder,
+    deleteFile,
+    renameFile,
+    setActiveFile,
+    executeCommand,
+    runProject,
+    createBackup,
+    restoreBackup
+  };
 
   return (
-    <ProjectContext.Provider value={{
-      projectState,
-      initializeProject,
-      openFile,
-      closeFile,
-      saveFile,
-      createFile,
-      createFolder,
-      deleteFile,
-      renameFile,
-      setActiveFile,
-      executeCommand,
-      runProject,
-      createBackup,
-      restoreBackup
-    }}>
+    <ProjectContext.Provider value={value}>
       {children}
     </ProjectContext.Provider>
   );
 };
 
+// Hook
 export const useProject = (): ProjectContextProps => {
   const context = useContext(ProjectContext);
   if (!context) {
