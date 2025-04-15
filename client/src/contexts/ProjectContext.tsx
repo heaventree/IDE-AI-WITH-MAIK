@@ -4,10 +4,24 @@ import { WebContainerService } from '../services/WebContainerService';
 import { BackupService } from '../services/BackupService';
 import { StorageService } from '../services/StorageService';
 import { SyncService } from '../services/SyncService';
-// Use the hook again since we've fixed the provider order
 import { useToast } from '@/hooks/use-toast';
 
-interface ProjectContextProps {
+// Define the default project state
+const defaultProjectState: ProjectState = {
+  files: {},
+  openFiles: [],
+  activeFile: null,
+  unsavedChanges: new Set<string>(),
+  containerStatus: 'idle',
+  backupStatus: {
+    lastBackup: null,
+    syncStatus: 'synced',
+    targets: ['local']
+  }
+};
+
+// Define the shape of our context
+export interface ProjectContextProps {
   projectState: ProjectState;
   initializeProject: () => Promise<void | (() => void)>;
   openFile: (path: string) => void;
