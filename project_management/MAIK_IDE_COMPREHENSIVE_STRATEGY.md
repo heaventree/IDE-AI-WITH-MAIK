@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-MAIK IDE (Multimodal AI-Assisted Integrated Development Environment) represents a convergence of advanced technologies from existing AI-powered development tools with specific enhancements focused on UI quality, visual editing, and robust design system implementation. Based on thorough analysis of the design brief and exploration of relevant repositories, this document outlines a comprehensive strategy for building a distinguished IDE that addresses the common shortcomings in existing AI-assisted development tools while introducing innovative features to enhance developer productivity and UI creation.
+MAIK IDE (Multimodal AI-Assisted Integrated Development Environment) represents an integration and enhancement of existing open-source AI-powered development tools, with specific focus on UI quality, visual editing, and robust design system implementation. Rather than building from scratch, we'll leverage and extend established projects (bolt.diy, Cline, Roo-Code) as our foundation, adding our unique differentiators where they provide the most value. Based on thorough analysis of the design brief and exploration of relevant repositories, this document outlines a comprehensive strategy for creating a distinguished IDE that addresses the common shortcomings in existing AI-assisted development tools while introducing innovative features to enhance developer productivity and UI creation.
 
 ## Core Foundations (Derived from Research)
 
