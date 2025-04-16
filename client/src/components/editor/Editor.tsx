@@ -1,7 +1,10 @@
 /** @jsxImportSource theme-ui */
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Flex, Button, Text } from 'theme-ui';
-import { X, Plus, Maximize2, Minimize2 } from 'lucide-react';
+import { Box, Flex, IconButton, Text, Button } from 'theme-ui';
+import { 
+  X, Plus, Maximize2, Minimize2, 
+  FileCode, FileBadge, FileJson, FileText 
+} from 'lucide-react';
 import { WebSocketMessageType } from '../../services/WebSocketService';
 import { useWebSocket } from '../../contexts/WebSocketContext';
 
@@ -18,11 +21,21 @@ interface TabInfo {
   content: string;
 }
 
-const Editor: React.FC<EditorProps> = ({ 
+// Get file icon based on file name/extension
+const getFileIcon = (fileName: string, size = 16) => {
+  if (fileName.endsWith('.json')) return <FileJson size={size} />;
+  if (fileName.endsWith('.md')) return <FileText size={size} />;
+  if (fileName.endsWith('.ts') || fileName.endsWith('.tsx') || fileName.endsWith('.js') || fileName.endsWith('.jsx')) {
+    return <FileCode size={size} />;
+  }
+  return <FileBadge size={size} />;
+};
+
+const Editor = ({ 
   initialContent = '', 
   language = 'typescript',
   fileName = 'untitled.ts'
-}) => {
+}: EditorProps) => {
   const [tabs, setTabs] = useState<TabInfo[]>([
     {
       id: '1',
@@ -99,29 +112,25 @@ const Editor: React.FC<EditorProps> = ({
   }, [activeTabId]);
   
   return (
-    <Box
-      sx={{
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        position: isFullscreen ? 'fixed' : 'relative',
-        top: isFullscreen ? 0 : 'auto',
-        left: isFullscreen ? 0 : 'auto',
-        right: isFullscreen ? 0 : 'auto',
-        bottom: isFullscreen ? 0 : 'auto',
-        zIndex: isFullscreen ? 1000 : 'auto',
-        bg: 'editor',
-        color: 'text',
-      }}
-    >
+    <Box sx={{
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      position: isFullscreen ? 'fixed' : 'relative',
+      top: isFullscreen ? 0 : 'auto',
+      left: isFullscreen ? 0 : 'auto',
+      right: isFullscreen ? 0 : 'auto',
+      bottom: isFullscreen ? 0 : 'auto',
+      zIndex: isFullscreen ? 1000 : 'auto',
+      bg: 'editor',
+      color: 'text',
+    }}>
       {/* Tab bar */}
-      <Flex
-        sx={{
-          borderBottom: '1px solid',
-          borderColor: 'border',
-          bg: 'sidebar',
-        }}
-      >
+      <Flex sx={{
+        borderBottom: '1px solid',
+        borderColor: 'border',
+        bg: 'sidebar',
+      }}>
         <Flex sx={{ flex: 1, overflowX: 'auto', overflowY: 'hidden' }}>
           {tabs.map(tab => (
             <Button
@@ -149,7 +158,10 @@ const Editor: React.FC<EditorProps> = ({
                 },
               }}
             >
-              <Text>{tab.name}</Text>
+              <Flex sx={{ alignItems: 'center' }}>
+                {getFileIcon(tab.name, 14)}
+                <Text sx={{ ml: 1 }}>{tab.name}</Text>
+              </Flex>
               <Box 
                 sx={{ 
                   ml: 2, 
@@ -208,14 +220,12 @@ const Editor: React.FC<EditorProps> = ({
       </Flex>
       
       {/* Editor content */}
-      <Box
-        sx={{
-          flex: 1,
-          overflow: 'auto',
-          position: 'relative',
-          fontFamily: 'monospace',
-        }}
-      >
+      <Box sx={{
+        flex: 1,
+        overflow: 'auto',
+        position: 'relative',
+        fontFamily: 'monospace',
+      }}>
         <textarea
           ref={textareaRef}
           value={activeTab.content}
@@ -238,5 +248,8 @@ const Editor: React.FC<EditorProps> = ({
     </Box>
   );
 };
+
+// Set display name for component identification in layout
+Editor.displayName = 'Editor';
 
 export default Editor;

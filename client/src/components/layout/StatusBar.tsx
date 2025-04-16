@@ -1,7 +1,11 @@
 /** @jsxImportSource theme-ui */
-import React from 'react';
-import { Flex, Text, Badge } from 'theme-ui';
-import { Zap, Clock, GitBranch, Circle } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Flex, Text, Box } from 'theme-ui';
+import { 
+  Zap, Clock, GitBranch, Circle, 
+  FileCode, Bell, Wifi, Cpu, 
+  CheckCircle, Terminal
+} from 'lucide-react';
 import { useWebSocket } from '../../contexts/WebSocketContext';
 
 interface StatusBarProps {
@@ -10,53 +14,69 @@ interface StatusBarProps {
 
 const StatusBar: React.FC<StatusBarProps> = () => {
   const { connected } = useWebSocket();
+  const [time, setTime] = useState(new Date().toLocaleTimeString());
+  
+  // Update time every second
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(new Date().toLocaleTimeString());
+    }, 1000);
+    
+    return () => clearInterval(timer);
+  }, []);
   
   return (
-    <Flex
-      sx={{
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        py: 1,
-        px: 2,
-        borderTop: '1px solid',
-        borderColor: 'border',
-        bg: 'statusBar',
-        color: 'statusText',
-        fontSize: 0,
-      }}
-    >
-      {/* Left section */}
-      <Flex sx={{ alignItems: 'center' }}>
-        <Flex 
+    <Flex sx={{ width: '100%', justifyContent: 'space-between' }}>
+      {/* Left status items */}
+      <Flex variant="layout.statusItems">
+        <Box className="status-item" 
           sx={{ 
-            alignItems: 'center', 
-            mr: 3,
-            color: connected ? 'success' : 'gray',
+            color: connected ? 'success' : 'foregroundMuted',
           }}
         >
-          <Circle size={8} fill={connected ? 'currentColor' : 'none'} style={{ marginRight: '4px' }} />
+          <Circle size={8} fill={connected ? 'currentColor' : 'none'} />
           <Text>
             {connected ? 'Connected' : 'Disconnected'}
           </Text>
-        </Flex>
+        </Box>
         
-        <Flex sx={{ alignItems: 'center', mr: 3 }}>
-          <Zap size={12} style={{ marginRight: '4px' }} />
+        <Box className="status-item">
+          <Zap size={12} />
           <Text>Ready</Text>
-        </Flex>
+        </Box>
+        
+        <Box className="status-item">
+          <FileCode size={12} />
+          <Text>TypeScript</Text>
+        </Box>
+        
+        <Box className="status-item">
+          <Terminal size={12} />
+          <Text>main.ts</Text>
+        </Box>
       </Flex>
       
-      {/* Right section */}
-      <Flex sx={{ alignItems: 'center' }}>
-        <Flex sx={{ alignItems: 'center', mr: 3 }}>
-          <GitBranch size={12} style={{ marginRight: '4px' }} />
+      {/* Right status items */}
+      <Flex variant="layout.statusItems">
+        <Box className="status-item" title="Git branch">
+          <GitBranch size={12} />
           <Text>main</Text>
-        </Flex>
+        </Box>
         
-        <Flex sx={{ alignItems: 'center' }}>
-          <Clock size={12} style={{ marginRight: '4px' }} />
-          <Text>{new Date().toLocaleTimeString()}</Text>
-        </Flex>
+        <Box className="status-item" title="Performance: 98% efficient">
+          <Cpu size={12} />
+          <Text>98%</Text>
+        </Box>
+        
+        <Box className="status-item" title="All systems normal">
+          <CheckCircle size={12} color="#0acf97" />
+          <Text sx={{ color: 'success' }}>All good</Text>
+        </Box>
+        
+        <Box className="status-item" title="Current time">
+          <Clock size={12} />
+          <Text>{time}</Text>
+        </Box>
       </Flex>
     </Flex>
   );

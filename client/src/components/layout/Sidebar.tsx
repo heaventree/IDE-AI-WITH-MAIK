@@ -1,6 +1,6 @@
 /** @jsxImportSource theme-ui */
 import React, { useState } from 'react';
-import { Box, Flex, Text, Button } from 'theme-ui';
+import { Box, Flex, Text, Button, IconButton } from 'theme-ui';
 import { 
   FolderTree, FileCode, FileJson, FileText, 
   Search, Users, GitBranch, PanelRight,
@@ -66,7 +66,11 @@ const FileIcon: React.FC<{ name: string, language?: string }> = ({ name, languag
 };
 
 // File or folder item component
-const FileTreeItem: React.FC<{ item: FileItem, depth: number }> = ({ item, depth }) => {
+const FileTreeItem: React.FC<{ item: FileItem, depth: number, isActive?: boolean }> = ({ 
+  item, 
+  depth,
+  isActive = false
+}) => {
   const [expanded, setExpanded] = useState(true);
   
   const toggleExpanded = () => {
@@ -78,38 +82,46 @@ const FileTreeItem: React.FC<{ item: FileItem, depth: number }> = ({ item, depth
   return (
     <Box>
       <Flex
+        variant="layout.sidebarItem"
+        className={isActive ? 'active' : ''}
         sx={{
-          alignItems: 'center',
-          pl: depth * 3 + 1,
-          py: 1,
-          cursor: 'pointer',
-          '&:hover': {
-            bg: 'rgba(114, 124, 245, 0.08)', // Primary color with transparency for subtle hover effect
-          },
+          pl: depth * 3 + 2,
+          borderLeftColor: isActive ? 'primary' : 'transparent',
         }}
         onClick={toggleExpanded}
       >
         {item.type === 'folder' ? (
-          <Box sx={{ mr: 1 }}>
+          <Box sx={{ mr: 1, display: 'flex', alignItems: 'center' }}>
             {expanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
           </Box>
         ) : (
           <Box sx={{ ml: 2, mr: 1 }} />
         )}
         
-        <Box sx={{ mr: 3, display: 'flex', alignItems: 'center', color: item.type === 'folder' ? 'primary' : 'text' }}>
+        <Box sx={{ 
+          mr: 3, 
+          display: 'flex', 
+          alignItems: 'center', 
+          color: item.type === 'folder' ? 'primary' : 'foreground' 
+        }}>
           {item.type === 'folder' ? <FolderTree size={18} /> : <FileIcon name={item.name} language={item.language} />}
         </Box>
         
         <Text sx={{ 
           fontSize: 1, 
-          fontWeight: item.type === 'folder' ? 'bold' : 'normal',
-          color: item.type === 'folder' ? 'primary' : 'text'
-        }}>{item.name}</Text>
+          fontWeight: item.type === 'folder' ? 600 : 400,
+        }}>
+          {item.name}
+        </Text>
       </Flex>
       
       {item.type === 'folder' && expanded && item.children && item.children.map((child, index) => (
-        <FileTreeItem key={`${child.name}-${index}`} item={child} depth={depth + 1} />
+        <FileTreeItem 
+          key={`${child.name}-${index}`} 
+          item={child} 
+          depth={depth + 1}
+          isActive={child.name === 'main.tsx'} // Just for demo, highlight the main file
+        />
       ))}
     </Box>
   );
@@ -119,157 +131,73 @@ const Sidebar: React.FC<SidebarProps> = () => {
   const [activeTab, setActiveTab] = useState<'files' | 'collab' | 'git' | 'search'>('files');
   
   return (
-    <Box
-      sx={{
-        width: 240,
-        borderRight: '1px solid',
-        borderColor: 'border',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        bg: 'sidebar',
-        color: 'text',
-      }}
-    >
+    <Flex sx={{ flexDirection: 'column', height: '100%' }}>
       {/* Sidebar tabs */}
       <Flex
         sx={{
           borderBottom: '1px solid',
           borderColor: 'border',
-          height: '60px', // Exact same height as MenuBar
-          alignItems: 'center', // Ensure buttons are vertically centered
+          bg: 'backgroundElevated',
         }}
       >
-        <Button
-          variant="text"
-          onClick={() => setActiveTab('files')}
-          sx={{
-            flex: 1,
-            py: 2,
-            borderBottom: activeTab === 'files' ? '2px solid' : 'none',
-            borderColor: 'primary',
-            borderRadius: 0,
-            color: activeTab === 'files' ? 'primary' : 'text',
-            bg: 'transparent',
-            '&:hover': {
-              bg: 'rgba(114, 124, 245, 0.08)', // Match file tree hover style
-              color: activeTab === 'files' ? 'primary' : 'highlight',
-            },
-            transition: 'all 0.2s ease',
-          }}
-          aria-label="File explorer"
-          title="File explorer"
-        >
-          <FolderTree size={18} />
-        </Button>
-        
-        <Button
-          variant="text"
-          onClick={() => setActiveTab('search')}
-          sx={{
-            flex: 1,
-            py: 2,
-            borderBottom: activeTab === 'search' ? '2px solid' : 'none',
-            borderColor: 'primary',
-            borderRadius: 0,
-            color: activeTab === 'search' ? 'primary' : 'text',
-            bg: 'transparent',
-            '&:hover': {
-              bg: 'rgba(114, 124, 245, 0.08)', // Match file tree hover style
-              color: activeTab === 'search' ? 'primary' : 'highlight',
-            },
-            transition: 'all 0.2s ease',
-          }}
-          aria-label="Search"
-          title="Search"
-        >
-          <Search size={18} />
-        </Button>
-        
-        <Button
-          variant="text"
-          onClick={() => setActiveTab('git')}
-          sx={{
-            flex: 1,
-            py: 2,
-            borderBottom: activeTab === 'git' ? '2px solid' : 'none',
-            borderColor: 'primary',
-            borderRadius: 0,
-            color: activeTab === 'git' ? 'primary' : 'text',
-            bg: 'transparent',
-            '&:hover': {
-              bg: 'rgba(114, 124, 245, 0.08)', // Match file tree hover style
-              color: activeTab === 'git' ? 'primary' : 'highlight',
-            },
-            transition: 'all 0.2s ease',
-          }}
-          aria-label="Git"
-          title="Git"
-        >
-          <GitBranch size={18} />
-        </Button>
-        
-        <Button
-          variant="text"
-          onClick={() => setActiveTab('collab')}
-          sx={{
-            flex: 1,
-            py: 2,
-            borderBottom: activeTab === 'collab' ? '2px solid' : 'none',
-            borderColor: 'primary',
-            borderRadius: 0,
-            color: activeTab === 'collab' ? 'primary' : 'text',
-            bg: 'transparent',
-            '&:hover': {
-              bg: 'rgba(114, 124, 245, 0.08)', // Match file tree hover style
-              color: activeTab === 'collab' ? 'primary' : 'highlight',
-            },
-            transition: 'all 0.2s ease',
-          }}
-          aria-label="Collaboration"
-          title="Collaboration"
-        >
-          <Users size={18} />
-        </Button>
+        {[
+          { id: 'files', icon: <FolderTree size={18} />, label: 'File explorer' },
+          { id: 'search', icon: <Search size={18} />, label: 'Search' },
+          { id: 'git', icon: <GitBranch size={18} />, label: 'Git' },
+          { id: 'collab', icon: <Users size={18} />, label: 'Collaboration' }
+        ].map(tab => (
+          <IconButton
+            key={tab.id}
+            variant="icon"
+            onClick={() => setActiveTab(tab.id as any)}
+            aria-label={tab.label}
+            title={tab.label}
+            sx={{
+              flex: 1,
+              py: 2,
+              borderRadius: 0,
+              borderBottom: activeTab === tab.id ? '2px solid' : '2px solid transparent',
+              borderColor: activeTab === tab.id ? 'primary' : 'transparent',
+              color: activeTab === tab.id ? 'primary' : 'foreground',
+              '&:hover': {
+                bg: 'sidebarItemHover',
+              },
+            }}
+          >
+            {tab.icon}
+          </IconButton>
+        ))}
       </Flex>
       
       {/* Tab content */}
-      <Box sx={{ flex: 1, overflow: 'auto' }}>
+      <Box variant="layout.sidebarSection" sx={{ flex: 1, overflow: 'auto' }}>
         {activeTab === 'files' && (
           <Box>
-            <Flex sx={{ p: 2, justifyContent: 'space-between', alignItems: 'center' }}>
-              <Text sx={{ fontWeight: 'bold', fontSize: 1 }}>Explorer</Text>
-              <Flex sx={{ alignItems: 'center', gap: 3 }}>
-                <Box 
-                  as="span" 
-                  sx={{ 
-                    cursor: 'pointer',
-                    display: 'flex',
-                    color: 'text',
-                    '&:hover': {
-                      color: 'primary',
-                    } 
-                  }} 
+            <Flex sx={{ 
+              justifyContent: 'space-between', 
+              alignItems: 'center',
+              px: 3,
+              py: 2,
+              mb: 1
+            }}>
+              <Text variant="text.label">EXPLORER</Text>
+              <Flex sx={{ alignItems: 'center', gap: 2 }}>
+                <IconButton 
+                  variant="icon"
                   aria-label="New file" 
                   title="New file"
+                  sx={{ width: '24px', height: '24px' }}
                 >
                   <FilePlus size={16} />
-                </Box>
-                <Box 
-                  as="span"
-                  sx={{ 
-                    cursor: 'pointer',
-                    display: 'flex',
-                    color: 'text',
-                    '&:hover': {
-                      color: 'primary',
-                    } 
-                  }} 
+                </IconButton>
+                <IconButton 
+                  variant="icon"
                   aria-label="New folder" 
                   title="New folder"
+                  sx={{ width: '24px', height: '24px' }}
                 >
                   <FolderPlus size={16} />
-                </Box>
+                </IconButton>
               </Flex>
             </Flex>
             <Box>
@@ -281,22 +209,22 @@ const Sidebar: React.FC<SidebarProps> = () => {
         )}
         
         {activeTab === 'search' && (
-          <Box sx={{ p: 2 }}>
-            <Text sx={{ fontWeight: 'bold', fontSize: 1, mb: 2 }}>Search</Text>
-            <Text sx={{ fontSize: 0, color: 'gray' }}>Search functionality coming soon...</Text>
+          <Box sx={{ p: 3 }}>
+            <Text variant="text.label" sx={{ mb: 2 }}>SEARCH</Text>
+            <Text variant="text.caption">Search functionality coming soon...</Text>
           </Box>
         )}
         
         {activeTab === 'git' && (
-          <Box sx={{ p: 2 }}>
-            <Text sx={{ fontWeight: 'bold', fontSize: 1, mb: 2 }}>Git</Text>
-            <Text sx={{ fontSize: 0, color: 'gray' }}>Git integration coming soon...</Text>
+          <Box sx={{ p: 3 }}>
+            <Text variant="text.label" sx={{ mb: 2 }}>GIT</Text>
+            <Text variant="text.caption">Git integration coming soon...</Text>
           </Box>
         )}
         
         {activeTab === 'collab' && <CollaborationPanel />}
       </Box>
-    </Box>
+    </Flex>
   );
 };
 

@@ -1,14 +1,14 @@
 /** @jsxImportSource theme-ui */
 import React, { useState, useRef, useEffect } from 'react';
 import { Box, Flex, IconButton, Text } from 'theme-ui';
-import { ChevronRight, X, Minimize, Maximize } from 'lucide-react';
+import { ChevronRight, X, Minimize, Maximize, Terminal as TerminalIcon } from 'lucide-react';
 
 interface TerminalProps {
   initialOpen?: boolean;
 }
 
 interface TerminalHistoryItem {
-  type: 'command' | 'output';
+  type: 'command' | 'output' | 'error' | 'success';
   content: string;
 }
 
@@ -162,53 +162,29 @@ const Terminal: React.FC<TerminalProps> = ({ initialOpen = false }) => {
       
       {/* Terminal panel */}
       {isOpen && (
-        <Box
-          sx={{
-            bg: 'terminal',
-            color: 'terminalText',
-            borderTop: '1px solid',
-            borderColor: 'border',
-            height: minimized ? 40 : 240,
-            overflow: 'hidden',
-          }}
-        >
+        <Box variant="layout.terminal">
           {/* Terminal header */}
-          <Flex
-            sx={{
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              bg: 'rgba(114, 124, 245, 0.1)', // Primary color with transparency
-              p: 1,
-              borderBottom: '1px solid',
-              borderColor: 'border',
-            }}
-          >
-            <Text sx={{ fontSize: 1, fontWeight: 'bold' }}>Terminal</Text>
+          <Flex variant="layout.terminalHeader">
+            <Flex sx={{ alignItems: 'center' }}>
+              <TerminalIcon size={14} sx={{ mr: 1 }} />
+              <Text variant="text.label" sx={{ fontSize: 0 }}>TERMINAL</Text>
+            </Flex>
             <Flex>
               <IconButton
+                variant="icon"
                 onClick={toggleMinimize}
                 aria-label={minimized ? 'Maximize terminal' : 'Minimize terminal'}
                 title={minimized ? 'Maximize terminal' : 'Minimize terminal'}
-                sx={{ 
-                  mr: 1,
-                  '&:hover': {
-                    color: 'primary',
-                    bg: 'rgba(114, 124, 245, 0.08)',
-                  }
-                }}
+                sx={{ width: '28px', height: '28px', mr: 1 }}
               >
                 {minimized ? <Maximize size={14} /> : <Minimize size={14} />}
               </IconButton>
               <IconButton
+                variant="icon"
                 onClick={toggleTerminal}
                 aria-label="Close terminal"
                 title="Close terminal"
-                sx={{ 
-                  '&:hover': {
-                    color: 'primary',
-                    bg: 'rgba(114, 124, 245, 0.08)',
-                  }
-                }}
+                sx={{ width: '28px', height: '28px' }}
               >
                 <X size={14} />
               </IconButton>
@@ -217,27 +193,30 @@ const Terminal: React.FC<TerminalProps> = ({ initialOpen = false }) => {
           
           {/* Terminal content */}
           {!minimized && (
-            <Box sx={{ p: 2, height: 'calc(100% - 40px)', display: 'flex', flexDirection: 'column' }}>
+            <Box variant="layout.terminalContent">
               {/* Command history */}
               <Box 
                 ref={historyRef}
                 sx={{ 
-                  flex: 1, 
-                  overflow: 'auto',
                   mb: 2,
                   fontSize: 0,
                   fontFamily: 'monospace',
+                  lineHeight: 1.5,
                 }}
               >
                 {history.map((item, index) => (
                   <Box key={index} sx={{ mb: 1 }}>
                     {item.type === 'command' ? (
                       <Flex>
-                        <Text sx={{ color: 'primary', mr: 1 }}>{'>'}</Text>
-                        <Text>{item.content}</Text>
+                        <Text className="command" sx={{ mr: 1 }}>{'>'}</Text>
+                        <Text className="command">{item.content}</Text>
                       </Flex>
+                    ) : item.type === 'error' ? (
+                      <Text className="error" sx={{ whiteSpace: 'pre-wrap' }}>{item.content}</Text>
+                    ) : item.type === 'success' ? (
+                      <Text className="success" sx={{ whiteSpace: 'pre-wrap' }}>{item.content}</Text>
                     ) : (
-                      <Text sx={{ whiteSpace: 'pre-wrap' }}>{item.content}</Text>
+                      <Text className="output" sx={{ whiteSpace: 'pre-wrap' }}>{item.content}</Text>
                     )}
                   </Box>
                 ))}
@@ -246,19 +225,19 @@ const Terminal: React.FC<TerminalProps> = ({ initialOpen = false }) => {
               {/* Command input */}
               <form onSubmit={handleSubmit}>
                 <Flex sx={{ alignItems: 'center' }}>
-                  <Text sx={{ color: 'primary', mr: 1 }}>{'>'}</Text>
+                  <Text className="command" sx={{ mr: 1 }}>{'>'}</Text>
                   <Box sx={{ flex: 1 }}>
                     <input
                       ref={inputRef}
                       value={command}
                       onChange={(e) => setCommand(e.target.value)}
-                      style={{
+                      sx={{
                         width: '100%',
-                        backgroundColor: 'transparent',
+                        bg: 'transparent',
                         border: 'none',
                         outline: 'none',
-                        color: 'inherit',
-                        fontSize: '14px',
+                        color: 'terminalText',
+                        fontSize: 0,
                         fontFamily: 'monospace',
                       }}
                       spellCheck={false}
@@ -274,5 +253,8 @@ const Terminal: React.FC<TerminalProps> = ({ initialOpen = false }) => {
     </Box>
   );
 };
+
+// Set display name for component identification in layout
+Terminal.displayName = 'Terminal';
 
 export default Terminal;
