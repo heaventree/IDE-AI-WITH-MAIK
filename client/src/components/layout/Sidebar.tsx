@@ -239,35 +239,37 @@ const Sidebar: React.FC<SidebarProps> = () => {
           <Box>
             <Flex sx={{ p: 2, justifyContent: 'space-between', alignItems: 'center' }}>
               <Text sx={{ fontWeight: 'bold', fontSize: 1 }}>Explorer</Text>
-              <Flex>
-                <Button 
-                  variant="text" 
+              <Flex sx={{ alignItems: 'center', gap: 3 }}>
+                <Box 
+                  as="span" 
                   sx={{ 
-                    p: 1,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    color: 'text',
                     '&:hover': {
-                      bg: 'rgba(114, 124, 245, 0.08)',
                       color: 'primary',
-                      transition: 'all 0.2s ease',
                     } 
                   }} 
                   aria-label="New file" 
-                  title="New file">
+                  title="New file"
+                >
                   <FilePlus size={16} />
-                </Button>
-                <Button 
-                  variant="text" 
+                </Box>
+                <Box 
+                  as="span"
                   sx={{ 
-                    p: 1,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    color: 'text',
                     '&:hover': {
-                      bg: 'rgba(114, 124, 245, 0.08)',
                       color: 'primary',
-                      transition: 'all 0.2s ease',
                     } 
                   }} 
                   aria-label="New folder" 
-                  title="New folder">
+                  title="New folder"
+                >
                   <FolderPlus size={16} />
-                </Button>
+                </Box>
               </Flex>
             </Flex>
             <Box>
