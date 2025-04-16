@@ -172,8 +172,9 @@ const Editor: React.FC<EditorProps> = ({
               borderRadius: 0,
               color: 'text',
               '&:hover': {
-                bg: 'muted',
+                bg: 'rgba(114, 124, 245, 0.08)',
                 color: 'primary',
+                transition: 'all 0.2s ease',
               },
             }}
             aria-label="New tab"
@@ -194,8 +195,9 @@ const Editor: React.FC<EditorProps> = ({
             borderColor: 'border',
             color: 'text',
             '&:hover': {
-              bg: 'muted',
+              bg: 'rgba(114, 124, 245, 0.08)',
               color: 'primary',
+              transition: 'all 0.2s ease',
             },
           }}
           aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}

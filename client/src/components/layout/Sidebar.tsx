@@ -240,7 +240,18 @@ const Sidebar: React.FC<SidebarProps> = () => {
             <Flex sx={{ p: 2, justifyContent: 'space-between', alignItems: 'center' }}>
               <Text sx={{ fontWeight: 'bold', fontSize: 1 }}>Explorer</Text>
               <Flex>
-                <Button variant="text" sx={{ p: 1 }} aria-label="New file" title="New file">
+                <Button 
+                  variant="text" 
+                  sx={{ 
+                    p: 1,
+                    '&:hover': {
+                      bg: 'rgba(114, 124, 245, 0.08)',
+                      color: 'primary',
+                      transition: 'all 0.2s ease',
+                    } 
+                  }} 
+                  aria-label="New file" 
+                  title="New file">
                   <FilePlus size={16} />
                 </Button>
                 <Button variant="text" sx={{ p: 1 }} aria-label="New folder" title="New folder">

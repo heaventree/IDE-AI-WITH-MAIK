@@ -148,10 +148,10 @@ const Terminal: React.FC<TerminalProps> = ({ initialOpen = false }) => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
               '&:hover': {
-                bg: 'primary',
-                opacity: 0.9,
+                bg: 'secondary',
+                transition: 'all 0.2s ease',
               },
             }}
           >
@@ -203,6 +203,12 @@ const Terminal: React.FC<TerminalProps> = ({ initialOpen = false }) => {
                 onClick={toggleTerminal}
                 aria-label="Close terminal"
                 title="Close terminal"
+                sx={{ 
+                  '&:hover': {
+                    color: 'primary',
+                    bg: 'rgba(114, 124, 245, 0.08)',
+                  }
+                }}
               >
                 <X size={14} />
               </IconButton>

@@ -31,7 +31,7 @@ const StatusBar: React.FC<StatusBarProps> = () => {
           sx={{ 
             alignItems: 'center', 
             mr: 3,
-            color: connected ? 'green' : 'gray',
+            color: connected ? 'success' : 'gray',
           }}
         >
           <Circle size={8} fill={connected ? 'currentColor' : 'none'} style={{ marginRight: '4px' }} />
