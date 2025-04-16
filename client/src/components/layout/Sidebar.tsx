@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { 
   FolderTree, FileCode, FileJson, FileText, 
-  Search, Users, GitBranch, PanelRight,
-  ChevronDown, ChevronRight, FilePlus, FolderPlus
+  Search, Users, GitBranch, Code, Database, Settings,
+  ChevronDown, ChevronRight, FilePlus, FolderPlus, 
+  AlertCircle, Coffee, Globe, Package, PlusCircle, 
+  ServerCrash, Zap, Diamond
 } from 'lucide-react';
-import CollaborationPanel from '../collaboration/CollaborationPanel';
 
+// Vertical sidebar component in FlutterFlow style
 interface SidebarProps {
   // Add props as needed
 }
@@ -18,6 +20,7 @@ interface FileItem {
   language?: string;
 }
 
+// Sample file structure
 const sampleFiles: FileItem[] = [
   {
     name: 'Project',
@@ -28,12 +31,33 @@ const sampleFiles: FileItem[] = [
         type: 'folder',
         children: [
           {
-            name: 'main.tsx',
+            name: 'components',
+            type: 'folder',
+            children: [
+              {
+                name: 'Button.tsx',
+                type: 'file',
+                language: 'typescript'
+              },
+              {
+                name: 'Card.tsx',
+                type: 'file',
+                language: 'typescript'
+              },
+              {
+                name: 'Input.tsx',
+                type: 'file',
+                language: 'typescript'
+              }
+            ]
+          },
+          {
+            name: 'App.tsx',
             type: 'file',
             language: 'typescript'
           },
           {
-            name: 'App.tsx',
+            name: 'main.tsx',
             type: 'file',
             language: 'typescript'
           }
@@ -55,15 +79,29 @@ const sampleFiles: FileItem[] = [
 
 // File icon based on file type/extension
 const FileIcon: React.FC<{ name: string, language?: string }> = ({ name, language }) => {
-  if (language === 'json') return <FileJson size={18} />;
-  if (language === 'markdown') return <FileText size={18} />;
-  if (name.endsWith('.tsx') || name.endsWith('.ts') || name.endsWith('.js') || name.endsWith('.jsx')) {
-    return <FileCode size={18} />;
-  }
-  return <FileText size={18} />;
+  const getIconClass = () => {
+    if (language === 'json') return 'json-icon';
+    if (language === 'markdown') return 'md-icon';
+    if (name.endsWith('.tsx') || name.endsWith('.ts')) return 'ts-icon';
+    if (name.endsWith('.js') || name.endsWith('.jsx')) return 'js-icon';
+    if (name.endsWith('.css')) return 'css-icon';
+    if (name.endsWith('.html')) return 'html-icon';
+    return 'file-icon';
+  };
+
+  const getIcon = () => {
+    if (language === 'json') return <FileJson size={16} />;
+    if (language === 'markdown') return <FileText size={16} />;
+    if (name.endsWith('.tsx') || name.endsWith('.ts') || name.endsWith('.js') || name.endsWith('.jsx')) {
+      return <FileCode size={16} />;
+    }
+    return <FileText size={16} />;
+  };
+
+  return <span className={`file-icon ${getIconClass()}`}>{getIcon()}</span>;
 };
 
-// File or folder item component
+// File or folder item component with enhanced styling
 const FileTreeItem: React.FC<{ item: FileItem, depth: number, isActive?: boolean }> = ({ 
   item, 
   depth,
@@ -86,14 +124,20 @@ const FileTreeItem: React.FC<{ item: FileItem, depth: number, isActive?: boolean
       >
         {item.type === 'folder' ? (
           <div className="filetree-expander">
-            {expanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+            {expanded ? 
+              <ChevronDown size={14} className="chevron-icon" /> : 
+              <ChevronRight size={14} className="chevron-icon" />
+            }
           </div>
         ) : (
           <div className="filetree-spacer" />
         )}
         
-        <div className="filetree-icon">
-          {item.type === 'folder' ? <FolderTree size={18} /> : <FileIcon name={item.name} language={item.language} />}
+        <div className={`filetree-icon ${item.type === 'folder' ? 'folder-icon' : ''}`}>
+          {item.type === 'folder' ? 
+            <FolderTree size={16} className="folder-tree-icon" /> : 
+            <FileIcon name={item.name} language={item.language} />
+          }
         </div>
         
         <div className={`filetree-name ${item.type === 'folder' ? 'folder' : 'file'}`}>
@@ -117,51 +161,220 @@ const FileTreeItem: React.FC<{ item: FileItem, depth: number, isActive?: boolean
   );
 };
 
-const SidebarTab: React.FC<{
-  id: string;
-  icon: React.ReactNode;
-  label: string;
-  active: boolean;
-  onClick: () => void;
-}> = ({ id, icon, label, active, onClick }) => (
-  <button
-    type="button"
-    className={`sidebar-tab ${active ? 'active' : ''}`}
-    onClick={onClick}
-    aria-label={label}
-    title={label}
-  >
-    {icon}
-  </button>
+// Search component
+const SearchPanel: React.FC = () => (
+  <div className="search-panel">
+    <div className="search-input-container">
+      <Search size={14} className="search-icon" />
+      <input 
+        type="text" 
+        className="search-input" 
+        placeholder="Search in project..." 
+      />
+    </div>
+
+    <div className="search-options">
+      <label className="search-option">
+        <input type="checkbox" className="search-checkbox" />
+        <span>Case sensitive</span>
+      </label>
+      <label className="search-option">
+        <input type="checkbox" className="search-checkbox" />
+        <span>Whole word</span>
+      </label>
+      <label className="search-option">
+        <input type="checkbox" className="search-checkbox" />
+        <span>Regular expression</span>
+      </label>
+    </div>
+
+    <div className="search-history">
+      <div className="search-history-heading">Recent Searches</div>
+      <div className="search-history-items">
+        <div className="search-history-item">
+          <Search size={12} />
+          <span>api.connectDatabase</span>
+        </div>
+        <div className="search-history-item">
+          <Search size={12} />
+          <span>renderComponent</span>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// Git panel component
+const GitPanel: React.FC = () => (
+  <div className="git-panel">
+    <div className="git-branch">
+      <GitBranch size={14} className="git-branch-icon" />
+      <span className="git-branch-name">main</span>
+      <div className="git-sync">
+        <div className="git-sync-status">
+          <span className="git-upload">↑3</span>
+          <span className="git-download">↓0</span>
+        </div>
+      </div>
+    </div>
+
+    <div className="git-changes">
+      <div className="git-changes-header">Changes (3)</div>
+      <div className="git-change-items">
+        <div className="git-change-item modified">
+          <div className="git-change-status">M</div>
+          <div className="git-change-file">src/components/Button.tsx</div>
+        </div>
+        <div className="git-change-item added">
+          <div className="git-change-status">A</div>
+          <div className="git-change-file">src/components/Card.tsx</div>
+        </div>
+        <div className="git-change-item modified">
+          <div className="git-change-status">M</div>
+          <div className="git-change-file">package.json</div>
+        </div>
+      </div>
+    </div>
+
+    <div className="git-actions">
+      <button className="git-action-button commit">
+        <GitBranch size={14} />
+        <span>Commit</span>
+      </button>
+      <div className="git-action-buttons">
+        <button className="git-action-button secondary">Pull</button>
+        <button className="git-action-button secondary">Push</button>
+      </div>
+    </div>
+  </div>
+);
+
+// Extension card component
+const ExtensionCard: React.FC<{ name: string, version: string, icon: React.ReactNode }> = ({ 
+  name, version, icon 
+}) => (
+  <div className="extension-card">
+    <div className="extension-icon">
+      {icon}
+    </div>
+    <div className="extension-info">
+      <div className="extension-name">{name}</div>
+      <div className="extension-version">{version}</div>
+    </div>
+    <div className="extension-actions">
+      <button className="extension-button">
+        <Settings size={14} />
+      </button>
+    </div>
+  </div>
+);
+
+// Extensions panel component
+const ExtensionsPanel: React.FC = () => (
+  <div className="extensions-panel">
+    <div className="extensions-search">
+      <Search size={14} className="extensions-search-icon" />
+      <input 
+        type="text" 
+        className="extensions-search-input" 
+        placeholder="Search extensions..."
+      />
+    </div>
+    
+    <div className="extensions-list">
+      <div className="extensions-heading">Installed</div>
+      <ExtensionCard 
+        name="Git Integration" 
+        version="v1.2.0" 
+        icon={<GitBranch size={24} />}
+      />
+      <ExtensionCard 
+        name="Database Tools" 
+        version="v0.9.4" 
+        icon={<Database size={24} />}
+      />
+      <ExtensionCard 
+        name="Code AI" 
+        version="v2.1.3" 
+        icon={<Zap size={24} />}
+      />
+      
+      <div className="extensions-heading">Recommended</div>
+      <ExtensionCard 
+        name="Theme Designer" 
+        version="v1.0.2" 
+        icon={<Diamond size={24} />}
+      />
+    </div>
+  </div>
+);
+
+// Collaboration component
+const CollaborationPanel: React.FC = () => (
+  <div className="collaboration-panel">
+    <div className="users-online">
+      <div className="users-online-heading">Online (3)</div>
+      <div className="users-list">
+        <div className="user-item">
+          <div className="user-avatar blue">JD</div>
+          <div className="user-info">
+            <div className="user-name">John Doe</div>
+            <div className="user-status">Editing src/components/Button.tsx</div>
+          </div>
+        </div>
+        <div className="user-item">
+          <div className="user-avatar green">AS</div>
+          <div className="user-info">
+            <div className="user-name">Alice Smith</div>
+            <div className="user-status">Viewing Git changes</div>
+          </div>
+        </div>
+        <div className="user-item">
+          <div className="user-avatar purple">RJ</div>
+          <div className="user-info">
+            <div className="user-name">Robert Johnson</div>
+            <div className="user-status">Inactive</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div className="collaboration-chat">
+      <div className="chat-heading">Team Chat</div>
+      <div className="chat-messages">
+        <div className="chat-message">
+          <div className="chat-avatar blue">JD</div>
+          <div className="message-content">
+            <div className="message-header">
+              <span className="message-author">John Doe</span>
+              <span className="message-time">10:42 AM</span>
+            </div>
+            <div className="message-text">Just pushed the button component updates</div>
+          </div>
+        </div>
+        <div className="chat-message">
+          <div className="chat-avatar green">AS</div>
+          <div className="message-content">
+            <div className="message-header">
+              <span className="message-author">Alice Smith</span>
+              <span className="message-time">10:45 AM</span>
+            </div>
+            <div className="message-text">Looks great! I'll review it now.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 );
 
 const Sidebar: React.FC<SidebarProps> = () => {
-  const [activeTab, setActiveTab] = useState<'files' | 'collab' | 'git' | 'search'>('files');
+  const [activeSidebarIcon, setActiveSidebarIcon] = useState<string>('files');
   
-  return (
-    <div className="sidebar-container">
-      {/* Sidebar tabs */}
-      <div className="sidebar-tabs">
-        {[
-          { id: 'files', icon: <FolderTree size={18} />, label: 'File explorer' },
-          { id: 'search', icon: <Search size={18} />, label: 'Search' },
-          { id: 'git', icon: <GitBranch size={18} />, label: 'Git' },
-          { id: 'collab', icon: <Users size={18} />, label: 'Collaboration' }
-        ].map(tab => (
-          <SidebarTab
-            key={tab.id}
-            id={tab.id}
-            icon={tab.icon}
-            label={tab.label}
-            active={activeTab === tab.id}
-            onClick={() => setActiveTab(tab.id as any)}
-          />
-        ))}
-      </div>
-      
-      {/* Tab content */}
-      <div className="sidebar-content">
-        {activeTab === 'files' && (
+  // Render appropriate content based on active sidebar icon
+  const renderSidebarContent = () => {
+    switch (activeSidebarIcon) {
+      case 'files':
+        return (
           <div className="sidebar-section">
             <div className="sidebar-header">
               <div className="sidebar-title">EXPLORER</div>
@@ -188,31 +401,94 @@ const Sidebar: React.FC<SidebarProps> = () => {
               ))}
             </div>
           </div>
-        )}
-        
-        {activeTab === 'search' && (
-          <div className="sidebar-section">
-            <div className="sidebar-header">
-              <div className="sidebar-title">SEARCH</div>
-            </div>
-            <div className="sidebar-message">
-              Search functionality coming soon...
-            </div>
+        );
+      
+      case 'search':
+        return <SearchPanel />;
+      
+      case 'git':
+        return <GitPanel />;
+      
+      case 'extensions':
+        return <ExtensionsPanel />;
+      
+      case 'collab':
+        return <CollaborationPanel />;
+      
+      default:
+        return (
+          <div className="sidebar-message">
+            Select an option from the sidebar
           </div>
-        )}
+        );
+    }
+  };
+  
+  return (
+    <div className="advanced-sidebar-container">
+      <div className="sidebar-activity-bar">
+        <div className="activity-bar-top">
+          <button 
+            className={`activity-bar-item ${activeSidebarIcon === 'files' ? 'active' : ''}`}
+            onClick={() => setActiveSidebarIcon('files')}
+            title="Explorer"
+          >
+            <FolderTree size={22} />
+            {activeSidebarIcon === 'files' && <div className="activity-bar-active-indicator" />}
+          </button>
+          
+          <button 
+            className={`activity-bar-item ${activeSidebarIcon === 'search' ? 'active' : ''}`}
+            onClick={() => setActiveSidebarIcon('search')}
+            title="Search"
+          >
+            <Search size={22} />
+            {activeSidebarIcon === 'search' && <div className="activity-bar-active-indicator" />}
+          </button>
+          
+          <button 
+            className={`activity-bar-item ${activeSidebarIcon === 'git' ? 'active' : ''}`}
+            onClick={() => setActiveSidebarIcon('git')}
+            title="Source Control"
+          >
+            <GitBranch size={22} />
+            {activeSidebarIcon === 'git' && <div className="activity-bar-active-indicator" />}
+          </button>
+          
+          <button 
+            className={`activity-bar-item ${activeSidebarIcon === 'extensions' ? 'active' : ''}`}
+            onClick={() => setActiveSidebarIcon('extensions')}
+            title="Extensions"
+          >
+            <Package size={22} />
+            {activeSidebarIcon === 'extensions' && <div className="activity-bar-active-indicator" />}
+          </button>
+          
+          <button 
+            className={`activity-bar-item ${activeSidebarIcon === 'collab' ? 'active' : ''}`}
+            onClick={() => setActiveSidebarIcon('collab')}
+            title="Collaboration"
+          >
+            <Users size={22} />
+            {activeSidebarIcon === 'collab' && <div className="activity-bar-active-indicator" />}
+            <div className="activity-notification" title="3 users online">3</div>
+          </button>
+        </div>
         
-        {activeTab === 'git' && (
-          <div className="sidebar-section">
-            <div className="sidebar-header">
-              <div className="sidebar-title">GIT</div>
-            </div>
-            <div className="sidebar-message">
-              Git integration coming soon...
-            </div>
-          </div>
-        )}
-        
-        {activeTab === 'collab' && <CollaborationPanel />}
+        <div className="activity-bar-bottom">
+          <button 
+            className={`activity-bar-item ${activeSidebarIcon === 'settings' ? 'active' : ''}`}
+            onClick={() => setActiveSidebarIcon('settings')}
+            title="Settings"
+          >
+            <Settings size={22} />
+            {activeSidebarIcon === 'settings' && <div className="activity-bar-active-indicator" />}
+          </button>
+        </div>
+      </div>
+      
+      <div className="sidebar-content-panel">
+        {renderSidebarContent()}
       </div>
     </div>
   );
