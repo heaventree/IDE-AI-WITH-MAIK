@@ -36,24 +36,27 @@ const EditorTab: React.FC<{
   onActivate: () => void;
   onClose: (e: React.MouseEvent) => void;
 }> = ({ tab, isActive, onActivate, onClose }) => (
-  <button 
-    type="button"
+  <div 
     className={`editor-tab ${isActive ? 'active' : ''}`}
     onClick={onActivate}
+    role="tab"
+    aria-selected={isActive}
+    tabIndex={isActive ? 0 : -1}
   >
     <div className="editor-tab-content">
       <div className="editor-tab-icon">{getFileIcon(tab.name, 14)}</div>
       <div className="editor-tab-name">{tab.name}</div>
     </div>
-    <button 
-      type="button" 
+    <span 
       className="editor-tab-close"
       onClick={onClose}
+      role="button"
+      tabIndex={0}
       aria-label={`Close ${tab.name}`}
     >
       <X size={14} />
-    </button>
-  </button>
+    </span>
+  </div>
 );
 
 const Editor = ({ 

@@ -6,7 +6,19 @@
  * foundation for both manually created and AI-generated UI components.
  */
 
-import theme from '../../theme.json';
+// Import theme manually since TypeScript doesn't recognize the JSON import
+// @ts-ignore
+const theme = {
+  primary: '#7b68ee',
+  secondary: '#8e77ff',
+  accent: '#00dfb5',
+  highlight: '#c678dd',
+  background: '#0f1127',
+  foreground: '#e2e4f3',
+  variant: 'professional', 
+  appearance: 'dark',
+  radius: 0.5
+};
 
 // ===== Color System =====
 
