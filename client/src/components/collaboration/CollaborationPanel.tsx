@@ -89,7 +89,7 @@ const CollaborationPanel: React.FC<CollaborationPanelProps> = () => {
         <Badge 
           variant="primary" 
           sx={{ 
-            bg: connected ? 'green' : 'gray', 
+            bg: connected ? 'success' : 'gray', 
             fontSize: 0, 
             px: 2,
             py: 1,
@@ -116,7 +116,8 @@ const CollaborationPanel: React.FC<CollaborationPanelProps> = () => {
                 px: 2,
                 borderRadius: 'sm',
                 '&:hover': {
-                  bg: 'muted',
+                  bg: 'rgba(114, 124, 245, 0.08)',
+                  transition: 'all 0.2s ease',
                 }
               }}
             >

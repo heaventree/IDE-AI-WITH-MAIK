@@ -254,7 +254,18 @@ const Sidebar: React.FC<SidebarProps> = () => {
                   title="New file">
                   <FilePlus size={16} />
                 </Button>
-                <Button variant="text" sx={{ p: 1 }} aria-label="New folder" title="New folder">
+                <Button 
+                  variant="text" 
+                  sx={{ 
+                    p: 1,
+                    '&:hover': {
+                      bg: 'rgba(114, 124, 245, 0.08)',
+                      color: 'primary',
+                      transition: 'all 0.2s ease',
+                    } 
+                  }} 
+                  aria-label="New folder" 
+                  title="New folder">
                   <FolderPlus size={16} />
                 </Button>
               </Flex>
