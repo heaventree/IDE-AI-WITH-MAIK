@@ -154,7 +154,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
           aria-label="File explorer"
           title="File explorer"
         >
-          <FolderTree size={16} />
+          <FolderTree size={18} />
         </Button>
         
         <Button
@@ -177,7 +177,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
           aria-label="Search"
           title="Search"
         >
-          <Search size={16} />
+          <Search size={18} />
         </Button>
         
         <Button
@@ -193,12 +193,14 @@ const Sidebar: React.FC<SidebarProps> = () => {
             bg: 'transparent',
             '&:hover': {
               bg: 'muted',
+              color: activeTab === 'git' ? 'primary' : 'highlight',
             },
+            transition: 'all 0.2s ease',
           }}
           aria-label="Git"
           title="Git"
         >
-          <GitBranch size={16} />
+          <GitBranch size={18} />
         </Button>
         
         <Button
@@ -214,12 +216,14 @@ const Sidebar: React.FC<SidebarProps> = () => {
             bg: 'transparent',
             '&:hover': {
               bg: 'muted',
+              color: activeTab === 'collab' ? 'primary' : 'highlight',
             },
+            transition: 'all 0.2s ease',
           }}
           aria-label="Collaboration"
           title="Collaboration"
         >
-          <Users size={16} />
+          <Users size={18} />
         </Button>
       </Flex>
       
@@ -231,10 +235,10 @@ const Sidebar: React.FC<SidebarProps> = () => {
               <Text sx={{ fontWeight: 'bold', fontSize: 1 }}>Explorer</Text>
               <Flex>
                 <Button variant="text" sx={{ p: 1 }} aria-label="New file" title="New file">
-                  <FilePlus size={14} />
+                  <FilePlus size={16} />
                 </Button>
                 <Button variant="text" sx={{ p: 1 }} aria-label="New folder" title="New folder">
-                  <FolderPlus size={14} />
+                  <FolderPlus size={16} />
                 </Button>
               </Flex>
             </Flex>
