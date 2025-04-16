@@ -1,6 +1,4 @@
-/** @jsxImportSource theme-ui */
 import React, { useState, useRef, useEffect } from 'react';
-import { Box, Flex, IconButton, Text } from 'theme-ui';
 import { ChevronRight, X, Minimize, Maximize, Terminal as TerminalIcon } from 'lucide-react';
 
 interface TerminalProps {
@@ -116,141 +114,98 @@ const Terminal: React.FC<TerminalProps> = ({ initialOpen = false }) => {
   };
   
   return (
-    <Box
-      sx={{
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        zIndex: 10,
-      }}
-    >
+    <div className="terminal-wrapper">
       {/* Terminal button */}
       {!isOpen && (
-        <Flex
-          sx={{
-            position: 'absolute',
-            bottom: 0,
-            right: 16,
-            mb: 2,
-          }}
-        >
-          <IconButton
+        <div className="terminal-button-container">
+          <button
+            type="button"
+            className="terminal-toggle-button"
             onClick={toggleTerminal}
             aria-label="Open terminal"
             title="Open terminal"
-            sx={{
-              borderRadius: 'full',
-              bg: 'primary',
-              color: 'white',
-              width: 40,
-              height: 40,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
-              '&:hover': {
-                bg: 'secondary',
-                transition: 'all 0.2s ease',
-              },
-            }}
           >
             <ChevronRight size={24} />
-          </IconButton>
-        </Flex>
+          </button>
+        </div>
       )}
       
       {/* Terminal panel */}
       {isOpen && (
-        <Box variant="layout.terminal">
+        <div className="terminal-container">
           {/* Terminal header */}
-          <Flex variant="layout.terminalHeader">
-            <Flex sx={{ alignItems: 'center' }}>
-              <TerminalIcon size={14} sx={{ mr: 1 }} />
-              <Text variant="text.label" sx={{ fontSize: 0 }}>TERMINAL</Text>
-            </Flex>
-            <Flex>
-              <IconButton
-                variant="icon"
+          <div className="terminal-header">
+            <div className="terminal-title">
+              <TerminalIcon size={14} />
+              <span>TERMINAL</span>
+            </div>
+            <div className="terminal-controls">
+              <button
+                type="button"
+                className="icon-button small"
                 onClick={toggleMinimize}
                 aria-label={minimized ? 'Maximize terminal' : 'Minimize terminal'}
                 title={minimized ? 'Maximize terminal' : 'Minimize terminal'}
-                sx={{ width: '28px', height: '28px', mr: 1 }}
               >
                 {minimized ? <Maximize size={14} /> : <Minimize size={14} />}
-              </IconButton>
-              <IconButton
-                variant="icon"
+              </button>
+              <button
+                type="button"
+                className="icon-button small"
                 onClick={toggleTerminal}
                 aria-label="Close terminal"
                 title="Close terminal"
-                sx={{ width: '28px', height: '28px' }}
               >
                 <X size={14} />
-              </IconButton>
-            </Flex>
-          </Flex>
+              </button>
+            </div>
+          </div>
           
           {/* Terminal content */}
           {!minimized && (
-            <Box variant="layout.terminalContent">
+            <div className="terminal-content">
               {/* Command history */}
-              <Box 
+              <div 
                 ref={historyRef}
-                sx={{ 
-                  mb: 2,
-                  fontSize: 0,
-                  fontFamily: 'monospace',
-                  lineHeight: 1.5,
-                }}
+                className="terminal-history"
               >
                 {history.map((item, index) => (
-                  <Box key={index} sx={{ mb: 1 }}>
+                  <div key={index} className="terminal-history-item">
                     {item.type === 'command' ? (
-                      <Flex>
-                        <Text className="command" sx={{ mr: 1 }}>{'>'}</Text>
-                        <Text className="command">{item.content}</Text>
-                      </Flex>
+                      <div className="terminal-command">
+                        <span className="terminal-prompt">{'>'}</span>
+                        <span>{item.content}</span>
+                      </div>
                     ) : item.type === 'error' ? (
-                      <Text className="error" sx={{ whiteSpace: 'pre-wrap' }}>{item.content}</Text>
+                      <div className="terminal-error">{item.content}</div>
                     ) : item.type === 'success' ? (
-                      <Text className="success" sx={{ whiteSpace: 'pre-wrap' }}>{item.content}</Text>
+                      <div className="terminal-success">{item.content}</div>
                     ) : (
-                      <Text className="output" sx={{ whiteSpace: 'pre-wrap' }}>{item.content}</Text>
+                      <div className="terminal-output">{item.content}</div>
                     )}
-                  </Box>
+                  </div>
                 ))}
-              </Box>
+              </div>
               
               {/* Command input */}
-              <form onSubmit={handleSubmit}>
-                <Flex sx={{ alignItems: 'center' }}>
-                  <Text className="command" sx={{ mr: 1 }}>{'>'}</Text>
-                  <Box sx={{ flex: 1 }}>
-                    <input
-                      ref={inputRef}
-                      value={command}
-                      onChange={(e) => setCommand(e.target.value)}
-                      sx={{
-                        width: '100%',
-                        bg: 'transparent',
-                        border: 'none',
-                        outline: 'none',
-                        color: 'terminalText',
-                        fontSize: 0,
-                        fontFamily: 'monospace',
-                      }}
-                      spellCheck={false}
-                      autoComplete="off"
-                    />
-                  </Box>
-                </Flex>
+              <form onSubmit={handleSubmit} className="terminal-input-form">
+                <div className="terminal-input-container">
+                  <span className="terminal-prompt">{'>'}</span>
+                  <input
+                    ref={inputRef}
+                    value={command}
+                    onChange={(e) => setCommand(e.target.value)}
+                    className="terminal-input"
+                    spellCheck={false}
+                    autoComplete="off"
+                  />
+                </div>
               </form>
-            </Box>
+            </div>
           )}
-        </Box>
+        </div>
       )}
-    </Box>
+    </div>
   );
 };
 

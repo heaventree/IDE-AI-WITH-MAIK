@@ -25,6 +25,8 @@
   --background: #151937;
   --background-elevated: #1a1f33;
   --background-floating: #222641;
+  --background-hover: #1e2342;
+  --background-active: #232849;
   
   --border: #2d324b;
   --border-muted: #252a40;
@@ -453,5 +455,326 @@
   .statusbar-item-text {
     font-size: 12px;
     white-space: nowrap;
+  }
+
+  /* Editor Component */
+  .editor-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background-color: var(--editor);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .editor-container.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+  }
+
+  .editor-tabbar {
+    display: flex;
+    justify-content: space-between;
+    height: 36px;
+    background-color: var(--background-elevated);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .editor-tabbar::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .editor-tabbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .editor-tabbar::-webkit-scrollbar-thumb {
+    background: rgba(114, 124, 245, 0.3);
+    border-radius: 4px;
+  }
+
+  .editor-tabs {
+    display: flex;
+    height: 100%;
+  }
+
+  .editor-tab {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 0 12px;
+    background-color: transparent;
+    border: none;
+    border-right: 1px solid var(--border);
+    color: var(--foreground-muted);
+    font-size: 13px;
+    cursor: pointer;
+    min-width: 120px;
+    max-width: 200px;
+    transition: background-color 0.1s ease;
+  }
+
+  .editor-tab:hover {
+    background-color: var(--background-hover);
+  }
+
+  .editor-tab.active {
+    background-color: var(--editor);
+    color: var(--primary);
+    border-bottom: 2px solid var(--primary);
+  }
+
+  .editor-tab-content {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    overflow: hidden;
+  }
+
+  .editor-tab-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .editor-tab-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .editor-tab-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--foreground-subtle);
+    cursor: pointer;
+    opacity: 0.6;
+    margin-left: 6px;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+  }
+
+  .editor-tab-close:hover {
+    opacity: 1;
+    background-color: rgba(114, 124, 245, 0.1);
+    color: var(--foreground);
+  }
+
+  .editor-tab.active .editor-tab-close:hover {
+    background-color: rgba(250, 92, 124, 0.1);
+    color: var(--danger);
+  }
+
+  .new-tab-button {
+    height: 100%;
+    width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    border-right: 1px solid var(--border);
+    color: var(--foreground-muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .new-tab-button:hover {
+    background-color: var(--background-hover);
+    color: var(--primary);
+  }
+
+  .fullscreen-button {
+    height: 100%;
+    width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    border-left: 1px solid var(--border);
+    color: var(--foreground-muted);
+    cursor: pointer;
+  }
+
+  .fullscreen-button:hover {
+    background-color: var(--background-hover);
+    color: var(--primary);
+  }
+
+  .editor-content {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .editor-textarea {
+    width: 100%;
+    height: 100%;
+    padding: 16px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    resize: none;
+    font-family: 'Cascadia Code', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--foreground);
+    tab-size: 2;
+  }
+
+  /* Terminal Component */
+  .terminal-wrapper {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+  }
+
+  .terminal-button-container {
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+    z-index: 10;
+  }
+
+  .terminal-toggle-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    transition: all 0.2s ease;
+  }
+
+  .terminal-toggle-button:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  }
+
+  .terminal-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--terminal);
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .terminal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 12px;
+    background-color: var(--background-elevated);
+    border-bottom: 1px solid var(--border);
+    height: 32px;
+  }
+
+  .terminal-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--foreground-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .terminal-controls {
+    display: flex;
+    gap: 4px;
+  }
+
+  .terminal-content {
+    flex: 1;
+    padding: 12px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .terminal-history {
+    flex: 1;
+    overflow-y: auto;
+    font-family: 'Cascadia Code', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+
+  .terminal-history-item {
+    margin-bottom: 4px;
+  }
+
+  .terminal-command {
+    display: flex;
+    color: var(--primary);
+  }
+
+  .terminal-prompt {
+    color: var(--primary);
+    margin-right: 8px;
+  }
+
+  .terminal-output {
+    color: var(--foreground-muted);
+    white-space: pre-wrap;
+  }
+
+  .terminal-error {
+    color: var(--danger);
+    white-space: pre-wrap;
+  }
+
+  .terminal-success {
+    color: var(--success);
+    white-space: pre-wrap;
+  }
+
+  .terminal-input-form {
+    width: 100%;
+  }
+
+  .terminal-input-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .terminal-input {
+    flex: 1;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: var(--foreground);
+    font-family: 'Cascadia Code', monospace;
+    font-size: 13px;
+    padding: 0;
   }
 }

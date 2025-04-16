@@ -1,6 +1,4 @@
-/** @jsxImportSource theme-ui */
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Flex, IconButton, Text, Button } from 'theme-ui';
 import { 
   X, Plus, Maximize2, Minimize2, 
   FileCode, FileBadge, FileJson, FileText 
@@ -30,6 +28,33 @@ const getFileIcon = (fileName: string, size = 16) => {
   }
   return <FileBadge size={size} />;
 };
+
+// Tab component for editor
+const EditorTab: React.FC<{
+  tab: TabInfo;
+  isActive: boolean;
+  onActivate: () => void;
+  onClose: (e: React.MouseEvent) => void;
+}> = ({ tab, isActive, onActivate, onClose }) => (
+  <button 
+    type="button"
+    className={`editor-tab ${isActive ? 'active' : ''}`}
+    onClick={onActivate}
+  >
+    <div className="editor-tab-content">
+      <div className="editor-tab-icon">{getFileIcon(tab.name, 14)}</div>
+      <div className="editor-tab-name">{tab.name}</div>
+    </div>
+    <button 
+      type="button" 
+      className="editor-tab-close"
+      onClick={onClose}
+      aria-label={`Close ${tab.name}`}
+    >
+      <X size={14} />
+    </button>
+  </button>
+);
 
 const Editor = ({ 
   initialContent = '', 
@@ -112,98 +137,53 @@ const Editor = ({
   }, [activeTabId]);
   
   return (
-    <Box sx={{
-      height: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-      position: isFullscreen ? 'fixed' : 'relative',
-      top: isFullscreen ? 0 : 'auto',
-      left: isFullscreen ? 0 : 'auto',
-      right: isFullscreen ? 0 : 'auto',
-      bottom: isFullscreen ? 0 : 'auto',
-      zIndex: isFullscreen ? 1000 : 'auto',
-      bg: 'editor',
-      color: 'text',
-    }}>
+    <div className={`editor-container ${isFullscreen ? 'fullscreen' : ''}`}>
       {/* Tab bar */}
-      <Flex variant="layout.tabBar">
-        <Flex variant="layout.tabContainer">
+      <div className="editor-tabbar">
+        <div className="editor-tabs">
           {tabs.map(tab => (
-            <Button
+            <EditorTab
               key={tab.id}
-              variant={tab.id === activeTabId ? "tabActive" : "tab"}
-              onClick={() => setActiveTabId(tab.id)}
-            >
-              <Flex sx={{ alignItems: 'center' }}>
-                {getFileIcon(tab.name, 14)}
-                <Text sx={{ ml: 1 }}>{tab.name}</Text>
-              </Flex>
-              <Box 
-                className="tab-close"
-                onClick={(e) => handleCloseTab(tab.id, e)}
-              >
-                <X size={14} />
-              </Box>
-            </Button>
+              tab={tab}
+              isActive={tab.id === activeTabId}
+              onActivate={() => setActiveTabId(tab.id)}
+              onClose={(e) => handleCloseTab(tab.id, e)}
+            />
           ))}
           
-          <Button
-            variant="ghost"
+          <button
+            type="button"
+            className="icon-button new-tab-button"
             onClick={handleAddTab}
-            sx={{
-              py: 2,
-              px: 2,
-              borderRadius: 0,
-              minWidth: 'auto'
-            }}
             aria-label="New tab"
             title="New tab"
           >
             <Plus size={14} />
-          </Button>
-        </Flex>
+          </button>
+        </div>
         
-        <Button
-          variant="ghost"
+        <button
+          type="button"
+          className="icon-button fullscreen-button"
           onClick={toggleFullscreen}
-          sx={{
-            py: 2,
-            px: 2,
-            borderRadius: 0,
-            borderLeft: '1px solid',
-            borderColor: 'border',
-            minWidth: 'auto'
-          }}
           aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
           title={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
         >
           {isFullscreen ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
-        </Button>
-      </Flex>
+        </button>
+      </div>
       
       {/* Editor content */}
-      <Box variant="layout.editorContent">
+      <div className="editor-content">
         <textarea
           ref={textareaRef}
           value={activeTab.content}
           onChange={(e) => handleContentChange(e.target.value)}
-          style={{
-            width: '100%',
-            height: '100%',
-            padding: '16px',
-            backgroundColor: 'transparent',
-            border: 'none',
-            outline: 'none',
-            fontFamily: 'monospace',
-            fontSize: '14px',
-            lineHeight: '1.6',
-            resize: 'none',
-            color: 'inherit',
-          }}
+          className="editor-textarea"
           spellCheck={false}
         />
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 };
 
