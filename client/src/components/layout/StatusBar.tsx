@@ -1,50 +1,41 @@
-import { useProject } from '../../contexts/ProjectContext';
+/** @jsxImportSource theme-ui */
+import React from 'react';
+import { Box, Flex, Text, Button } from 'theme-ui';
 
-const StatusBar = () => {
-  const { projectState } = useProject();
-  
-  // Get active file extension if there is one
-  const activeFileExt = projectState.activeFile ? 
-    projectState.activeFile.split('.').pop()?.toUpperCase() : 'TEXT';
-  
-  // Get sync status text
-  const getSyncStatusText = () => {
-    const targets = projectState.backupStatus.targets;
-    
-    if (targets.length === 0) return 'Sync: None';
-    
-    return `Sync: ${targets.includes('github') ? 'GitHub' : ''}${
-      targets.includes('github') && targets.includes('onedrive') ? ' + ' : ''
-    }${targets.includes('onedrive') ? 'OneDrive' : ''}`;
-  };
+interface StatusBarProps {
+  onTerminalToggle?: () => void;
+}
 
+const StatusBar: React.FC<StatusBarProps> = ({ onTerminalToggle }) => {
   return (
-    <footer className="h-6 bg-primary-600 dark:bg-primary-800 text-white flex items-center justify-between px-3 text-xs">
-      <div className="flex items-center space-x-3">
-        <div className="flex items-center">
-          <i className="ri-server-line mr-1"></i>
-          <span>WebContainer: {
-            projectState.containerStatus === 'ready' 
-              ? 'Ready' 
-              : projectState.containerStatus === 'loading'
-              ? 'Loading...'
-              : projectState.containerStatus === 'error'
-              ? 'Error'
-              : 'Idle'
-          }</span>
-        </div>
-        <div className="flex items-center">
-          <i className="ri-cloud-line mr-1"></i>
-          <span>{getSyncStatusText()}</span>
-        </div>
-      </div>
-      <div className="flex items-center space-x-3">
-        <div>{activeFileExt || 'TEXT'}</div>
-        <div>UTF-8</div>
-        <div>LF</div>
-        <div>Ln 1, Col 1</div>
-      </div>
-    </footer>
+    <Box sx={{ variant: 'layout.statusBar', borderTop: '1px solid', borderColor: 'lightgray' }}>
+      <Flex sx={{ justifyContent: 'space-between', alignItems: 'center', height: '100%' }}>
+        {/* Left side status items */}
+        <Flex>
+          <Text sx={{ mr: 3 }}>Line: 42, Col: 10</Text>
+          <Text sx={{ mr: 3 }}>UTF-8</Text>
+          <Text sx={{ mr: 3 }}>TypeScript</Text>
+        </Flex>
+        
+        {/* Right side status items */}
+        <Flex>
+          <Button 
+            variant="text" 
+            onClick={onTerminalToggle}
+            sx={{ 
+              fontSize: 0,
+              px: 2,
+              py: 1,
+              '&:hover': { bg: 'muted' }
+            }}
+          >
+            Terminal
+          </Button>
+          <Text sx={{ ml: 3 }}>Ln 42, Col 10</Text>
+          <Text sx={{ ml: 3 }}>Spaces: 2</Text>
+        </Flex>
+      </Flex>
+    </Box>
   );
 };
 

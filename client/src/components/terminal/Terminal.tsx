@@ -1,107 +1,113 @@
-import { useState, useRef, useEffect } from 'react';
-import { useProject } from '../../contexts/ProjectContext';
+/** @jsxImportSource theme-ui */
+import React, { useState, useRef, useEffect } from 'react';
+import { Box, Flex, Input } from 'theme-ui';
 
-const Terminal = () => {
-  const { executeCommand } = useProject();
-  const [expanded, setExpanded] = useState(true);
-  const [commandHistory, setCommandHistory] = useState<string[]>([]);
-  const [outputHistory, setOutputHistory] = useState<Array<{command: string, output: string}>>([]);
+const Terminal: React.FC = () => {
+  const [commandHistory, setCommandHistory] = useState<string[]>([
+    'Welcome to Bolt DIY Terminal',
+    'Type "help" to see available commands',
+    '> '
+  ]);
   const [currentCommand, setCurrentCommand] = useState('');
-  const commandInputRef = useRef<HTMLInputElement>(null);
-  
-  // Auto focus command input when terminal is expanded
-  useEffect(() => {
-    if (expanded && commandInputRef.current) {
-      commandInputRef.current.focus();
-    }
-  }, [expanded]);
+  const terminalRef = useRef<HTMLDivElement>(null);
 
-  const handleCommandSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!currentCommand.trim()) return;
+  const handleCommand = (command: string) => {
+    if (!command.trim()) return;
     
     // Add command to history
-    setCommandHistory(prev => [...prev, currentCommand]);
+    setCommandHistory(prev => [...prev.slice(0, -1), `> ${command}`, '> ']);
     
-    try {
-      // Execute command
-      const result = await executeCommand(currentCommand);
-      
-      // Add output to history
-      setOutputHistory(prev => [
-        ...prev,
-        {
-          command: currentCommand,
-          output: result.stdout + (result.stderr ? '\n' + result.stderr : '')
+    // Process command
+    const cmd = command.trim().toLowerCase();
+    
+    switch (cmd) {
+      case 'help':
+        setCommandHistory(prev => [...prev.slice(0, -1), 
+          'Available commands:',
+          '  help - Show this help',
+          '  clear - Clear terminal',
+          '  echo <text> - Print text',
+          '  date - Show current date',
+          '> '
+        ]);
+        break;
+      case 'clear':
+        setCommandHistory(['> ']);
+        break;
+      case 'date':
+        setCommandHistory(prev => [...prev.slice(0, -1), 
+          new Date().toString(),
+          '> '
+        ]);
+        break;
+      default:
+        if (cmd.startsWith('echo ')) {
+          const text = command.substring(5);
+          setCommandHistory(prev => [...prev.slice(0, -1), text, '> ']);
+        } else {
+          setCommandHistory(prev => [...prev.slice(0, -1), 
+            `Command not found: ${command}`,
+            '> '
+          ]);
         }
-      ]);
-    } catch (error) {
-      // Add error to history
-      setOutputHistory(prev => [
-        ...prev,
-        {
-          command: currentCommand,
-          output: `Error: ${(error as Error).message}`
-        }
-      ]);
+        break;
     }
     
-    // Clear current command
+    // Clear input
     setCurrentCommand('');
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleCommand(currentCommand);
+    }
+  };
+
+  // Auto scroll to bottom
+  useEffect(() => {
+    if (terminalRef.current) {
+      terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+    }
+  }, [commandHistory]);
+
   return (
-    <div 
-      className={`border-t border-neutral-300 dark:border-dark-100 bg-dark-500 text-green-400 font-mono text-sm overflow-y-auto custom-scrollbar resize-vertical ${
-        expanded ? 'h-64' : 'h-8'
-      }`}
+    <Box 
+      sx={{ 
+        bg: 'terminal',
+        color: 'terminalText',
+        fontFamily: 'monospace',
+        fontSize: 1,
+        p: 2,
+        height: '100%',
+        overflow: 'auto'
+      }}
+      ref={terminalRef}
     >
-      <div className="p-2 flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <span className="text-xs font-medium text-neutral-400">TERMINAL</span>
-        </div>
-        <div className="flex space-x-1">
-          <button 
-            className="p-1 rounded hover:bg-dark-300 transition text-xs text-neutral-400"
-            onClick={() => setExpanded(!expanded)}
-          >
-            <i className={`ri-${expanded ? 'subtract-line' : 'add-line'}`}></i>
-          </button>
-          <button 
-            className="p-1 rounded hover:bg-dark-300 transition text-xs text-neutral-400"
-            onClick={() => setOutputHistory([])}
-          >
-            <i className="ri-eraser-line"></i>
-          </button>
-        </div>
-      </div>
+      {/* Output Lines */}
+      <Box>
+        {commandHistory.map((line, i) => (
+          <Box key={i} sx={{ whiteSpace: 'pre-wrap', mb: 1 }}>
+            {line}
+          </Box>
+        ))}
+      </Box>
       
-      {expanded && (
-        <div className="px-3 pb-3 overflow-y-auto" style={{ maxHeight: 'calc(100% - 32px)' }}>
-          {/* Output history */}
-          {outputHistory.map((entry, index) => (
-            <div key={index} className="mb-2">
-              <div className="text-white">$ {entry.command}</div>
-              <pre className="whitespace-pre-wrap break-all">{entry.output}</pre>
-            </div>
-          ))}
-          
-          {/* Command input */}
-          <form onSubmit={handleCommandSubmit} className="flex items-center">
-            <span className="text-white mr-1">$</span>
-            <input
-              ref={commandInputRef}
-              type="text"
-              className="flex-1 bg-transparent outline-none border-none text-green-400"
-              value={currentCommand}
-              onChange={(e) => setCurrentCommand(e.target.value)}
-              placeholder="Enter command..."
-            />
-          </form>
-        </div>
-      )}
-    </div>
+      {/* Input Line (hidden, just for handling input) */}
+      <Input
+        type="text"
+        value={currentCommand}
+        onChange={e => setCurrentCommand(e.target.value)}
+        onKeyDown={handleKeyDown}
+        autoFocus
+        sx={{
+          position: 'absolute',
+          left: '-9999px',  // Hide it off-screen
+          width: '1px',
+          height: '1px',
+          opacity: 0
+        }}
+      />
+    </Box>
   );
 };
 

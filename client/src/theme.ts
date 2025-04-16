@@ -1,0 +1,169 @@
+import { Theme } from 'theme-ui';
+import { deep, swiss } from '@theme-ui/presets';
+
+// Combining aspects of different themes with customizations
+const theme: Theme = {
+  ...swiss,
+  colors: {
+    ...swiss.colors,
+    primary: '#4361ee', // Modern blue
+    secondary: '#3d5a80',
+    accent: '#4cc9f0',
+    highlight: '#ade8f4',
+    muted: '#e9ecef',
+    background: '#f8f9fa',
+    text: '#212529',
+    lightgray: '#ced4da',
+    
+    // IDE specific colors
+    sidebar: '#f1f3f5',
+    editor: '#ffffff',
+    terminal: '#2b2d42',
+    terminalText: '#8d99ae',
+    statusBar: '#e9ecef',
+    statusText: '#495057',
+    menuBar: '#ffffff',
+    menuText: '#212529',
+    
+    // Dark mode colors
+    modes: {
+      dark: {
+        ...deep.colors,
+        primary: '#4cc9f0',
+        secondary: '#4895ef',
+        accent: '#f72585',
+        background: '#1a1d21',
+        text: '#f8f9fa',
+        sidebar: '#22252a',
+        editor: '#282c34',
+        terminal: '#1d1e22',
+        terminalText: '#a8b2d1',
+        statusBar: '#282c34',
+        statusText: '#a8b2d1',
+        menuBar: '#22252a',
+        menuText: '#f8f9fa',
+      },
+    },
+  },
+  
+  // Custom font sizes
+  fontSizes: [12, 14, 16, 18, 20, 24, 32, 48],
+  
+  // Space scale for margin, padding
+  space: [0, 4, 8, 16, 24, 32, 48, 64, 128],
+  
+  // Custom font settings
+  fonts: {
+    ...swiss.fonts,
+    body: 'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    heading: 'Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    monospace: 'Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+  },
+  
+  // Component specific styles
+  styles: {
+    ...swiss.styles,
+    root: {
+      fontFamily: 'body',
+      fontWeight: 'body',
+      lineHeight: 'body',
+    },
+  },
+  
+  // Custom variants
+  buttons: {
+    primary: {
+      bg: 'primary',
+      color: 'white',
+      '&:hover': {
+        bg: 'secondary',
+      },
+    },
+    secondary: {
+      bg: 'secondary',
+      color: 'white',
+      '&:hover': {
+        bg: 'primary',
+      },
+    },
+    ghost: {
+      bg: 'transparent',
+      color: 'primary',
+      border: '1px solid',
+      borderColor: 'primary',
+      '&:hover': {
+        bg: 'highlight',
+      },
+    },
+    icon: {
+      bg: 'transparent',
+      color: 'text',
+      p: 1,
+      '&:hover': {
+        color: 'primary',
+      },
+    },
+  },
+
+  // IDE specific components
+  cards: {
+    primary: {
+      p: 3,
+      borderRadius: 4,
+      boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
+      bg: 'white',
+    },
+    compact: {
+      p: 2,
+      borderRadius: 2,
+      boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
+      bg: 'white',
+    },
+  },
+
+  // UI elements
+  layout: {
+    container: {
+      maxWidth: 1200,
+    },
+    sidebar: {
+      width: [0, '240px', '280px'],
+      bg: 'sidebar',
+      height: '100%',
+      overflow: 'auto',
+    },
+    editor: {
+      bg: 'editor',
+      height: '100%',
+      flex: 1,
+    },
+    terminal: {
+      bg: 'terminal',
+      color: 'terminalText',
+      fontFamily: 'monospace',
+      p: 2,
+      height: '200px',
+      overflow: 'auto',
+    },
+    menuBar: {
+      bg: 'menuBar',
+      color: 'menuText',
+      height: '48px',
+      display: 'flex',
+      alignItems: 'center',
+      px: 3,
+      boxShadow: '0 1px 3px rgba(0,0,0,0.12)',
+    },
+    statusBar: {
+      bg: 'statusBar',
+      color: 'statusText',
+      height: '24px',
+      fontSize: 0,
+      display: 'flex',
+      alignItems: 'center',
+      px: 2,
+    },
+  },
+};
+
+export default theme;

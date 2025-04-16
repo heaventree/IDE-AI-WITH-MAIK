@@ -1,49 +1,13 @@
-import { useState, useMemo } from 'react';
-import { useProject } from '../../contexts/ProjectContext';
-import { FileEntry } from '../../types';
+/** @jsxImportSource theme-ui */
+import React, { useState } from 'react';
+import { Box, Flex, Text } from 'theme-ui';
 
-const Sidebar = () => {
-  const { projectState, openFile, createFile, createFolder } = useProject();
-  const [expanded, setExpanded] = useState<Record<string, boolean>>({ 'src': true });
-
-  const fileTree = useMemo(() => {
-    const tree: Record<string, FileEntry> = {};
-    
-    // Build file tree from flat files object
-    Object.values(projectState.files).forEach(file => {
-      const pathParts = file.path.split('/');
-      let currentLevel = tree;
-      
-      // Navigate through path parts to build the tree
-      pathParts.forEach((part, index) => {
-        const isLast = index === pathParts.length - 1;
-        const currentPath = pathParts.slice(0, index + 1).join('/');
-        
-        if (isLast) {
-          // Add actual file at the last level
-          currentLevel[part] = { ...file };
-        } else {
-          // Create folder if it doesn't exist
-          if (!currentLevel[part]) {
-            currentLevel[part] = {
-              name: part,
-              path: currentPath,
-              type: 'folder',
-              children: {}
-            };
-          }
-          
-          // Move to next level
-          if (!currentLevel[part].children) {
-            currentLevel[part].children = {};
-          }
-          currentLevel = currentLevel[part].children as Record<string, FileEntry>;
-        }
-      });
-    });
-    
-    return tree;
-  }, [projectState.files]);
+// Simple File Explorer
+const FileExplorer = () => {
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({
+    'src': true,
+    'components': true
+  });
 
   const toggleFolder = (path: string) => {
     setExpanded(prev => ({
@@ -52,169 +16,162 @@ const Sidebar = () => {
     }));
   };
 
-  const getFileIcon = (file: FileEntry) => {
-    if (file.type === 'folder') {
-      return expanded[file.path] ? (
-        <i className="ri-folder-open-line mr-1.5 text-primary-500"></i>
-      ) : (
-        <i className="ri-folder-line mr-1.5 text-amber-500"></i>
-      );
-    }
-    
-    // File type icons based on extension
-    switch (file.extension) {
-      case 'tsx':
-      case 'jsx':
-        return <i className="ri-reactjs-line mr-1.5 text-primary-500"></i>;
-      case 'ts':
-      case 'js':
-        return <i className="ri-file-code-line mr-1.5 text-neutral-700 dark:text-neutral-400"></i>;
-      case 'json':
-        return <i className="ri-file-text-line mr-1.5 text-neutral-700 dark:text-neutral-400"></i>;
-      case 'md':
-        return <i className="ri-markdown-line mr-1.5 text-blue-500"></i>;
-      case 'css':
-      case 'scss':
-        return <i className="ri-palette-line mr-1.5 text-pink-500"></i>;
-      default:
-        return <i className="ri-file-line mr-1.5 text-neutral-700 dark:text-neutral-400"></i>;
-    }
-  };
+  // Sample file structure
+  const files = [
+    {
+      name: 'src',
+      path: 'src',
+      type: 'folder',
+      children: [
+        {
+          name: 'components',
+          path: 'src/components',
+          type: 'folder',
+          children: [
+            { name: 'App.tsx', path: 'src/components/App.tsx', type: 'file' },
+            { name: 'Header.tsx', path: 'src/components/Header.tsx', type: 'file' }
+          ]
+        },
+        {
+          name: 'utils',
+          path: 'src/utils',
+          type: 'folder',
+          children: [
+            { name: 'helpers.ts', path: 'src/utils/helpers.ts', type: 'file' },
+            { name: 'api.ts', path: 'src/utils/api.ts', type: 'file' }
+          ]
+        },
+        { name: 'index.tsx', path: 'src/index.tsx', type: 'file' },
+        { name: 'styles.css', path: 'src/styles.css', type: 'file' }
+      ]
+    },
+    { name: 'package.json', path: 'package.json', type: 'file' },
+    { name: 'README.md', path: 'README.md', type: 'file' }
+  ];
 
-  const renderFileTree = (tree: Record<string, FileEntry>, level = 0) => {
-    return Object.values(tree)
-      .sort((a, b) => {
-        // Folders first, then sort alphabetically
-        if (a.type === 'folder' && b.type !== 'folder') return -1;
-        if (a.type !== 'folder' && b.type === 'folder') return 1;
-        return a.name.localeCompare(b.name);
-      })
-      .map(item => (
-        <div key={item.path} style={{ marginLeft: `${level * 16}px` }}>
-          {item.type === 'folder' ? (
-            <>
-              <div 
-                className="flex items-center p-1.5 rounded hover:bg-neutral-200 dark:hover:bg-dark-100 cursor-pointer"
-                onClick={() => toggleFolder(item.path)}
-              >
-                {getFileIcon(item)}
-                <span className="text-sm">{item.name}</span>
-              </div>
-              
-              {expanded[item.path] && item.children && (
-                <div>
-                  {renderFileTree(item.children as Record<string, FileEntry>, level + 1)}
-                </div>
-              )}
-            </>
-          ) : (
-            <div 
-              className={`flex items-center p-1.5 rounded cursor-pointer ${
-                projectState.activeFile === item.path 
-                  ? 'bg-neutral-200 dark:bg-dark-100' 
-                  : 'hover:bg-neutral-200 dark:hover:bg-dark-100'
-              }`}
-              onClick={() => openFile(item.path)}
-            >
-              {getFileIcon(item)}
-              <span className="text-sm">{item.name}</span>
-            </div>
-          )}
-        </div>
-      ));
-  };
-
-  const handleNewFile = () => {
-    const fileName = prompt('Enter file name:');
-    if (fileName) {
-      createFile(fileName);
-    }
-  };
-
-  const handleNewFolder = () => {
-    const folderName = prompt('Enter folder name:');
-    if (folderName) {
-      createFolder(folderName);
-    }
+  const renderFileTree = (items: any[], level = 0) => {
+    return items.map(item => (
+      <Box key={item.path} sx={{ ml: level * 2 }}>
+        <Flex
+          onClick={() => item.type === 'folder' && toggleFolder(item.path)}
+          sx={{
+            alignItems: 'center',
+            p: 1,
+            cursor: item.type === 'folder' ? 'pointer' : 'default',
+            '&:hover': {
+              bg: 'muted'
+            },
+            borderRadius: 1
+          }}
+        >
+          {/* Folder/File Icon */}
+          <Box sx={{ mr: 1, color: item.type === 'folder' ? 'primary' : 'text' }}>
+            {item.type === 'folder' ? (
+              expanded[item.path] ? '📂' : '📁'
+            ) : (
+              '📄'
+            )}
+          </Box>
+          
+          {/* File/Folder Name */}
+          <Text>{item.name}</Text>
+        </Flex>
+        
+        {/* Render children if it's an expanded folder */}
+        {item.type === 'folder' && expanded[item.path] && item.children && (
+          <Box sx={{ mt: 1 }}>
+            {renderFileTree(item.children, level + 1)}
+          </Box>
+        )}
+      </Box>
+    ));
   };
 
   return (
-    <aside className="w-48 lg:w-64 border-r border-neutral-300 dark:border-dark-100 flex flex-col bg-neutral-100 dark:bg-dark-300 overflow-hidden transition-all duration-200 ease-in-out">
-      {/* Sidebar header with project name */}
-      <div className="p-3 border-b border-neutral-300 dark:border-dark-100 flex justify-between items-center">
-        <h2 className="font-medium text-sm">PROJECT EXPLORER</h2>
-        <div className="flex space-x-1">
-          <button 
-            className="p-1 rounded hover:bg-neutral-200 dark:hover:bg-dark-100 transition text-neutral-700 dark:text-neutral-300" 
-            title="New File"
-            onClick={handleNewFile}
-          >
-            <i className="ri-file-add-line text-sm"></i>
-          </button>
-          <button 
-            className="p-1 rounded hover:bg-neutral-200 dark:hover:bg-dark-100 transition text-neutral-700 dark:text-neutral-300" 
-            title="New Folder"
-            onClick={handleNewFolder}
-          >
-            <i className="ri-folder-add-line text-sm"></i>
-          </button>
-          <button 
-            className="p-1 rounded hover:bg-neutral-200 dark:hover:bg-dark-100 transition text-neutral-700 dark:text-neutral-300" 
-            title="Refresh"
-          >
-            <i className="ri-refresh-line text-sm"></i>
-          </button>
-        </div>
-      </div>
-      
-      {/* Project explorer tree */}
-      <div className="flex-1 overflow-y-auto custom-scrollbar p-1">
-        <div className="py-1">
-          {renderFileTree(fileTree)}
-        </div>
-      </div>
-      
-      {/* Sidebar footer with sync status */}
-      <div className="p-2 border-t border-neutral-300 dark:border-dark-100 bg-neutral-200 dark:bg-dark-200">
-        <div className="flex items-center justify-between text-xs">
-          <div className="flex items-center">
-            <i className="ri-cloud-line mr-1 text-secondary-500"></i>
-            <span>
-              {projectState.backupStatus.syncStatus === 'syncing' 
-                ? 'Syncing...' 
-                : projectState.backupStatus.syncStatus === 'error'
-                ? 'Sync error'
-                : projectState.backupStatus.lastBackup 
-                ? `Synced (${new Date(projectState.backupStatus.lastBackup).toLocaleTimeString()})` 
-                : 'Not synced yet'}
-            </span>
-          </div>
-          <div className="flex space-x-2">
-            <button 
-              className={`p-1 rounded ${
-                projectState.backupStatus.targets.includes('github')
-                  ? 'bg-neutral-300 dark:bg-dark-100'
-                  : 'hover:bg-neutral-300 dark:hover:bg-dark-100'
-              } transition`} 
-              title="GitHub"
-            >
-              <i className="ri-github-fill"></i>
-            </button>
-            <button 
-              className={`p-1 rounded ${
-                projectState.backupStatus.targets.includes('onedrive')
-                  ? 'bg-neutral-300 dark:bg-dark-100'
-                  : 'hover:bg-neutral-300 dark:hover:bg-dark-100'
-              } transition`} 
-              title="OneDrive"
-            >
-              <i className="ri-microsoft-line"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </aside>
+    <Box sx={{ p: 2 }}>
+      <Text sx={{ fontWeight: 'bold', mb: 2 }}>Files</Text>
+      {renderFileTree(files)}
+    </Box>
   );
+};
+
+// Sidebar tabs
+const SidebarTabs = () => {
+  const [activeTab, setActiveTab] = useState('files');
+  
+  const tabs = [
+    { id: 'files', label: '📁', title: 'Files' },
+    { id: 'search', label: '🔍', title: 'Search' },
+    { id: 'git', label: '📊', title: 'Git' },
+    { id: 'ai', label: '🤖', title: 'AI' }
+  ];
+  
+  return (
+    <Flex sx={{ flexDirection: 'column', height: '100%' }}>
+      {/* Tab buttons */}
+      <Flex sx={{ 
+        borderRight: '1px solid', 
+        borderColor: 'lightgray',
+        flexDirection: 'column',
+        width: '48px',
+        bg: 'sidebar',
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        bottom: 0,
+        zIndex: 1
+      }}>
+        {tabs.map(tab => (
+          <Box
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            title={tab.title}
+            sx={{
+              p: 2,
+              fontSize: 3,
+              textAlign: 'center',
+              cursor: 'pointer',
+              borderLeft: '3px solid',
+              borderColor: activeTab === tab.id ? 'primary' : 'transparent',
+              bg: activeTab === tab.id ? 'background' : 'transparent',
+              '&:hover': {
+                bg: 'muted'
+              }
+            }}
+          >
+            {tab.label}
+          </Box>
+        ))}
+      </Flex>
+      
+      {/* Tab content */}
+      <Box sx={{ ml: '48px', height: '100%', overflow: 'auto' }}>
+        {activeTab === 'files' && <FileExplorer />}
+        {activeTab === 'search' && (
+          <Box sx={{ p: 2 }}>
+            <Text sx={{ fontWeight: 'bold', mb: 2 }}>Search</Text>
+            <Text sx={{ color: 'gray' }}>Search functionality will go here</Text>
+          </Box>
+        )}
+        {activeTab === 'git' && (
+          <Box sx={{ p: 2 }}>
+            <Text sx={{ fontWeight: 'bold', mb: 2 }}>Git</Text>
+            <Text sx={{ color: 'gray' }}>Git integration will go here</Text>
+          </Box>
+        )}
+        {activeTab === 'ai' && (
+          <Box sx={{ p: 2 }}>
+            <Text sx={{ fontWeight: 'bold', mb: 2 }}>AI Assistant</Text>
+            <Text sx={{ color: 'gray' }}>AI tools will go here</Text>
+          </Box>
+        )}
+      </Box>
+    </Flex>
+  );
+};
+
+const Sidebar: React.FC = () => {
+  return <SidebarTabs />;
 };
 
 export default Sidebar;
