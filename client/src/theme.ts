@@ -896,8 +896,8 @@ const theme: Theme = {
       borderColor: 'border',
     },
     
-    // Status items
-    statusItems: {
+    // Status bar items
+    statusBarItems: {
       display: 'flex',
       alignItems: 'center',
       '& .status-item': {

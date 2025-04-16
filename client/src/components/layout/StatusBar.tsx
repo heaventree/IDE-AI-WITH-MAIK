@@ -28,7 +28,7 @@ const StatusBar: React.FC<StatusBarProps> = () => {
   return (
     <Flex sx={{ width: '100%', justifyContent: 'space-between' }}>
       {/* Left status items */}
-      <Flex variant="layout.statusItems">
+      <Flex variant="layout.statusBarItems">
         <Box className="status-item" 
           sx={{ 
             color: connected ? 'success' : 'foregroundMuted',
@@ -57,7 +57,7 @@ const StatusBar: React.FC<StatusBarProps> = () => {
       </Flex>
       
       {/* Right status items */}
-      <Flex variant="layout.statusItems">
+      <Flex variant="layout.statusBarItems">
         <Box className="status-item" title="Git branch">
           <GitBranch size={12} />
           <Text>main</Text>

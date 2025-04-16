@@ -126,48 +126,20 @@ const Editor = ({
       color: 'text',
     }}>
       {/* Tab bar */}
-      <Flex sx={{
-        borderBottom: '1px solid',
-        borderColor: 'border',
-        bg: 'sidebar',
-      }}>
-        <Flex sx={{ flex: 1, overflowX: 'auto', overflowY: 'hidden' }}>
+      <Flex variant="layout.tabBar">
+        <Flex variant="layout.tabContainer">
           {tabs.map(tab => (
             <Button
               key={tab.id}
-              variant="text"
+              variant={tab.id === activeTabId ? "tabActive" : "tab"}
               onClick={() => setActiveTabId(tab.id)}
-              sx={{
-                py: 2,
-                px: 3,
-                borderRight: '1px solid',
-                borderColor: 'border',
-                borderBottom: tab.id === activeTabId ? '2px solid' : 'none',
-                borderBottomColor: tab.id === activeTabId ? 'primary' : 'transparent',
-                borderRadius: 0,
-                bg: tab.id === activeTabId ? 'editor' : 'transparent',
-                color: tab.id === activeTabId ? 'primary' : 'text',
-                fontSize: 1,
-                minWidth: 120,
-                justifyContent: 'space-between',
-                position: 'relative',
-                whiteSpace: 'nowrap',
-                transition: 'all 0.2s ease',
-                '&:hover': {
-                  color: tab.id === activeTabId ? 'primary' : 'highlight',
-                },
-              }}
             >
               <Flex sx={{ alignItems: 'center' }}>
                 {getFileIcon(tab.name, 14)}
                 <Text sx={{ ml: 1 }}>{tab.name}</Text>
               </Flex>
               <Box 
-                sx={{ 
-                  ml: 2, 
-                  opacity: 0.5,
-                  '&:hover': { opacity: 1 },
-                }}
+                className="tab-close"
                 onClick={(e) => handleCloseTab(tab.id, e)}
               >
                 <X size={14} />
