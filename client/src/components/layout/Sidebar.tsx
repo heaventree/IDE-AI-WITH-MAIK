@@ -84,7 +84,7 @@ const FileTreeItem: React.FC<{ item: FileItem, depth: number }> = ({ item, depth
           py: 1,
           cursor: 'pointer',
           '&:hover': {
-            bg: 'muted',
+            bg: 'rgba(114, 124, 245, 0.08)', // Primary color with transparency for subtle hover effect
           },
         }}
         onClick={toggleExpanded}
@@ -152,7 +152,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
             color: activeTab === 'files' ? 'primary' : 'text',
             bg: 'transparent',
             '&:hover': {
-              bg: 'muted',
+              bg: 'rgba(114, 124, 245, 0.08)', // Match file tree hover style
               color: activeTab === 'files' ? 'primary' : 'highlight',
             },
             transition: 'all 0.2s ease',
@@ -175,7 +175,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
             color: activeTab === 'search' ? 'primary' : 'text',
             bg: 'transparent',
             '&:hover': {
-              bg: 'muted',
+              bg: 'rgba(114, 124, 245, 0.08)', // Match file tree hover style
               color: activeTab === 'search' ? 'primary' : 'highlight',
             },
             transition: 'all 0.2s ease',
@@ -198,7 +198,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
             color: activeTab === 'git' ? 'primary' : 'text',
             bg: 'transparent',
             '&:hover': {
-              bg: 'muted',
+              bg: 'rgba(114, 124, 245, 0.08)', // Match file tree hover style
               color: activeTab === 'git' ? 'primary' : 'highlight',
             },
             transition: 'all 0.2s ease',
