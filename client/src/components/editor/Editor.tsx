@@ -148,18 +148,13 @@ const Editor = ({
           ))}
           
           <Button
-            variant="text"
+            variant="ghost"
             onClick={handleAddTab}
             sx={{
               py: 2,
               px: 2,
               borderRadius: 0,
-              color: 'text',
-              '&:hover': {
-                bg: 'rgba(114, 124, 245, 0.08)',
-                color: 'primary',
-                transition: 'all 0.2s ease',
-              },
+              minWidth: 'auto'
             }}
             aria-label="New tab"
             title="New tab"
@@ -169,7 +164,7 @@ const Editor = ({
         </Flex>
         
         <Button
-          variant="text"
+          variant="ghost"
           onClick={toggleFullscreen}
           sx={{
             py: 2,
@@ -177,12 +172,7 @@ const Editor = ({
             borderRadius: 0,
             borderLeft: '1px solid',
             borderColor: 'border',
-            color: 'text',
-            '&:hover': {
-              bg: 'rgba(114, 124, 245, 0.08)',
-              color: 'primary',
-              transition: 'all 0.2s ease',
-            },
+            minWidth: 'auto'
           }}
           aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
           title={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
@@ -192,12 +182,7 @@ const Editor = ({
       </Flex>
       
       {/* Editor content */}
-      <Box sx={{
-        flex: 1,
-        overflow: 'auto',
-        position: 'relative',
-        fontFamily: 'monospace',
-      }}>
+      <Box variant="layout.editorContent">
         <textarea
           ref={textareaRef}
           value={activeTab.content}
@@ -211,6 +196,7 @@ const Editor = ({
             outline: 'none',
             fontFamily: 'monospace',
             fontSize: '14px',
+            lineHeight: '1.6',
             resize: 'none',
             color: 'inherit',
           }}
