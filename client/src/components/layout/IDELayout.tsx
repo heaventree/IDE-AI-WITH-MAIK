@@ -1,8 +1,11 @@
 /** @jsxImportSource theme-ui */
 import React, { useState } from 'react';
-import { Box, Flex, Button, useColorMode } from 'theme-ui';
+import { Box, Flex, useColorMode } from 'theme-ui';
 import MenuBar from './MenuBar';
 import Sidebar from './Sidebar';
+import StatusBar from './StatusBar';
+import Editor from '../editor/Editor';
+import Terminal from '../terminal/Terminal';
 
 // Simple IDE Layout that doesn't depend on other components yet
 const IDELayout: React.FC = () => {
@@ -11,6 +14,14 @@ const IDELayout: React.FC = () => {
   // Toggle dark/light mode
   const toggleColorMode = () => {
     setColorMode(colorMode === 'default' ? 'dark' : 'default');
+  };
+  
+  // State for terminal visibility
+  const [showTerminal, setShowTerminal] = useState(true);
+  
+  // Toggle terminal
+  const toggleTerminal = () => {
+    setShowTerminal(!showTerminal);
   };
 
   return (
@@ -42,77 +53,29 @@ const IDELayout: React.FC = () => {
           {/* Editor */}
           <Box 
             sx={{ 
-              bg: 'editor',
-              p: 3,
               flex: 1,
-              fontFamily: 'monospace'
+              overflow: 'hidden'
             }}
           >
-            <Box sx={{ fontWeight: 'bold', mb: 2 }}>Editor</Box>
-            <Box sx={{ whiteSpace: 'pre-wrap' }}>
-              {`// Sample code
-import React from 'react';
-
-function App() {
-  return (
-    <div>
-      <h1>Hello, MAIK IDE!</h1>
-      <p>This is a code editor placeholder</p>
-    </div>
-  );
-}
-
-export default App;`}
-            </Box>
+            <Editor />
           </Box>
           
-          {/* Terminal */}
-          <Box 
-            sx={{ 
-              bg: 'terminal',
-              color: 'terminalText',
-              fontFamily: 'monospace',
-              p: 2,
-              height: '200px',
-              minHeight: '200px'
-            }}
-          >
-            <Box sx={{ mb: 1 }}>Welcome to MAIK Terminal</Box>
-            <Box sx={{ mb: 1 }}>Type commands here...</Box>
-            <Box>{'> _'}</Box>
-          </Box>
+          {/* Terminal (conditionally rendered) */}
+          {showTerminal && (
+            <Box 
+              sx={{ 
+                height: '200px',
+                minHeight: '200px'
+              }}
+            >
+              <Terminal />
+            </Box>
+          )}
         </Flex>
       </Flex>
       
       {/* Status Bar */}
-      <Flex 
-        sx={{ 
-          height: '24px', 
-          bg: 'statusBar',
-          color: 'statusText',
-          fontSize: 0,
-          alignItems: 'center',
-          px: 2,
-          borderTop: '1px solid',
-          borderColor: 'lightgray',
-          justifyContent: 'space-between'
-        }}
-      >
-        <Box>Ready</Box>
-        <Button 
-          variant="text"
-          onClick={toggleColorMode}
-          sx={{ 
-            fontSize: 0,
-            py: 0,
-            height: '100%',
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          {colorMode === 'default' ? '🌙 Dark Mode' : '☀️ Light Mode'}
-        </Button>
-      </Flex>
+      <StatusBar onTerminalToggle={toggleTerminal} />
     </Flex>
   );
 };
