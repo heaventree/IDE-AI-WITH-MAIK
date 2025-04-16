@@ -23,6 +23,7 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleSidebar }) => {
         alignItems: 'center',
         justifyContent: 'space-between',
         p: 2,
+        height: 48, // Fixed height to match sidebar
         borderBottom: '1px solid',
         borderColor: 'border',
         bg: 'menuBar',

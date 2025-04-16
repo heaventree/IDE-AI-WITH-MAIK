@@ -7,10 +7,10 @@ const theme: Theme = {
   colors: {
     // Dark mode colors are now the default
     ...deep.colors,
-    primary: '#4cc9f0',
-    secondary: '#4895ef',
-    accent: '#f72585',
-    highlight: '#4cc9f0',
+    primary: '#7a5af5', // More purple-ish instead of blue
+    secondary: '#5c46cc', // Deeper purple
+    accent: '#f05475', // More subdued red/pink
+    highlight: '#5a3de0', // Deeper highlight
     muted: '#2d3748',
     background: '#1a1d21',
     text: '#f8f9fa',

@@ -134,15 +134,19 @@ const Editor: React.FC<EditorProps> = ({
                 borderRight: '1px solid',
                 borderColor: 'border',
                 borderBottom: tab.id === activeTabId ? '2px solid' : 'none',
-                borderBottomColor: 'primary',
+                borderBottomColor: tab.id === activeTabId ? 'primary' : 'transparent',
                 borderRadius: 0,
                 bg: tab.id === activeTabId ? 'editor' : 'transparent',
                 color: tab.id === activeTabId ? 'primary' : 'text',
-                fontSize: 0,
-                minWidth: 100,
+                fontSize: 1,
+                minWidth: 120,
                 justifyContent: 'space-between',
                 position: 'relative',
                 whiteSpace: 'nowrap',
+                transition: 'all 0.2s ease',
+                '&:hover': {
+                  color: tab.id === activeTabId ? 'primary' : 'highlight',
+                },
               }}
             >
               <Text>{tab.name}</Text>

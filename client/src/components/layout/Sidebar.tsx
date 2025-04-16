@@ -57,12 +57,12 @@ const sampleFiles: FileItem[] = [
 
 // File icon based on file type/extension
 const FileIcon: React.FC<{ name: string, language?: string }> = ({ name, language }) => {
-  if (language === 'json') return <FileJson size={16} />;
-  if (language === 'markdown') return <FileText size={16} />;
+  if (language === 'json') return <FileJson size={18} />;
+  if (language === 'markdown') return <FileText size={18} />;
   if (name.endsWith('.tsx') || name.endsWith('.ts') || name.endsWith('.js') || name.endsWith('.jsx')) {
-    return <FileCode size={16} />;
+    return <FileCode size={18} />;
   }
-  return <FileText size={16} />;
+  return <FileText size={18} />;
 };
 
 // File or folder item component
@@ -97,11 +97,11 @@ const FileTreeItem: React.FC<{ item: FileItem, depth: number }> = ({ item, depth
           <Box sx={{ ml: 2, mr: 1 }} />
         )}
         
-        <Box sx={{ mr: 1 }}>
-          {item.type === 'folder' ? <FolderTree size={16} /> : <FileIcon name={item.name} language={item.language} />}
+        <Box sx={{ mr: 2 }}>
+          {item.type === 'folder' ? <FolderTree size={18} /> : <FileIcon name={item.name} language={item.language} />}
         </Box>
         
-        <Text sx={{ fontSize: 0 }}>{item.name}</Text>
+        <Text sx={{ fontSize: 1 }}>{item.name}</Text>
       </Flex>
       
       {item.type === 'folder' && expanded && item.children && item.children.map((child, index) => (
@@ -147,7 +147,9 @@ const Sidebar: React.FC<SidebarProps> = () => {
             bg: 'transparent',
             '&:hover': {
               bg: 'muted',
+              color: activeTab === 'files' ? 'primary' : 'highlight',
             },
+            transition: 'all 0.2s ease',
           }}
           aria-label="File explorer"
           title="File explorer"
@@ -168,7 +170,9 @@ const Sidebar: React.FC<SidebarProps> = () => {
             bg: 'transparent',
             '&:hover': {
               bg: 'muted',
+              color: activeTab === 'search' ? 'primary' : 'highlight',
             },
+            transition: 'all 0.2s ease',
           }}
           aria-label="Search"
           title="Search"
