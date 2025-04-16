@@ -166,6 +166,68 @@ const theme: Theme = {
   
   // Advanced button variants inspired by Webstudio
   buttons: {
+    // Tab button (inactive)
+    tab: {
+      bg: 'transparent',
+      color: 'foregroundMuted',
+      fontSize: 1,
+      py: 2,
+      px: 3,
+      borderRight: '1px solid',
+      borderColor: 'border',
+      borderBottom: 'none',
+      borderRadius: 0,
+      position: 'relative',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      minWidth: 120,
+      whiteSpace: 'nowrap',
+      transition: 'all 0.2s ease',
+      '&:hover': {
+        color: 'foreground',
+        bg: 'backgroundHover',
+      },
+      '& .tab-close': {
+        ml: 2,
+        opacity: 0.5,
+        '&:hover': {
+          opacity: 1,
+        },
+      },
+    },
+    
+    // Active tab button
+    tabActive: {
+      bg: 'editor',
+      color: 'primary',
+      fontSize: 1,
+      py: 2,
+      px: 3,
+      borderRight: '1px solid',
+      borderColor: 'border',
+      borderBottom: '2px solid',
+      borderBottomColor: 'primary',
+      borderRadius: 0,
+      position: 'relative',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      minWidth: 120,
+      whiteSpace: 'nowrap',
+      transition: 'all 0.2s ease',
+      '&:hover': {
+        color: 'primary',
+      },
+      '& .tab-close': {
+        ml: 2,
+        opacity: 0.5,
+        '&:hover': {
+          opacity: 1,
+        },
+      },
+    },
+    
     // Primary action button
     primary: {
       bg: 'primary',
@@ -470,6 +532,51 @@ const theme: Theme = {
       maxWidth: 1200,
       mx: 'auto',
       px: [2, 3, 4],
+    },
+    
+    // Tab bar for the editor
+    tabBar: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      bg: 'backgroundElevated',
+      borderBottom: '1px solid',
+      borderColor: 'border',
+    },
+    
+    // Container for tabs in the editor
+    tabContainer: {
+      display: 'flex',
+      flex: 1,
+      overflowX: 'auto',
+      overflowY: 'hidden',
+      '&::-webkit-scrollbar': {
+        height: '4px',
+      },
+      '&::-webkit-scrollbar-track': {
+        background: 'transparent',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        background: 'rgba(114, 124, 245, 0.3)',
+        borderRadius: '4px',
+      },
+    },
+
+    // Status items in the status bar
+    statusItems: {
+      display: 'flex',
+      alignItems: 'center',
+      height: '100%',
+      color: 'foregroundMuted',
+      fontSize: 0,
+      '& .status-item': {
+        display: 'flex',
+        alignItems: 'center',
+        px: 2,
+        gap: 1,
+        borderRight: '1px solid',
+        borderColor: 'border',
+        height: '100%',
+      }
     },
     
     // Main layout grid
