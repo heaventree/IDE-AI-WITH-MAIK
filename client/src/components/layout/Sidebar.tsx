@@ -97,11 +97,11 @@ const FileTreeItem: React.FC<{ item: FileItem, depth: number }> = ({ item, depth
           <Box sx={{ ml: 2, mr: 1 }} />
         )}
         
-        <Box sx={{ mr: 2 }}>
+        <Box sx={{ mr: 3 }}>
           {item.type === 'folder' ? <FolderTree size={18} /> : <FileIcon name={item.name} language={item.language} />}
         </Box>
         
-        <Text sx={{ fontSize: 1 }}>{item.name}</Text>
+        <Text sx={{ fontSize: 1, fontWeight: item.type === 'folder' ? 'medium' : 'normal' }}>{item.name}</Text>
       </Flex>
       
       {item.type === 'folder' && expanded && item.children && item.children.map((child, index) => (
@@ -132,6 +132,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
         sx={{
           borderBottom: '1px solid',
           borderColor: 'border',
+          height: '48px', // Fixed height to match the MenuBar
         }}
       >
         <Button

@@ -7,23 +7,23 @@ const theme: Theme = {
   colors: {
     // Dark mode colors are now the default
     ...deep.colors,
-    primary: '#7a5af5', // More purple-ish instead of blue
-    secondary: '#5c46cc', // Deeper purple
-    accent: '#f05475', // More subdued red/pink
-    highlight: '#5a3de0', // Deeper highlight
+    primary: '#00d8ff', // Vibrant cyan blue
+    secondary: '#01b6d1', // Slightly darker cyan
+    accent: '#ff2b51', // Vibrant red
+    highlight: '#01c2ff', // Highlight cyan
     muted: '#2d3748',
     background: '#1a1d21',
     text: '#f8f9fa',
     lightgray: '#4a5568',
     
     // IDE specific colors
-    sidebar: '#22252a',
+    sidebar: '#1a1d23', // Darker sidebar
     editor: '#282c34',
-    terminal: '#1d1e22',
+    terminal: '#1a1a20', // Darker terminal
     terminalText: '#a8b2d1',
-    statusBar: '#282c34',
+    statusBar: '#1c1e24', // Darker status bar
     statusText: '#a8b2d1',
-    menuBar: '#22252a',
+    menuBar: '#1a1d23', // Match sidebar
     menuText: '#f8f9fa',
     border: '#2d3748',
     

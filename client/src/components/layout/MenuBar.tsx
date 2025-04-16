@@ -47,10 +47,11 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleSidebar }) => {
             fontWeight: 'bold',
             display: 'flex',
             alignItems: 'center',
-            background: 'linear-gradient(90deg, #4361ee, #3a86ff, #ff006e)',
+            background: 'linear-gradient(90deg, #00d8ff, #01c2ff, #00f2ff)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             mr: 3,
+            letterSpacing: '0.5px',
           }}
         >
           <Code size={20} strokeWidth={2.5} style={{ marginRight: '8px' }} />
@@ -58,24 +59,24 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleSidebar }) => {
         </Heading>
         
         {/* Quick actions */}
-        <Flex sx={{ alignItems: 'center', gap: 1 }}>
+        <Flex sx={{ alignItems: 'center', gap: 2 }}>
           <IconButton aria-label="Save file" title="Save file">
-            <Save size={16} />
+            <Save size={18} />
           </IconButton>
           <IconButton aria-label="Run code" title="Run code">
-            <Play size={16} />
+            <Play size={18} />
           </IconButton>
         </Flex>
       </Flex>
       
       {/* Right section */}
-      <Flex sx={{ alignItems: 'center', gap: 1 }}>
+      <Flex sx={{ alignItems: 'center', gap: 2 }}>
         <IconButton 
           aria-label="Import"
           title="Import"
           sx={{ fontSize: 1 }}
         >
-          <Download size={16} />
+          <Download size={18} />
         </IconButton>
         
         <IconButton 
@@ -83,7 +84,7 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleSidebar }) => {
           title="Export"
           sx={{ fontSize: 1 }}
         >
-          <Upload size={16} />
+          <Upload size={18} />
         </IconButton>
         
         <IconButton 
@@ -91,7 +92,7 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleSidebar }) => {
           title="Settings"
           sx={{ fontSize: 1 }}
         >
-          <Settings size={16} />
+          <Settings size={18} />
         </IconButton>
         
         <IconButton 
@@ -99,7 +100,7 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleSidebar }) => {
           title="Help"
           sx={{ fontSize: 1 }}
         >
-          <HelpCircle size={16} />
+          <HelpCircle size={18} />
         </IconButton>
         
         <IconButton 
@@ -107,7 +108,7 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleSidebar }) => {
           title="View on GitHub"
           sx={{ fontSize: 1 }}
         >
-          <Github size={16} />
+          <Github size={18} />
         </IconButton>
         
         <IconButton 
@@ -115,7 +116,7 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleSidebar }) => {
           title="Buy me a coffee"
           sx={{ fontSize: 1 }}
         >
-          <Coffee size={16} />
+          <Coffee size={18} />
         </IconButton>
         
         <IconButton 
@@ -123,7 +124,7 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleSidebar }) => {
           onClick={toggleColorMode}
           sx={{ fontSize: 1 }}
         >
-          {colorMode === 'light' ? <Moon size={16} /> : <Sun size={16} />}
+          {colorMode === 'light' ? <Moon size={18} /> : <Sun size={18} />}
         </IconButton>
       </Flex>
     </Flex>
