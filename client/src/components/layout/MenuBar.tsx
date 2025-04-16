@@ -101,7 +101,10 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleSidebar }) => {
         <IconButton 
           aria-label="Export"
           title="Export"
-          sx={{ fontSize: 1 }}
+          sx={{ 
+            fontSize: 1,
+            ...iconButtonHoverStyle
+          }}
         >
           <Upload size={18} />
         </IconButton>
@@ -109,7 +112,10 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleSidebar }) => {
         <IconButton 
           aria-label="Settings"
           title="Settings"
-          sx={{ fontSize: 1 }}
+          sx={{ 
+            fontSize: 1,
+            ...iconButtonHoverStyle
+          }}
         >
           <Settings size={18} />
         </IconButton>
@@ -117,7 +123,10 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleSidebar }) => {
         <IconButton 
           aria-label="Help"
           title="Help"
-          sx={{ fontSize: 1 }}
+          sx={{ 
+            fontSize: 1,
+            ...iconButtonHoverStyle
+          }}
         >
           <HelpCircle size={18} />
         </IconButton>
@@ -125,7 +134,10 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleSidebar }) => {
         <IconButton 
           aria-label="GitHub"
           title="View on GitHub"
-          sx={{ fontSize: 1 }}
+          sx={{ 
+            fontSize: 1,
+            ...iconButtonHoverStyle
+          }}
         >
           <Github size={18} />
         </IconButton>
@@ -133,7 +145,10 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleSidebar }) => {
         <IconButton 
           aria-label="Buy me a coffee"
           title="Buy me a coffee"
-          sx={{ fontSize: 1 }}
+          sx={{ 
+            fontSize: 1,
+            ...iconButtonHoverStyle
+          }}
         >
           <Coffee size={18} />
         </IconButton>
@@ -141,7 +156,10 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleSidebar }) => {
         <IconButton 
           aria-label="Toggle dark mode"
           onClick={toggleColorMode}
-          sx={{ fontSize: 1 }}
+          sx={{ 
+            fontSize: 1,
+            ...iconButtonHoverStyle
+          }}
         >
           {colorMode === 'light' ? <Moon size={18} /> : <Sun size={18} />}
         </IconButton>

@@ -164,10 +164,10 @@ const Terminal: React.FC<TerminalProps> = ({ initialOpen = false }) => {
       {isOpen && (
         <Box
           sx={{
-            bg: 'black',
-            color: 'white',
+            bg: 'terminal',
+            color: 'terminalText',
             borderTop: '1px solid',
-            borderColor: 'gray',
+            borderColor: 'border',
             height: minimized ? 40 : 240,
             overflow: 'hidden',
           }}
@@ -177,10 +177,10 @@ const Terminal: React.FC<TerminalProps> = ({ initialOpen = false }) => {
             sx={{
               alignItems: 'center',
               justifyContent: 'space-between',
-              bg: 'rgba(255,255,255,0.1)',
+              bg: 'rgba(114, 124, 245, 0.1)', // Primary color with transparency
               p: 1,
               borderBottom: '1px solid',
-              borderColor: 'rgba(255,255,255,0.2)',
+              borderColor: 'border',
             }}
           >
             <Text sx={{ fontSize: 1, fontWeight: 'bold' }}>Terminal</Text>
@@ -189,7 +189,13 @@ const Terminal: React.FC<TerminalProps> = ({ initialOpen = false }) => {
                 onClick={toggleMinimize}
                 aria-label={minimized ? 'Maximize terminal' : 'Minimize terminal'}
                 title={minimized ? 'Maximize terminal' : 'Minimize terminal'}
-                sx={{ mr: 1 }}
+                sx={{ 
+                  mr: 1,
+                  '&:hover': {
+                    color: 'primary',
+                    bg: 'rgba(114, 124, 245, 0.08)',
+                  }
+                }}
               >
                 {minimized ? <Maximize size={14} /> : <Minimize size={14} />}
               </IconButton>
