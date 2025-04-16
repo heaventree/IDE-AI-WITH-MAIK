@@ -221,7 +221,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
             color: activeTab === 'collab' ? 'primary' : 'text',
             bg: 'transparent',
             '&:hover': {
-              bg: 'muted',
+              bg: 'rgba(114, 124, 245, 0.08)', // Match file tree hover style
               color: activeTab === 'collab' ? 'primary' : 'highlight',
             },
             transition: 'all 0.2s ease',

@@ -17,6 +17,14 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleSidebar }) => {
     setColorMode(colorMode === 'light' ? 'dark' : 'light');
   };
   
+  // Reusable hover style for all icon buttons
+  const iconButtonHoverStyle = {
+    '&:hover': {
+      color: 'primary',
+      bg: 'rgba(114, 124, 245, 0.08)',
+    }
+  };
+  
   return (
     <Flex 
       sx={{
@@ -60,10 +68,18 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleSidebar }) => {
         
         {/* Quick actions */}
         <Flex sx={{ alignItems: 'center', gap: 2 }}>
-          <IconButton aria-label="Save file" title="Save file">
+          <IconButton 
+            aria-label="Save file" 
+            title="Save file"
+            sx={iconButtonHoverStyle}
+          >
             <Save size={18} />
           </IconButton>
-          <IconButton aria-label="Run code" title="Run code">
+          <IconButton 
+            aria-label="Run code" 
+            title="Run code"
+            sx={iconButtonHoverStyle}
+          >
             <Play size={18} />
           </IconButton>
         </Flex>
@@ -74,7 +90,10 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleSidebar }) => {
         <IconButton 
           aria-label="Import"
           title="Import"
-          sx={{ fontSize: 1 }}
+          sx={{ 
+            fontSize: 1,
+            ...iconButtonHoverStyle
+          }}
         >
           <Download size={18} />
         </IconButton>
