@@ -1,66 +1,61 @@
 /** @jsxImportSource theme-ui */
 import React from 'react';
-import { Flex, Box, Button, useColorMode } from 'theme-ui';
+import { Flex, Text, Badge } from 'theme-ui';
+import { Zap, Clock, GitBranch, Circle } from 'lucide-react';
+import { useWebSocket } from '../../contexts/WebSocketContext';
 
 interface StatusBarProps {
-  onTerminalToggle?: () => void;
+  // Add props as needed
 }
 
-const StatusBar: React.FC<StatusBarProps> = ({ onTerminalToggle }) => {
-  const [colorMode, setColorMode] = useColorMode();
-  
-  // Toggle dark/light mode
-  const toggleColorMode = () => {
-    setColorMode(colorMode === 'default' ? 'dark' : 'default');
-  };
+const StatusBar: React.FC<StatusBarProps> = () => {
+  const { connected } = useWebSocket();
   
   return (
-    <Flex 
-      sx={{ 
-        variant: 'layout.statusBar',
+    <Flex
+      sx={{
+        alignItems: 'center',
         justifyContent: 'space-between',
+        py: 1,
+        px: 2,
+        borderTop: '1px solid',
+        borderColor: 'border',
+        bg: 'muted',
         fontSize: 0,
       }}
     >
-      <Flex sx={{ alignItems: 'center', gap: 3 }}>
-        <Box>Ready</Box>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <Box sx={{ color: 'primary' }}>JavaScript</Box>
-          <Box>|</Box>
-          <Box>Line: 1, Col: 1</Box>
-        </Box>
-      </Flex>
-      
-      <Flex sx={{ alignItems: 'center', gap: 2 }}>
-        {onTerminalToggle && (
-          <Button 
-            variant="text" 
-            onClick={onTerminalToggle}
-            sx={{ 
-              fontSize: 0,
-              py: 0,
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            Toggle Terminal
-          </Button>
-        )}
-        
-        <Button 
-          variant="text"
-          onClick={toggleColorMode}
+      {/* Left section */}
+      <Flex sx={{ alignItems: 'center' }}>
+        <Flex 
           sx={{ 
-            fontSize: 0,
-            py: 0,
-            height: '100%',
-            display: 'flex',
-            alignItems: 'center',
+            alignItems: 'center', 
+            mr: 3,
+            color: connected ? 'green' : 'gray',
           }}
         >
-          {colorMode === 'default' ? '🌙 Dark Mode' : '☀️ Light Mode'}
-        </Button>
+          <Circle size={8} fill={connected ? 'currentColor' : 'none'} style={{ marginRight: '4px' }} />
+          <Text>
+            {connected ? 'Connected' : 'Disconnected'}
+          </Text>
+        </Flex>
+        
+        <Flex sx={{ alignItems: 'center', mr: 3 }}>
+          <Zap size={12} style={{ marginRight: '4px' }} />
+          <Text>Ready</Text>
+        </Flex>
+      </Flex>
+      
+      {/* Right section */}
+      <Flex sx={{ alignItems: 'center' }}>
+        <Flex sx={{ alignItems: 'center', mr: 3 }}>
+          <GitBranch size={12} style={{ marginRight: '4px' }} />
+          <Text>main</Text>
+        </Flex>
+        
+        <Flex sx={{ alignItems: 'center' }}>
+          <Clock size={12} style={{ marginRight: '4px' }} />
+          <Text>{new Date().toLocaleTimeString()}</Text>
+        </Flex>
       </Flex>
     </Flex>
   );
