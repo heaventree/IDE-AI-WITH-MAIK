@@ -20,7 +20,8 @@ const StatusBar: React.FC<StatusBarProps> = () => {
         px: 2,
         borderTop: '1px solid',
         borderColor: 'border',
-        bg: 'muted',
+        bg: 'statusBar',
+        color: 'statusText',
         fontSize: 0,
       }}
     >

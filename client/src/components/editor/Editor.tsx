@@ -110,7 +110,8 @@ const Editor: React.FC<EditorProps> = ({
         right: isFullscreen ? 0 : 'auto',
         bottom: isFullscreen ? 0 : 'auto',
         zIndex: isFullscreen ? 1000 : 'auto',
-        bg: 'background',
+        bg: 'editor',
+        color: 'text',
       }}
     >
       {/* Tab bar */}
@@ -118,7 +119,7 @@ const Editor: React.FC<EditorProps> = ({
         sx={{
           borderBottom: '1px solid',
           borderColor: 'border',
-          bg: 'muted',
+          bg: 'sidebar',
         }}
       >
         <Flex sx={{ flex: 1, overflowX: 'auto', overflowY: 'hidden' }}>
@@ -135,7 +136,8 @@ const Editor: React.FC<EditorProps> = ({
                 borderBottom: tab.id === activeTabId ? '2px solid' : 'none',
                 borderBottomColor: 'primary',
                 borderRadius: 0,
-                bg: tab.id === activeTabId ? 'background' : 'transparent',
+                bg: tab.id === activeTabId ? 'editor' : 'transparent',
+                color: tab.id === activeTabId ? 'primary' : 'text',
                 fontSize: 0,
                 minWidth: 100,
                 justifyContent: 'space-between',
@@ -164,6 +166,11 @@ const Editor: React.FC<EditorProps> = ({
               py: 2,
               px: 2,
               borderRadius: 0,
+              color: 'text',
+              '&:hover': {
+                bg: 'muted',
+                color: 'primary',
+              },
             }}
             aria-label="New tab"
             title="New tab"
@@ -181,6 +188,11 @@ const Editor: React.FC<EditorProps> = ({
             borderRadius: 0,
             borderLeft: '1px solid',
             borderColor: 'border',
+            color: 'text',
+            '&:hover': {
+              bg: 'muted',
+              color: 'primary',
+            },
           }}
           aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
           title={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
