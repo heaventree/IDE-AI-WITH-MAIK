@@ -35,7 +35,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     // Send an initial message to confirm connection
     ws.send(JSON.stringify({ 
       type: 'connected', 
-      message: 'Connected to Bolt DIY Enhanced server',
+      message: 'Connected to MAIK IDE server',
       timestamp: new Date().toISOString() 
     }));
     
