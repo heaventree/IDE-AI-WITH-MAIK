@@ -50,7 +50,8 @@ const theme: Theme = {
     sidebarItem: 'transparent', // Sidebar item background
     sidebarItemHover: 'rgba(114, 124, 245, 0.08)', // Sidebar item hover
     sidebarItemActive: 'rgba(114, 124, 245, 0.15)', // Sidebar active item
-    sidebarText: '#d0d2e0', // Sidebar text
+    sidebarText: '#d0d2e0', // Sidebar text (same as foreground)
+    sidebarActiveText: '#727cf5', // Active sidebar text color (primary)
     sidebarTextMuted: '#a6a9be', // Sidebar secondary text
     
     editor: '#151937', // Editor background matching NobleUI
@@ -561,22 +562,13 @@ const theme: Theme = {
       },
     },
 
-    // Status items in the status bar
-    statusItems: {
+    // Tab container helper styles
+    tabHelper: {
       display: 'flex',
       alignItems: 'center',
-      height: '100%',
-      color: 'foregroundMuted',
-      fontSize: 0,
-      '& .status-item': {
-        display: 'flex',
-        alignItems: 'center',
-        px: 2,
-        gap: 1,
-        borderRight: '1px solid',
-        borderColor: 'border',
-        height: '100%',
-      }
+      bg: 'backgroundElevated',
+      borderBottom: '1px solid',
+      borderColor: 'border',
     },
     
     // Main layout grid

@@ -102,7 +102,7 @@ const FileTreeItem: React.FC<{ item: FileItem, depth: number, isActive?: boolean
           mr: 3, 
           display: 'flex', 
           alignItems: 'center', 
-          color: item.type === 'folder' ? 'primary' : 'foreground' 
+          color: 'inherit'
         }}>
           {item.type === 'folder' ? <FolderTree size={18} /> : <FileIcon name={item.name} language={item.language} />}
         </Box>
@@ -110,6 +110,7 @@ const FileTreeItem: React.FC<{ item: FileItem, depth: number, isActive?: boolean
         <Text sx={{ 
           fontSize: 1, 
           fontWeight: item.type === 'folder' ? 600 : 400,
+          color: 'inherit'
         }}>
           {item.name}
         </Text>
