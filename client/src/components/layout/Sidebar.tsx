@@ -123,6 +123,8 @@ const Sidebar: React.FC<SidebarProps> = () => {
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
+        bg: 'sidebar',
+        color: 'text',
       }}
     >
       {/* Sidebar tabs */}
@@ -141,6 +143,11 @@ const Sidebar: React.FC<SidebarProps> = () => {
             borderBottom: activeTab === 'files' ? '2px solid' : 'none',
             borderColor: 'primary',
             borderRadius: 0,
+            color: activeTab === 'files' ? 'primary' : 'text',
+            bg: 'transparent',
+            '&:hover': {
+              bg: 'muted',
+            },
           }}
           aria-label="File explorer"
           title="File explorer"
@@ -157,6 +164,11 @@ const Sidebar: React.FC<SidebarProps> = () => {
             borderBottom: activeTab === 'search' ? '2px solid' : 'none',
             borderColor: 'primary',
             borderRadius: 0,
+            color: activeTab === 'search' ? 'primary' : 'text',
+            bg: 'transparent',
+            '&:hover': {
+              bg: 'muted',
+            },
           }}
           aria-label="Search"
           title="Search"
@@ -173,6 +185,11 @@ const Sidebar: React.FC<SidebarProps> = () => {
             borderBottom: activeTab === 'git' ? '2px solid' : 'none',
             borderColor: 'primary',
             borderRadius: 0,
+            color: activeTab === 'git' ? 'primary' : 'text',
+            bg: 'transparent',
+            '&:hover': {
+              bg: 'muted',
+            },
           }}
           aria-label="Git"
           title="Git"
@@ -189,6 +206,11 @@ const Sidebar: React.FC<SidebarProps> = () => {
             borderBottom: activeTab === 'collab' ? '2px solid' : 'none',
             borderColor: 'primary',
             borderRadius: 0,
+            color: activeTab === 'collab' ? 'primary' : 'text',
+            bg: 'transparent',
+            '&:hover': {
+              bg: 'muted',
+            },
           }}
           aria-label="Collaboration"
           title="Collaboration"

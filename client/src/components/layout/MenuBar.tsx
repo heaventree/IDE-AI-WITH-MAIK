@@ -25,7 +25,8 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleSidebar }) => {
         p: 2,
         borderBottom: '1px solid',
         borderColor: 'border',
-        bg: 'muted',
+        bg: 'menuBar',
+        color: 'menuText',
       }}
     >
       {/* Left section */}
