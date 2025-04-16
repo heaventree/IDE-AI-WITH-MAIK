@@ -1,177 +1,163 @@
 /** @jsxImportSource theme-ui */
 import React, { useState } from 'react';
-import { Box, Flex, Text } from 'theme-ui';
+import { Box, Flex, Button, Text } from 'theme-ui';
 
-// Simple File Explorer
-const FileExplorer = () => {
-  const [expanded, setExpanded] = useState<Record<string, boolean>>({
-    'src': true,
-    'components': true
-  });
+// Simple folder structure for demo
+const sampleFiles: FileProps[] = [
+  { id: 'f1', name: 'src', type: 'folder', children: [
+    { id: 'f2', name: 'components', type: 'folder', children: [
+      { id: 'f3', name: 'Button.tsx', type: 'file' },
+      { id: 'f4', name: 'Card.tsx', type: 'file' },
+    ]},
+    { id: 'f5', name: 'App.tsx', type: 'file' },
+    { id: 'f6', name: 'index.tsx', type: 'file' },
+  ]},
+  { id: 'f7', name: 'public', type: 'folder', children: [
+    { id: 'f8', name: 'index.html', type: 'file' },
+    { id: 'f9', name: 'favicon.ico', type: 'file' },
+  ]},
+  { id: 'f10', name: 'package.json', type: 'file' },
+  { id: 'f11', name: 'tsconfig.json', type: 'file' },
+];
 
-  const toggleFolder = (path: string) => {
-    setExpanded(prev => ({
-      ...prev,
-      [path]: !prev[path]
-    }));
+interface FileProps {
+  name: string;
+  type: 'file' | 'folder';
+  children?: FileProps[];
+  id: string;
+  level?: number;
+}
+
+// Component for rendering file/folder items
+const FileItem: React.FC<FileProps> = ({ name, type, children, level = 0, id }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  
+  const toggleFolder = () => {
+    if (type === 'folder') {
+      setIsOpen(!isOpen);
+    }
   };
-
-  // Sample file structure
-  const files = [
-    {
-      name: 'src',
-      path: 'src',
-      type: 'folder',
-      children: [
-        {
-          name: 'components',
-          path: 'src/components',
-          type: 'folder',
-          children: [
-            { name: 'App.tsx', path: 'src/components/App.tsx', type: 'file' },
-            { name: 'Header.tsx', path: 'src/components/Header.tsx', type: 'file' }
-          ]
-        },
-        {
-          name: 'utils',
-          path: 'src/utils',
-          type: 'folder',
-          children: [
-            { name: 'helpers.ts', path: 'src/utils/helpers.ts', type: 'file' },
-            { name: 'api.ts', path: 'src/utils/api.ts', type: 'file' }
-          ]
-        },
-        { name: 'index.tsx', path: 'src/index.tsx', type: 'file' },
-        { name: 'styles.css', path: 'src/styles.css', type: 'file' }
-      ]
-    },
-    { name: 'package.json', path: 'package.json', type: 'file' },
-    { name: 'README.md', path: 'README.md', type: 'file' }
-  ];
-
-  const renderFileTree = (items: any[], level = 0) => {
-    return items.map(item => (
-      <Box key={item.path} sx={{ ml: level * 2 }}>
-        <Flex
-          onClick={() => item.type === 'folder' && toggleFolder(item.path)}
-          sx={{
-            alignItems: 'center',
-            p: 1,
-            cursor: item.type === 'folder' ? 'pointer' : 'default',
-            '&:hover': {
-              bg: 'muted'
-            },
-            borderRadius: 1
-          }}
-        >
-          {/* Folder/File Icon */}
-          <Box sx={{ mr: 1, color: item.type === 'folder' ? 'primary' : 'text' }}>
-            {item.type === 'folder' ? (
-              expanded[item.path] ? '📂' : '📁'
-            ) : (
-              '📄'
-            )}
-          </Box>
-          
-          {/* File/Folder Name */}
-          <Text>{item.name}</Text>
-        </Flex>
-        
-        {/* Render children if it's an expanded folder */}
-        {item.type === 'folder' && expanded[item.path] && item.children && (
-          <Box sx={{ mt: 1 }}>
-            {renderFileTree(item.children, level + 1)}
-          </Box>
-        )}
-      </Box>
-    ));
-  };
-
+  
   return (
-    <Box sx={{ p: 2 }}>
-      <Text sx={{ fontWeight: 'bold', mb: 2 }}>Files</Text>
-      {renderFileTree(files)}
+    <Box sx={{ ml: level * 3 }}>
+      <Flex 
+        onClick={toggleFolder}
+        sx={{ 
+          alignItems: 'center', 
+          py: 1, 
+          px: 2,
+          cursor: 'pointer',
+          '&:hover': {
+            bg: 'muted',
+          },
+          borderRadius: 'sm'
+        }}
+      >
+        {type === 'folder' && (
+          <Text sx={{ mr: 1 }}>{isOpen ? '📂' : '📁'}</Text>
+        )}
+        {type === 'file' && <Text sx={{ mr: 1 }}>📄</Text>}
+        <Text sx={{ fontSize: 1 }}>{name}</Text>
+      </Flex>
+      
+      {isOpen && type === 'folder' && children && (
+        <Box>
+          {children.map(child => (
+            <FileItem 
+              key={child.id} 
+              {...child} 
+              level={level + 1} 
+            />
+          ))}
+        </Box>
+      )}
     </Box>
   );
 };
 
-// Sidebar tabs
-const SidebarTabs = () => {
-  const [activeTab, setActiveTab] = useState('files');
-  
-  const tabs = [
-    { id: 'files', label: '📁', title: 'Files' },
-    { id: 'search', label: '🔍', title: 'Search' },
-    { id: 'git', label: '📊', title: 'Git' },
-    { id: 'ai', label: '🤖', title: 'AI' }
-  ];
+interface SidebarProps {
+  // Add props as needed
+}
+
+const Sidebar: React.FC<SidebarProps> = () => {
+  const [activeTab, setActiveTab] = useState<'files' | 'search' | 'extensions'>('files');
   
   return (
-    <Flex sx={{ flexDirection: 'column', height: '100%' }}>
-      {/* Tab buttons */}
-      <Flex sx={{ 
-        borderRight: '1px solid', 
-        borderColor: 'lightgray',
+    <Flex 
+      sx={{ 
+        variant: 'layout.sidebar',
         flexDirection: 'column',
-        width: '48px',
-        bg: 'sidebar',
-        position: 'absolute',
-        left: 0,
-        top: 0,
-        bottom: 0,
-        zIndex: 1
-      }}>
-        {tabs.map(tab => (
-          <Box
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            title={tab.title}
-            sx={{
-              p: 2,
-              fontSize: 3,
-              textAlign: 'center',
-              cursor: 'pointer',
-              borderLeft: '3px solid',
-              borderColor: activeTab === tab.id ? 'primary' : 'transparent',
-              bg: activeTab === tab.id ? 'background' : 'transparent',
-              '&:hover': {
-                bg: 'muted'
-              }
-            }}
-          >
-            {tab.label}
-          </Box>
-        ))}
+        height: '100%', 
+      }}
+    >
+      {/* Sidebar tabs */}
+      <Flex sx={{ borderBottom: '1px solid', borderColor: 'lightgray' }}>
+        <Button 
+          variant={activeTab === 'files' ? 'primary' : 'text'}
+          onClick={() => setActiveTab('files')}
+          sx={{ 
+            flex: 1, 
+            py: 2,
+            borderRadius: 0,
+          }}
+        >
+          Files
+        </Button>
+        <Button 
+          variant={activeTab === 'search' ? 'primary' : 'text'}
+          onClick={() => setActiveTab('search')}
+          sx={{ 
+            flex: 1, 
+            py: 2,
+            borderRadius: 0, 
+          }}
+        >
+          Search
+        </Button>
+        <Button 
+          variant={activeTab === 'extensions' ? 'primary' : 'text'}
+          onClick={() => setActiveTab('extensions')}
+          sx={{ 
+            flex: 1, 
+            py: 2,
+            borderRadius: 0,
+          }}
+        >
+          Ext
+        </Button>
       </Flex>
       
-      {/* Tab content */}
-      <Box sx={{ ml: '48px', height: '100%', overflow: 'auto' }}>
-        {activeTab === 'files' && <FileExplorer />}
-        {activeTab === 'search' && (
-          <Box sx={{ p: 2 }}>
-            <Text sx={{ fontWeight: 'bold', mb: 2 }}>Search</Text>
-            <Text sx={{ color: 'gray' }}>Search functionality will go here</Text>
+      {/* File explorer */}
+      {activeTab === 'files' && (
+        <Box sx={{ overflowY: 'auto', flex: 1, p: 2 }}>
+          <Text sx={{ fontWeight: 'bold', mb: 2, fontSize: 1 }}>EXPLORER</Text>
+          {sampleFiles.map(file => (
+            <FileItem key={file.id} {...file} />
+          ))}
+        </Box>
+      )}
+      
+      {/* Search panel */}
+      {activeTab === 'search' && (
+        <Box sx={{ p: 2 }}>
+          <Text sx={{ fontWeight: 'bold', mb: 2, fontSize: 1 }}>SEARCH</Text>
+          <Box sx={{ bg: 'muted', p: 2, borderRadius: 'sm' }}>
+            <Text sx={{ fontSize: 1 }}>Search functionality coming soon...</Text>
           </Box>
-        )}
-        {activeTab === 'git' && (
-          <Box sx={{ p: 2 }}>
-            <Text sx={{ fontWeight: 'bold', mb: 2 }}>Git</Text>
-            <Text sx={{ color: 'gray' }}>Git integration will go here</Text>
+        </Box>
+      )}
+      
+      {/* Extensions panel */}
+      {activeTab === 'extensions' && (
+        <Box sx={{ p: 2 }}>
+          <Text sx={{ fontWeight: 'bold', mb: 2, fontSize: 1 }}>EXTENSIONS</Text>
+          <Box sx={{ bg: 'muted', p: 2, borderRadius: 'sm' }}>
+            <Text sx={{ fontSize: 1 }}>Extensions marketplace coming soon...</Text>
           </Box>
-        )}
-        {activeTab === 'ai' && (
-          <Box sx={{ p: 2 }}>
-            <Text sx={{ fontWeight: 'bold', mb: 2 }}>AI Assistant</Text>
-            <Text sx={{ color: 'gray' }}>AI tools will go here</Text>
-          </Box>
-        )}
-      </Box>
+        </Box>
+      )}
     </Flex>
   );
-};
-
-const Sidebar: React.FC = () => {
-  return <SidebarTabs />;
 };
 
 export default Sidebar;

@@ -1,6 +1,8 @@
 /** @jsxImportSource theme-ui */
 import React, { useState } from 'react';
 import { Box, Flex, Button, useColorMode } from 'theme-ui';
+import MenuBar from './MenuBar';
+import Sidebar from './Sidebar';
 
 // Simple IDE Layout that doesn't depend on other components yet
 const IDELayout: React.FC = () => {
@@ -22,34 +24,12 @@ const IDELayout: React.FC = () => {
       }}
     >
       {/* Top Menu Bar */}
-      <Flex sx={{ 
-        height: '48px', 
-        bg: 'menuBar', 
-        color: 'menuText', 
-        alignItems: 'center', 
-        px: 3,
-        borderBottom: '1px solid',
-        borderColor: 'lightgray'
-      }}>
-        <Box sx={{ fontWeight: 'bold', fontSize: 2 }}>Bolt DIY IDE</Box>
-      </Flex>
+      <MenuBar />
       
       {/* Main Content Area */}
       <Flex sx={{ flex: 1, overflow: 'hidden' }}>
         {/* Sidebar */}
-        <Box 
-          sx={{ 
-            width: '240px',
-            minWidth: '240px',
-            bg: 'sidebar',
-            borderRight: '1px solid',
-            borderColor: 'lightgray',
-            p: 3
-          }}
-        >
-          <Box sx={{ fontWeight: 'bold', mb: 2 }}>Sidebar</Box>
-          <Box>File Explorer would go here</Box>
-        </Box>
+        <Sidebar />
         
         {/* Editor and Terminal Area */}
         <Flex 
@@ -76,7 +56,7 @@ import React from 'react';
 function App() {
   return (
     <div>
-      <h1>Hello, Bolt DIY!</h1>
+      <h1>Hello, MAIK IDE!</h1>
       <p>This is a code editor placeholder</p>
     </div>
   );
@@ -97,7 +77,7 @@ export default App;`}
               minHeight: '200px'
             }}
           >
-            <Box sx={{ mb: 1 }}>Welcome to Bolt DIY Terminal</Box>
+            <Box sx={{ mb: 1 }}>Welcome to MAIK Terminal</Box>
             <Box sx={{ mb: 1 }}>Type commands here...</Box>
             <Box>{'> _'}</Box>
           </Box>
