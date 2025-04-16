@@ -1,23 +1,17 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import { ThemeUIContextProvider } from "./contexts/ThemeUIProvider";
-import { ThemeProvider } from "./contexts/ThemeContext";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "./lib/queryClient";
+import { ThemeUIProvider } from "theme-ui";
+import theme from "./theme";
 import { Toaster } from "@/components/ui/toaster";
 import App from "./App";
 
-// App with all providers in correct order
+// App with Theme UI provider
 function AppWithProviders() {
   return (
-    <ThemeUIContextProvider>
-      <ThemeProvider>
-        <QueryClientProvider client={queryClient}>
-          <App />
-          <Toaster />
-        </QueryClientProvider>
-      </ThemeProvider>
-    </ThemeUIContextProvider>
+    <ThemeUIProvider theme={theme}>
+      <App />
+      <Toaster />
+    </ThemeUIProvider>
   );
 }
 

@@ -99,7 +99,7 @@ export default App;`}
           >
             <Box sx={{ mb: 1 }}>Welcome to Bolt DIY Terminal</Box>
             <Box sx={{ mb: 1 }}>Type commands here...</Box>
-            <Box>{"> _"}</Box>
+            <Box>{'> _'}</Box>
           </Box>
         </Flex>
       </Flex>
