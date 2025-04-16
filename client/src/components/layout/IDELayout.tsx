@@ -1,67 +1,14 @@
 /** @jsxImportSource theme-ui */
 import React, { useState } from 'react';
-import { Box, Flex, IconButton, useColorMode } from 'theme-ui';
-import MenuBar from './MenuBar';
-import Sidebar from './Sidebar';
-import Editor from '../editor/Editor';
-import Terminal from '../terminal/Terminal';
-import StatusBar from './StatusBar';
+import { Box, Flex, Button, useColorMode } from 'theme-ui';
 
-// Simple icons
-const SunIcon = () => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    width="24" 
-    height="24" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round"
-  >
-    <circle cx="12" cy="12" r="5"></circle>
-    <line x1="12" y1="1" x2="12" y2="3"></line>
-    <line x1="12" y1="21" x2="12" y2="23"></line>
-    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-    <line x1="1" y1="12" x2="3" y2="12"></line>
-    <line x1="21" y1="12" x2="23" y2="12"></line>
-    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-  </svg>
-);
-
-const MoonIcon = () => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    width="24" 
-    height="24" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round"
-  >
-    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-  </svg>
-);
-
+// Simple IDE Layout that doesn't depend on other components yet
 const IDELayout: React.FC = () => {
   const [colorMode, setColorMode] = useColorMode();
-  const [sidebarWidth, setSidebarWidth] = useState(280);
-  const [terminalHeight, setTerminalHeight] = useState(200);
-  const [showTerminal, setShowTerminal] = useState(true);
-
+  
   // Toggle dark/light mode
   const toggleColorMode = () => {
     setColorMode(colorMode === 'default' ? 'dark' : 'default');
-  };
-
-  // Toggle terminal visibility
-  const toggleTerminal = () => {
-    setShowTerminal(!showTerminal);
   };
 
   return (
@@ -75,20 +22,33 @@ const IDELayout: React.FC = () => {
       }}
     >
       {/* Top Menu Bar */}
-      <MenuBar />
+      <Flex sx={{ 
+        height: '48px', 
+        bg: 'menuBar', 
+        color: 'menuText', 
+        alignItems: 'center', 
+        px: 3,
+        borderBottom: '1px solid',
+        borderColor: 'lightgray'
+      }}>
+        <Box sx={{ fontWeight: 'bold', fontSize: 2 }}>Bolt DIY IDE</Box>
+      </Flex>
       
       {/* Main Content Area */}
       <Flex sx={{ flex: 1, overflow: 'hidden' }}>
         {/* Sidebar */}
         <Box 
           sx={{ 
-            variant: 'layout.sidebar', 
-            width: `${sidebarWidth}px`,
-            minWidth: `${sidebarWidth}px`,
-            transition: 'width 0.2s ease'
+            width: '240px',
+            minWidth: '240px',
+            bg: 'sidebar',
+            borderRight: '1px solid',
+            borderColor: 'lightgray',
+            p: 3
           }}
         >
-          <Sidebar />
+          <Box sx={{ fontWeight: 'bold', mb: 2 }}>Sidebar</Box>
+          <Box>File Explorer would go here</Box>
         </Box>
         
         {/* Editor and Terminal Area */}
@@ -102,59 +62,77 @@ const IDELayout: React.FC = () => {
           {/* Editor */}
           <Box 
             sx={{ 
-              variant: 'layout.editor',
-              flex: 1
+              bg: 'editor',
+              p: 3,
+              flex: 1,
+              fontFamily: 'monospace'
             }}
           >
-            <Editor />
+            <Box sx={{ fontWeight: 'bold', mb: 2 }}>Editor</Box>
+            <Box sx={{ whiteSpace: 'pre-wrap' }}>
+              {`// Sample code
+import React from 'react';
+
+function App() {
+  return (
+    <div>
+      <h1>Hello, Bolt DIY!</h1>
+      <p>This is a code editor placeholder</p>
+    </div>
+  );
+}
+
+export default App;`}
+            </Box>
           </Box>
           
-          {/* Terminal (collapsible) */}
-          {showTerminal && (
-            <Box 
-              sx={{ 
-                variant: 'layout.terminal',
-                height: `${terminalHeight}px`,
-                minHeight: `${terminalHeight}px`,
-                transition: 'height 0.2s ease'
-              }}
-            >
-              <Terminal />
-            </Box>
-          )}
+          {/* Terminal */}
+          <Box 
+            sx={{ 
+              bg: 'terminal',
+              color: 'terminalText',
+              fontFamily: 'monospace',
+              p: 2,
+              height: '200px',
+              minHeight: '200px'
+            }}
+          >
+            <Box sx={{ mb: 1 }}>Welcome to Bolt DIY Terminal</Box>
+            <Box sx={{ mb: 1 }}>Type commands here...</Box>
+            <Box>{"> _"}</Box>
+          </Box>
         </Flex>
       </Flex>
       
       {/* Status Bar */}
-      <StatusBar onTerminalToggle={toggleTerminal} />
-      
-      {/* Theme Toggle Button */}
-      <IconButton
-        onClick={toggleColorMode}
-        aria-label="Toggle dark mode"
-        sx={{
-          position: 'fixed',
-          bottom: '40px',
-          right: '20px',
-          zIndex: 1000,
-          bg: 'background',
-          color: 'text',
-          width: '40px',
-          height: '40px',
-          borderRadius: '50%',
-          display: 'flex',
+      <Flex 
+        sx={{ 
+          height: '24px', 
+          bg: 'statusBar',
+          color: 'statusText',
+          fontSize: 0,
           alignItems: 'center',
-          justifyContent: 'center',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-          border: '1px solid',
+          px: 2,
+          borderTop: '1px solid',
           borderColor: 'lightgray',
-          '&:hover': {
-            bg: 'muted',
-          }
+          justifyContent: 'space-between'
         }}
       >
-        {colorMode === 'default' ? <MoonIcon /> : <SunIcon />}
-      </IconButton>
+        <Box>Ready</Box>
+        <Button 
+          variant="text"
+          onClick={toggleColorMode}
+          sx={{ 
+            fontSize: 0,
+            py: 0,
+            height: '100%',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          {colorMode === 'default' ? '🌙 Dark Mode' : '☀️ Light Mode'}
+        </Button>
+      </Flex>
     </Flex>
   );
 };

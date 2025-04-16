@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThemeProvider as ThemeUIProvider } from 'theme-ui';
+import { ThemeUIProvider } from 'theme-ui';
 import theme from '../theme';
 
 interface ThemeProviderProps {
