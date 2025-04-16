@@ -2,14 +2,456 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary: #727cf5;
+  --primary-hover: #616fe8;
+  --primary-pressed: #5662e0;
+  --primary-muted: rgba(114, 124, 245, 0.15);
+  --primary-transparent: rgba(114, 124, 245, 0.08);
+  
+  --secondary: #6571ff;
+  --accent: #0acf97;
+  --highlight: #a6adff;
+  
+  --danger: #fa5c7c; 
+  --warning: #ffbc00;
+  --success: #0acf97;
+  --info: #3096f3;
+  
+  --foreground: #d0d2e0;
+  --foreground-muted: #a6a9be;
+  --foreground-subtle: #6e7191;
+  
+  --background: #151937;
+  --background-elevated: #1a1f33;
+  --background-floating: #222641;
+  
+  --border: #2d324b;
+  --border-muted: #252a40;
+  
+  --sidebar: #1a1f33;
+  --editor: #151937;
+  --terminal: #111425;
+  --menubar: #1a1f33;
+  --statusbar: #171c30;
+}
+
 @layer base {
   * {
     @apply border-border;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    @apply font-sans;
   }
 
   body {
-    @apply font-sans antialiased;
-    background-color: #151937; /* Dark blue-black from NobleUI */
-    color: #d0d2e0; /* Light grayish blue */
+    @apply antialiased;
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Custom scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(114, 124, 245, 0.3);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(114, 124, 245, 0.5);
+  }
+}
+
+@layer components {
+  /* IDE Container & Layout */
+  .ide-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+
+  .ide-menubar {
+    height: 60px;
+    border-bottom: 1px solid var(--border);
+    background-color: var(--menubar);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    flex-shrink: 0;
+    z-index: 10;
+  }
+
+  .ide-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .ide-sidebar {
+    width: 280px;
+    border-right: 1px solid var(--border);
+    background-color: var(--sidebar);
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-shrink: 0;
+  }
+
+  .ide-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .ide-editor {
+    flex: 1;
+    background-color: var(--editor);
+    position: relative;
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .ide-statusbar {
+    height: 24px;
+    border-top: 1px solid var(--border);
+    background-color: var(--statusbar);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    flex-shrink: 0;
+    z-index: 10;
+  }
+
+  /* MenuBar Component */
+  .menubar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .menubar-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .menubar-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .menubar-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .menubar-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1;
+  }
+
+  .menubar-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 16px;
+  }
+
+  .menubar-nav {
+    height: 100%;
+  }
+
+  .menubar-nav-list {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 4px;
+  }
+
+  .menubar-nav-list li {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Icon Button */
+  .icon-button {
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    color: var(--foreground);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    width: 32px;
+    padding: 0;
+    transition: all 0.2s ease;
+  }
+
+  .icon-button:hover {
+    background-color: rgba(114, 124, 245, 0.08);
+    color: var(--primary);
+  }
+
+  .icon-button:active {
+    background-color: rgba(114, 124, 245, 0.15);
+  }
+
+  .icon-button:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  /* Gradient Text */
+  .gradient-text {
+    background: linear-gradient(45deg, var(--primary) 0%, var(--highlight) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+  }
+
+  /* Sidebar Component */
+  .sidebar-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .sidebar-tabs {
+    display: flex;
+    justify-content: stretch;
+    border-bottom: 1px solid var(--border);
+    background-color: var(--background-elevated);
+  }
+
+  .sidebar-tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    background: transparent;
+    border: none;
+    color: var(--foreground);
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .sidebar-tab:hover {
+    background-color: var(--primary-transparent);
+  }
+
+  .sidebar-tab.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+  }
+
+  .sidebar-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .sidebar-section {
+    padding: 0;
+  }
+
+  .sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    margin-bottom: 4px;
+  }
+
+  .sidebar-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--foreground-muted);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .sidebar-actions {
+    display: flex;
+    gap: 4px;
+  }
+
+  .sidebar-message {
+    padding: 8px 12px;
+    font-size: 13px;
+    color: var(--foreground-muted);
+  }
+
+  /* File Tree Components */
+  .filetree {
+    width: 100%;
+  }
+
+  .filetree-item-container {
+    width: 100%;
+  }
+
+  .filetree-children {
+    width: 100%;
+  }
+
+  .filetree-item {
+    display: flex;
+    align-items: center;
+    padding: 4px 0;
+    cursor: pointer;
+    height: 24px;
+    position: relative;
+    transition: all 0.1s ease;
+    border-left: 2px solid transparent;
+  }
+
+  .filetree-item:hover {
+    background-color: var(--primary-transparent);
+  }
+
+  .filetree-item.active {
+    background-color: var(--primary-muted);
+    border-left-color: var(--primary);
+  }
+
+  .filetree-expander {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 4px;
+  }
+
+  .filetree-spacer {
+    width: 16px;
+    margin-right: 4px;
+  }
+
+  .filetree-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+    color: var(--foreground-muted);
+  }
+
+  .filetree-item.active .filetree-icon {
+    color: var(--primary);
+  }
+
+  .filetree-name {
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .filetree-name.folder {
+    font-weight: 600;
+  }
+
+  /* Small icon button variant */
+  .icon-button.small {
+    height: 24px;
+    width: 24px;
+  }
+
+  /* StatusBar Component */
+  .statusbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: 12px;
+    color: var(--foreground-muted);
+    padding: 0 8px;
+  }
+
+  .statusbar-left, .statusbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    height: 100%;
+  }
+
+  .statusbar-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 100%;
+  }
+
+  .statusbar-item.success {
+    color: var(--success);
+  }
+
+  .statusbar-item.warning {
+    color: var(--warning);
+  }
+  
+  .statusbar-item.error {
+    color: var(--danger);
+  }
+
+  .statusbar-item.muted {
+    color: var(--foreground-subtle);
+  }
+
+  .statusbar-item-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .statusbar-item-text {
+    font-size: 12px;
+    white-space: nowrap;
   }
 }

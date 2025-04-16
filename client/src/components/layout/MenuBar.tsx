@@ -1,6 +1,4 @@
-/** @jsxImportSource theme-ui */
 import React from 'react';
-import { Flex, Box, Heading, IconButton, useColorMode } from 'theme-ui';
 import { 
   Menu, Code, Sun, Moon, Github, Coffee, Save, Play, 
   Settings, HelpCircle, Download, Upload, ChevronLeft
@@ -11,131 +9,135 @@ interface MenuBarProps {
   sidebarOpen: boolean;
 }
 
+const IconButton = ({ 
+  icon, 
+  onClick, 
+  label, 
+  title, 
+  className = ""
+}: { 
+  icon: React.ReactNode; 
+  onClick?: () => void; 
+  label: string; 
+  title?: string;
+  className?: string;
+}) => (
+  <button
+    type="button"
+    onClick={onClick}
+    aria-label={label}
+    title={title || label}
+    className={`icon-button ${className}`}
+  >
+    {icon}
+  </button>
+);
+
 const MenuBar: React.FC<MenuBarProps> = ({ toggleSidebar, sidebarOpen }) => {
-  const [colorMode, setColorMode] = useColorMode();
+  // We'll use a state hook that mimics the color mode for now
+  const [isDarkMode, setIsDarkMode] = React.useState(true);
   
   const toggleColorMode = () => {
-    setColorMode(colorMode === 'light' ? 'dark' : 'light');
+    setIsDarkMode(!isDarkMode);
   };
   
   return (
-    <Flex sx={{ width: '100%', justifyContent: 'space-between' }}>
+    <div className="menubar-container">
       {/* Left section - Brand and main controls */}
-      <Flex variant="layout.menuBarBrand">
+      <div className="menubar-left">
         <IconButton
-          variant="icon"
-          aria-label="Toggle sidebar"
+          icon={sidebarOpen ? <ChevronLeft size={18} /> : <Menu size={18} />}
           onClick={toggleSidebar}
+          label="Toggle sidebar"
           title={sidebarOpen ? "Hide sidebar" : "Show sidebar"}
-        >
-          {sidebarOpen ? <ChevronLeft size={18} /> : <Menu size={18} />}
-        </IconButton>
+        />
         
-        <Box className="logo">
-          <Code size={22} strokeWidth={2.5} style={{ color: '#727cf5' }} />
-        </Box>
-        
-        <Heading as="h1" variant="text.gradient">
-          MAIK IDE
-        </Heading>
+        <div className="menubar-brand">
+          <div className="menubar-logo">
+            <Code size={22} strokeWidth={2.5} color="#727cf5" />
+          </div>
+          
+          <h1 className="gradient-text menubar-title">MAIK IDE</h1>
+        </div>
         
         {/* Main action buttons */}
-        <Flex sx={{ ml: 4, gap: 2 }}>
+        <div className="menubar-actions">
           <IconButton 
-            variant="icon"
-            aria-label="Save file" 
+            icon={<Save size={18} />}
+            label="Save file"
             title="Save file (Ctrl+S)"
-          >
-            <Save size={18} />
-          </IconButton>
+          />
           
           <IconButton 
-            variant="icon"
-            aria-label="Run code" 
+            icon={<Play size={18} color="#0acf97" />}
+            label="Run code"
             title="Run code (F5)"
-            sx={{ color: 'success' }}
-          >
-            <Play size={18} />
-          </IconButton>
-        </Flex>
-      </Flex>
+          />
+        </div>
+      </div>
       
       {/* Right section - Tools and settings */}
-      <Flex as="nav">
-        <Flex as="ul" variant="layout.menuList">
+      <nav className="menubar-nav">
+        <ul className="menubar-nav-list">
           <li>
             <IconButton 
-              variant="icon"
-              aria-label="Import"
+              icon={<Download size={18} />}
+              label="Import"
               title="Import project"
-            >
-              <Download size={18} />
-            </IconButton>
+            />
           </li>
           
           <li>
             <IconButton 
-              variant="icon"
-              aria-label="Export"
+              icon={<Upload size={18} />}
+              label="Export"
               title="Export project"
-            >
-              <Upload size={18} />
-            </IconButton>
+            />
           </li>
           
           <li>
             <IconButton 
-              variant="icon"
-              aria-label="Settings"
+              icon={<Settings size={18} />}
+              label="Settings"
               title="Settings"
-            >
-              <Settings size={18} />
-            </IconButton>
+            />
           </li>
           
           <li>
             <IconButton 
-              variant="icon"
-              aria-label="Help"
+              icon={<HelpCircle size={18} />}
+              label="Help"
               title="Help"
-            >
-              <HelpCircle size={18} />
-            </IconButton>
+            />
           </li>
           
           <li>
             <IconButton 
-              variant="icon"
-              aria-label="GitHub"
+              icon={<Github size={18} />}
+              label="GitHub"
               title="View on GitHub"
-            >
-              <Github size={18} />
-            </IconButton>
+            />
           </li>
           
           <li>
             <IconButton 
-              variant="icon"
-              aria-label="Buy me a coffee"
+              icon={<Coffee size={18} />}
+              label="Sponsor"
               title="Buy me a coffee"
-            >
-              <Coffee size={18} />
-            </IconButton>
+            />
           </li>
           
           <li>
             <IconButton 
-              variant="icon"
-              aria-label="Toggle dark mode"
+              icon={isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
               onClick={toggleColorMode}
-              title={colorMode === 'light' ? "Switch to dark mode" : "Switch to light mode"}
-            >
-              {colorMode === 'light' ? <Moon size={18} /> : <Sun size={18} />}
-            </IconButton>
+              label="Toggle dark mode"
+              title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+            />
           </li>
-        </Flex>
-      </Flex>
-    </Flex>
+        </ul>
+      </nav>
+    </div>
   );
 };
 

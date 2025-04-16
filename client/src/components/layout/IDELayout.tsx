@@ -1,6 +1,4 @@
-/** @jsxImportSource theme-ui */
 import React, { ReactNode, useState } from 'react';
-import { Box, Grid } from 'theme-ui';
 import MenuBar from './MenuBar';
 import Sidebar from './Sidebar';
 import StatusBar from './StatusBar';
@@ -17,7 +15,6 @@ const IDELayout: React.FC<IDELayoutProps> = ({ children }) => {
   };
   
   // Process children to determine what goes where
-  // We expect children to contain Editor and Terminal components
   const childrenArray = React.Children.toArray(children);
   
   // Find editor and terminal components
@@ -34,58 +31,43 @@ const IDELayout: React.FC<IDELayoutProps> = ({ children }) => {
   // Other components that don't match specific areas
   const otherComponents = childrenArray.filter(
     child => 
-      !editorComponent || child !== editorComponent && 
-      !terminalComponent || child !== terminalComponent
+      (!editorComponent || child !== editorComponent) && 
+      (!terminalComponent || child !== terminalComponent)
   );
-  
+
   return (
-    <Grid
-      as="main"
-      variant="layout.mainGrid"
-      css={{
-        gridTemplateAreas: sidebarOpen 
-          ? `
-            "menubar menubar"
-            "sidebar editor"
-            "sidebar terminal"
-            "statusbar statusbar"
-          `
-          : `
-            "menubar menubar"
-            "editor editor"
-            "terminal terminal"
-            "statusbar statusbar"
-          `,
-        gridTemplateColumns: sidebarOpen ? 'minmax(280px, 22%) 1fr' : '1fr',
-      }}
-    >
+    <div className="ide-container">
       {/* Top menu bar */}
-      <Box variant="layout.menuBar">
+      <header className="ide-menubar">
         <MenuBar toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
-      </Box>
+      </header>
       
-      {/* Sidebar */}
-      {sidebarOpen && (
-        <Box variant="layout.sidebar">
-          <Sidebar />
-        </Box>
-      )}
-      
-      {/* Main editor area */}
-      <Box variant="layout.editor">
-        {editorComponent || otherComponents}
-      </Box>
-      
-      {/* Terminal area */}
-      <Box variant="layout.terminal">
-        {terminalComponent}
-      </Box>
+      {/* Main content area */}
+      <div className="ide-content">
+        {/* Sidebar */}
+        {sidebarOpen && (
+          <aside className="ide-sidebar">
+            <Sidebar />
+          </aside>
+        )}
+        
+        {/* Main editor and terminal stack */}
+        <main className="ide-main">
+          {/* Main editor area */}
+          <div className="ide-editor">
+            {editorComponent || otherComponents}
+          </div>
+          
+          {/* Terminal container is positioned by the Terminal component itself */}
+          {terminalComponent}
+        </main>
+      </div>
       
       {/* Bottom status bar */}
-      <Box variant="layout.statusBar">
+      <footer className="ide-statusbar">
         <StatusBar />
-      </Box>
-    </Grid>
+      </footer>
+    </div>
   );
 };
 

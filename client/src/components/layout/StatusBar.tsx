@@ -1,6 +1,4 @@
-/** @jsxImportSource theme-ui */
 import React, { useEffect, useState } from 'react';
-import { Flex, Text, Box } from 'theme-ui';
 import { 
   Zap, Clock, GitBranch, Circle, 
   FileCode, Bell, Wifi, Cpu, 
@@ -11,6 +9,20 @@ import { useWebSocket } from '../../contexts/WebSocketContext';
 interface StatusBarProps {
   // Add props as needed
 }
+
+interface StatusItemProps {
+  icon: React.ReactNode;
+  text: string;
+  title?: string;
+  className?: string;
+}
+
+const StatusItem: React.FC<StatusItemProps> = ({ icon, text, title, className = '' }) => (
+  <div className={`statusbar-item ${className}`} title={title}>
+    <div className="statusbar-item-icon">{icon}</div>
+    <div className="statusbar-item-text">{text}</div>
+  </div>
+);
 
 const StatusBar: React.FC<StatusBarProps> = () => {
   const { connected } = useWebSocket();
@@ -26,59 +38,59 @@ const StatusBar: React.FC<StatusBarProps> = () => {
   }, []);
   
   return (
-    <Flex sx={{ width: '100%', justifyContent: 'space-between' }}>
+    <div className="statusbar-container">
       {/* Left status items */}
-      <Flex variant="layout.statusBarItems">
-        <Box className="status-item" 
-          sx={{ 
-            color: connected ? 'success' : 'foregroundMuted',
-          }}
-        >
-          <Circle size={8} fill={connected ? 'currentColor' : 'none'} />
-          <Text>
-            {connected ? 'Connected' : 'Disconnected'}
-          </Text>
-        </Box>
+      <div className="statusbar-left">
+        <StatusItem 
+          icon={<Circle size={8} fill={connected ? 'currentColor' : 'none'} />}
+          text={connected ? 'Connected' : 'Disconnected'}
+          className={connected ? 'success' : 'muted'}
+        />
         
-        <Box className="status-item">
-          <Zap size={12} />
-          <Text>Ready</Text>
-        </Box>
+        <StatusItem 
+          icon={<Zap size={12} />}
+          text="Ready"
+        />
         
-        <Box className="status-item">
-          <FileCode size={12} />
-          <Text>TypeScript</Text>
-        </Box>
+        <StatusItem 
+          icon={<FileCode size={12} />}
+          text="TypeScript"
+        />
         
-        <Box className="status-item">
-          <Terminal size={12} />
-          <Text>main.ts</Text>
-        </Box>
-      </Flex>
+        <StatusItem 
+          icon={<Terminal size={12} />}
+          text="main.ts"
+        />
+      </div>
       
       {/* Right status items */}
-      <Flex variant="layout.statusBarItems">
-        <Box className="status-item" title="Git branch">
-          <GitBranch size={12} />
-          <Text>main</Text>
-        </Box>
+      <div className="statusbar-right">
+        <StatusItem 
+          icon={<GitBranch size={12} />}
+          text="main"
+          title="Git branch"
+        />
         
-        <Box className="status-item" title="Performance: 98% efficient">
-          <Cpu size={12} />
-          <Text>98%</Text>
-        </Box>
+        <StatusItem 
+          icon={<Cpu size={12} />}
+          text="98%"
+          title="Performance: 98% efficient"
+        />
         
-        <Box className="status-item" title="All systems normal">
-          <CheckCircle size={12} color="#0acf97" />
-          <Text sx={{ color: 'success' }}>All good</Text>
-        </Box>
+        <StatusItem 
+          icon={<CheckCircle size={12} color="#0acf97" />}
+          text="All good"
+          title="All systems normal"
+          className="success"
+        />
         
-        <Box className="status-item" title="Current time">
-          <Clock size={12} />
-          <Text>{time}</Text>
-        </Box>
-      </Flex>
-    </Flex>
+        <StatusItem 
+          icon={<Clock size={12} />}
+          text={time}
+          title="Current time"
+        />
+      </div>
+    </div>
   );
 };
 
