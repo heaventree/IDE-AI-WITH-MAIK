@@ -23,7 +23,7 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleSidebar }) => {
         alignItems: 'center',
         justifyContent: 'space-between',
         p: 2,
-        height: 48, // Fixed height to match sidebar
+        height: '60px', // Exact height to match sidebar 
         borderBottom: '1px solid',
         borderColor: 'border',
         bg: 'menuBar',
@@ -47,7 +47,7 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleSidebar }) => {
             fontWeight: 'bold',
             display: 'flex',
             alignItems: 'center',
-            background: 'linear-gradient(90deg, #00d8ff, #01c2ff, #00f2ff)',
+            background: 'linear-gradient(90deg, #727cf5, #6571ff, #4a57eb)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             mr: 3,

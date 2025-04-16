@@ -8,6 +8,8 @@
   }
 
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply font-sans antialiased;
+    background-color: #151937; /* Dark blue-black from NobleUI */
+    color: #d0d2e0; /* Light grayish blue */
   }
 }

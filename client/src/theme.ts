@@ -7,25 +7,25 @@ const theme: Theme = {
   colors: {
     // Dark mode colors are now the default
     ...deep.colors,
-    primary: '#00d8ff', // Vibrant cyan blue
-    secondary: '#01b6d1', // Slightly darker cyan
-    accent: '#ff2b51', // Vibrant red
-    highlight: '#01c2ff', // Highlight cyan
-    muted: '#2d3748',
-    background: '#1a1d21',
-    text: '#f8f9fa',
-    lightgray: '#4a5568',
+    primary: '#6571ff', // Vibrant blue-purple from NobleUI
+    secondary: '#506ef9', // Secondary blue
+    accent: '#0acf97', // Accent green from NobleUI
+    highlight: '#727cf5', // Highlight blue
+    muted: '#283046', // Muted dark blue
+    background: '#151937', // Deep blue-black from NobleUI
+    text: '#d0d2e0', // Light grayish blue text
+    lightgray: '#414561',
     
     // IDE specific colors
-    sidebar: '#1a1d23', // Darker sidebar
-    editor: '#282c34',
-    terminal: '#1a1a20', // Darker terminal
-    terminalText: '#a8b2d1',
-    statusBar: '#1c1e24', // Darker status bar
-    statusText: '#a8b2d1',
-    menuBar: '#1a1d23', // Match sidebar
-    menuText: '#f8f9fa',
-    border: '#2d3748',
+    sidebar: '#1e1e2d', // Dark sidebar matching NobleUI
+    editor: '#151937', // Editor background matching NobleUI
+    terminal: '#1a1a2e', // Dark terminal
+    terminalText: '#d0d2e0',
+    statusBar: '#1e1e2d', // Status bar
+    statusText: '#d0d2e0',
+    menuBar: '#1e1e2d', // Exact same as sidebar
+    menuText: '#d0d2e0',
+    border: '#2d324b', // Slightly lighter border
     
     // Light mode as an option
     modes: {
