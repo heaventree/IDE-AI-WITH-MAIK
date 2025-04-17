@@ -1,0 +1,187 @@
+{
+  "project": {
+    "PROJECT_NAME": "Bolt DIY",
+    "PROJECT_DESCRIPTION": "An advanced AI-powered collaborative IDE with intelligent code suggestions, error monitoring, and developer productivity tools",
+    "PROJECT_VISION": "Bolt DIY aims to be the most advanced, reliable, and accessible AI-powered development environment that enhances developer productivity through intelligent assistance, comprehensive error monitoring, and collaborative tools.",
+    "PROJECT_BACKGROUND": "The Bolt DIY platform began as a way to democratize AI-assisted development, but encountered challenges with memory management, token optimization, and error handling that impacted user experience. The remediation project addresses these core issues to make the platform robust and enterprise-ready.",
+    "PROJECT_CHALLENGES": "The current implementation suffers from monolithic architecture, inconsistent error handling, memory limitations, and lack of observability. These issues lead to context loss, hallucinations, crashes, and poor performance under load.",
+    "PROJECT_GOAL_1": "Implement a modular, maintainable architecture with clearly defined interfaces",
+    "PROJECT_GOAL_2": "Create a robust memory management system to prevent context loss and hallucinations",
+    "PROJECT_GOAL_3": "Establish comprehensive error handling with proper monitoring and recovery paths",
+    "PROJECT_GOAL_4": "Optimize LLM interactions for token efficiency and context window management",
+    "PROJECT_GOAL_5": "Add governance and transparency features for responsible AI usage",
+    "SUCCESS_FACTOR_1": "Reduced error rates and system crashes",
+    "SUCCESS_FACTOR_2": "Improved conversation coherence and context retention",
+    "SUCCESS_FACTOR_3": "Decreased token usage and improved response times",
+    "PROJECT_BUDGET_RESOURCES": "Dedicated internal development team with AI expertise"
+  },
+  "stakeholders": {
+    "STAKEHOLDER_ROLE_1": "Developer Team",
+    "STAKEHOLDER_RESPONSIBILITY_1": "Implementing the remediation plan and maintaining the codebase",
+    "STAKEHOLDER_ROLE_2": "Product Managers",
+    "STAKEHOLDER_RESPONSIBILITY_2": "Defining requirements and prioritizing features",
+    "STAKEHOLDER_ROLE_3": "End Users",
+    "STAKEHOLDER_RESPONSIBILITY_3": "Providing feedback on usability and performance"
+  },
+  "timeline": {
+    "MILESTONE_1": "Core Architecture Implementation",
+    "MILESTONE_1_DATE": "Q2 2025",
+    "MILESTONE_1_DESCRIPTION": "Implementing modular architecture, dependency injection, and error handling",
+    "MILESTONE_2": "Memory and Token Optimization",
+    "MILESTONE_2_DATE": "Q3 2025",
+    "MILESTONE_2_DESCRIPTION": "Implementing advanced memory management and token optimization",
+    "MILESTONE_3": "Governance and Monitoring",
+    "MILESTONE_3_DATE": "Q4 2025",
+    "MILESTONE_3_DESCRIPTION": "Adding AI governance, monitoring, and transparency features"
+  },
+  "scope": {
+    "IN_SCOPE_1": "Core agent architecture refactoring",
+    "IN_SCOPE_2": "Memory management system overhaul",
+    "IN_SCOPE_3": "Error handling and monitoring framework",
+    "OUT_OF_SCOPE_1": "User interface redesign",
+    "OUT_OF_SCOPE_2": "Additional AI models beyond current offerings",
+    "OUT_OF_SCOPE_3": "Third-party integrations beyond those already supported"
+  },
+  "risks": {
+    "RISK_1": "Regression in existing functionality during refactoring",
+    "RISK_1_IMPACT": "High",
+    "RISK_1_LIKELIHOOD": "Medium",
+    "RISK_1_MITIGATION": "Comprehensive test suite and gradual migration strategy",
+    "RISK_2": "Performance degradation from added monitoring",
+    "RISK_2_IMPACT": "Medium",
+    "RISK_2_LIKELIHOOD": "Low",
+    "RISK_2_MITIGATION": "Performance testing and optimization during implementation",
+    "RISK_3": "Increased complexity in the system architecture",
+    "RISK_3_IMPACT": "Medium",
+    "RISK_3_LIKELIHOOD": "Medium",
+    "RISK_3_MITIGATION": "Clear documentation and adherence to design patterns"
+  },
+  "metrics": {
+    "METRIC_1": "Error Rate",
+    "METRIC_1_TARGET": "<1% of requests resulting in system errors",
+    "METRIC_1_METHOD": "Monitoring through Sentry and internal analytics",
+    "METRIC_2": "Token Usage Efficiency",
+    "METRIC_2_TARGET": "20% reduction in average tokens per request",
+    "METRIC_2_METHOD": "Comparison of token counts before and after optimization",
+    "METRIC_3": "Context Retention",
+    "METRIC_3_TARGET": "90% accuracy in recalling information from previous interactions",
+    "METRIC_3_METHOD": "Automated testing with conversation simulations"
+  },
+  "architecture": {
+    "SYSTEM_OVERVIEW": "Bolt DIY uses a modular architecture with clear interfaces between components. The system employs dependency injection for flexibility and testability, with a central Agent orchestrating interactions between specialized managers for state, memory, prompts, and tools.",
+    "SYSTEM_COMPONENTS": "Agent, StateManager, MemoryManager, PromptManager, ToolExecutor, ErrorHandler, AIGovernance",
+    "NETWORK_DIAGRAM": "Client <-> API Server <-> Agent System <-> LLM API",
+    "DATA_FLOW": "User requests flow from the client to the API server, which passes them to the Agent. The Agent orchestrates state retrieval, memory access, prompt construction, LLM calls, and tool execution before returning responses.",
+    "API_ENDPOINTS": "/api/query (main endpoint for user interactions), /api/command (for tool execution), /api/session (for session management)",
+    "DATABASE_SCHEMA": "Primary tables include users, sessions, conversations, memories, and governance_logs",
+    "INFRASTRUCTURE": "Node.js backend with TypeScript, deployed on Replit infrastructure"
+  },
+  "tech_stack": {
+    "FRONTEND_FRAMEWORK": "React",
+    "FRONTEND_LANGUAGES": "TypeScript, HTML, CSS",
+    "BACKEND_FRAMEWORK": "Node.js with Express",
+    "BACKEND_LANGUAGES": "TypeScript",
+    "DATABASE_TYPE": "PostgreSQL with vector extensions for semantic search",
+    "API_FRAMEWORK": "REST with Express, WebSockets for real-time updates",
+    "DEVOPS_TOOLS": "Replit workflows, Sentry for monitoring",
+    "TESTING_FRAMEWORK": "Jest, React Testing Library"
+  },
+  "development_workflow": {
+    "BRANCHING_STRATEGY": "GitHub Flow with feature branches and pull requests",
+    "PR_PROCESS": "Pull requests require at least one review and passing tests",
+    "CODE_REVIEW_PROCESS": "Code reviews focus on architecture adherence, error handling, and test coverage",
+    "TESTING_PROCESS": "Unit tests for each component, integration tests for key workflows, end-to-end tests for critical paths",
+    "RELEASE_PROCESS": "Staged releases through development, staging, and production environments",
+    "DEPLOYMENT_PROCESS": "Automated deployments through Replit after successful test runs",
+    "LOCAL_SETUP": "Clone repository, install dependencies, set environment variables, and run npm start"
+  },
+  "coding_standards": {
+    "STYLE_GUIDE": "ESLint with Prettier for TypeScript",
+    "NAMING_CONVENTIONS": "camelCase for variables and functions, PascalCase for classes and interfaces, ALL_CAPS for constants",
+    "CODE_ORGANIZATION": "Modules grouped by functionality, interfaces defined in separate files, clear dependency injection",
+    "COMMENTING_STANDARDS": "JSDoc for all public methods, inline comments for complex logic, README.md for each module",
+    "LINTING_TOOLS": "ESLint with TypeScript and Prettier plugins",
+    "COMMON_PATTERNS": "Repository pattern for data access, Strategy pattern for algorithm selection, Observer pattern for events"
+  },
+  "design_system": {
+    "DESIGN_PHILOSOPHY": "Clean, accessible interfaces that prioritize developer productivity and minimize cognitive load",
+    "BRAND_GUIDELINES": "Modern, professional aesthetic with a focus on readability and usability",
+    "COMPONENT_LIBRARY": "Shadcn UI components with custom Bolt DIY theme"
+  },
+  "accessibility": {
+    "ACCESSIBILITY_OVERVIEW": "Bolt DIY is committed to providing an accessible development environment for all users, including those with disabilities. Our accessibility standards ensure that all developers, regardless of ability, can utilize the full power of our AI-assisted coding platform.",
+    "WCAG_LEVEL": "WCAG 2.1 AA",
+    "SPECIFIC_REQUIREMENTS": "Support for screen readers, keyboard navigation, and high-contrast mode",
+    "LEGAL_CONSIDERATIONS": "Compliance with ADA requirements and international accessibility standards",
+    "ACCESSIBILITY_FEATURES": "Keyboard shortcuts, screen reader support, customizable UI elements",
+    "SCREEN_READER_SUPPORT": "ARIA attributes, semantic HTML, and screen reader testing",
+    "KEYBOARD_NAVIGATION": "Full keyboard navigation with intuitive shortcuts",
+    "COLOR_CONTRAST": "Minimum 4.5:1 contrast ratio for text, 3:1 for large text and UI components",
+    "ACCESSIBILITY_TESTING": "Automated testing with axe-core and manual testing with screen readers"
+  },
+  "testing": {
+    "UNIT_TESTING": "Jest for TypeScript components with >80% code coverage target",
+    "INTEGRATION_TESTING": "Testing interactions between components with mocked dependencies",
+    "E2E_TESTING": "Playwright for critical user journeys",
+    "PERFORMANCE_TESTING": "Load testing with k6, performance monitoring with Sentry",
+    "ACCESSIBILITY_TESTING": "Automated testing with axe-core, manual testing with screen readers",
+    "SECURITY_TESTING": "Static analysis, dependency scanning, and penetration testing",
+    "TEST_ENVIRONMENTS": "Local, development, staging, and production environments"
+  },
+  "security": {
+    "AUTHENTICATION": "JWT-based authentication with secure cookie storage",
+    "AUTHORIZATION": "Role-based access control with granular permissions",
+    "DATA_PROTECTION": "Data encryption at rest and in transit, secure handling of API keys",
+    "SECURITY_STANDARDS": "OWASP Top 10 compliance, regular security audits",
+    "COMPLIANCE_REQUIREMENTS": "GDPR, CCPA, and industry-standard data protection",
+    "VULNERABILITY_MANAGEMENT": "Regular dependency updates, vulnerability scanning, responsible disclosure program",
+    "SECURITY_TESTING": "Static analysis, dependency scanning, and regular penetration testing"
+  },
+  "deployment": {
+    "DEPLOYMENT_ENVIRONMENTS": "Development, Staging, and Production environments on Replit",
+    "CI_CD_PIPELINE": "Automated testing and deployment through Replit workflows",
+    "ROLLBACK_STRATEGY": "Version control with capability to revert to previous deployments",
+    "MONITORING_APPROACH": "Sentry for error tracking, custom analytics for performance monitoring",
+    "ALERTING_SYSTEM": "Sentry alerts for critical errors, custom alerts for performance thresholds",
+    "HEALTH_CHECKS": "Regular API endpoint health checks and system diagnostics",
+    "SCALING_STRATEGY": "Horizontal scaling based on user load and resource utilization"
+  },
+  "ai_integration": {
+    "AI_CAPABILITIES": "Code generation, error analysis, natural language to code conversion, context-aware assistance",
+    "AI_MODELS": "GPT-4 for main interactions, specialized models for specific tasks",
+    "DATA_PIPELINE": "Secure data processing pipeline with vector embeddings for memory retrieval",
+    "TRAINING_PROCESS": "Models use pretrained weights with optional fine-tuning for code-specific tasks",
+    "ETHICAL_CONSIDERATIONS": "Bias detection, transparency in AI decisions, responsible AI usage",
+    "PERFORMANCE_METRICS": "Response time, accuracy, hallucination rate, and user satisfaction",
+    "FALLBACK_STRATEGIES": "Graceful degradation to simpler models or rule-based approaches when needed"
+  },
+  "wordpress_integration": {
+    "WORDPRESS_INTEGRATION_OVERVIEW": "Not applicable for Bolt DIY",
+    "WORDPRESS_ARCHITECTURE": "Not applicable for Bolt DIY",
+    "PLUGIN_STRATEGY": "Not applicable for Bolt DIY",
+    "THEME_CUSTOMIZATION": "Not applicable for Bolt DIY",
+    "DATA_SYNCHRONIZATION": "Not applicable for Bolt DIY",
+    "AUTHENTICATION_FLOW": "Not applicable for Bolt DIY",
+    "CONTENT_MANAGEMENT": "Not applicable for Bolt DIY"
+  },
+  "tasks": {
+    "HIGH_PRIORITY_TASK_1": "Implement ErrorHandler with Sentry integration",
+    "HIGH_PRIORITY_TASK_1_ASSIGNEE": "Development Team",
+    "HIGH_PRIORITY_TASK_1_DUE_DATE": "Q2 2025",
+    "HIGH_PRIORITY_TASK_1_STATUS": "In Progress",
+    "HIGH_PRIORITY_TASK_1_BLOCKERS": "None",
+    "HIGH_PRIORITY_TASK_1_NOTES": "Focus on comprehensive error categorization and user-friendly messages",
+    "HIGH_PRIORITY_TASK_2": "Develop advanced MemoryManager with vector search",
+    "HIGH_PRIORITY_TASK_2_ASSIGNEE": "Development Team",
+    "HIGH_PRIORITY_TASK_2_DUE_DATE": "Q2 2025",
+    "HIGH_PRIORITY_TASK_2_STATUS": "Not Started",
+    "HIGH_PRIORITY_TASK_2_BLOCKERS": "Dependency on core architecture implementation",
+    "HIGH_PRIORITY_TASK_2_NOTES": "Hybrid approach with short-term buffer and long-term vector store",
+    "HIGH_PRIORITY_TASK_3": "Implement AI Governance module",
+    "HIGH_PRIORITY_TASK_3_ASSIGNEE": "Development Team",
+    "HIGH_PRIORITY_TASK_3_DUE_DATE": "Q3 2025",
+    "HIGH_PRIORITY_TASK_3_STATUS": "Not Started",
+    "HIGH_PRIORITY_TASK_3_BLOCKERS": "Dependency on core architecture implementation",
+    "HIGH_PRIORITY_TASK_3_NOTES": "Focus on transparency, bias detection, and decision logging"
+  }
+}
