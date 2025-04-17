@@ -80,14 +80,13 @@ const sampleFiles: FileItem[] = [
 // File icon based on file type/extension
 const FileIcon: React.FC<{ name: string, language?: string }> = ({ name, language }) => {
   const getIconClass = () => {
-    if (language === 'json') return 'file-icon-json';
-    if (language === 'markdown') return 'file-icon-md';
-    if (name.endsWith('.tsx') || name.endsWith('.ts')) return 'file-icon-ts';
-    if (name.endsWith('.js') || name.endsWith('.jsx')) return 'file-icon-js';
-    if (name.endsWith('.css')) return 'file-icon-css';
-    if (name.endsWith('.html')) return 'file-icon-html';
-    if (name.match(/\.(png|jpg|jpeg|gif|svg|webp)$/i)) return 'file-icon-img';
-    return 'file-icon-default';
+    if (language === 'json') return 'json-icon';
+    if (language === 'markdown') return 'md-icon';
+    if (name.endsWith('.tsx') || name.endsWith('.ts')) return 'ts-icon';
+    if (name.endsWith('.js') || name.endsWith('.jsx')) return 'js-icon';
+    if (name.endsWith('.css')) return 'css-icon';
+    if (name.endsWith('.html')) return 'html-icon';
+    return 'file-icon';
   };
 
   const getIcon = () => {
@@ -99,7 +98,7 @@ const FileIcon: React.FC<{ name: string, language?: string }> = ({ name, languag
     return <FileText size={16} />;
   };
 
-  return <span className={getIconClass()}>{getIcon()}</span>;
+  return <span className={`file-icon ${getIconClass()}`}>{getIcon()}</span>;
 };
 
 // File or folder item component with enhanced styling
@@ -117,32 +116,37 @@ const FileTreeItem: React.FC<{ item: FileItem, depth: number, isActive?: boolean
   };
   
   return (
-    <div>
+    <div className="filetree-item-container">
       <div
-        className={`file-tree-item ${isActive ? 'active' : ''}`}
+        className={`filetree-item ${isActive ? 'active' : ''}`}
         style={{ paddingLeft: `${depth * 12 + 8}px` }}
         onClick={toggleExpanded}
       >
-        {item.type === 'folder' && (
-          <span className={`file-tree-toggle ${expanded ? 'expanded' : ''}`}>
-            {expanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
-          </span>
+        {item.type === 'folder' ? (
+          <div className="filetree-expander">
+            {expanded ? 
+              <ChevronDown size={14} className="chevron-icon" /> : 
+              <ChevronRight size={14} className="chevron-icon" />
+            }
+          </div>
+        ) : (
+          <div className="filetree-spacer" />
         )}
         
-        <span className="file-tree-item-icon">
+        <div className={`filetree-icon ${item.type === 'folder' ? 'folder-icon' : ''}`}>
           {item.type === 'folder' ? 
-            <FolderTree size={16} className="file-icon-directory" /> : 
+            <FolderTree size={16} className="folder-tree-icon" /> : 
             <FileIcon name={item.name} language={item.language} />
           }
-        </span>
+        </div>
         
-        <span className="file-tree-item-name">
+        <div className={`filetree-name ${item.type === 'folder' ? 'folder' : 'file'}`}>
           {item.name}
-        </span>
+        </div>
       </div>
       
       {item.type === 'folder' && expanded && item.children && (
-        <div className="file-tree-directory">
+        <div className="filetree-children">
           {item.children.map((child, index) => (
             <FileTreeItem 
               key={`${child.name}-${index}`} 
@@ -372,18 +376,18 @@ const Sidebar: React.FC<SidebarProps> = () => {
       case 'files':
         return (
           <div className="sidebar-section">
-            <div className="sidebar-section-header">
-              <div>EXPLORER</div>
-              <div className="sidebar-section-actions">
+            <div className="sidebar-header">
+              <div className="sidebar-title">EXPLORER</div>
+              <div className="sidebar-actions">
                 <button 
-                  className="btn btn-ghost btn-xs"
+                  className="icon-button small"
                   aria-label="New file" 
                   title="New file"
                 >
                   <FilePlus size={16} />
                 </button>
                 <button 
-                  className="btn btn-ghost btn-xs"
+                  className="icon-button small"
                   aria-label="New folder" 
                   title="New folder"
                 >
@@ -391,7 +395,7 @@ const Sidebar: React.FC<SidebarProps> = () => {
                 </button>
               </div>
             </div>
-            <div className="file-tree">
+            <div className="filetree">
               {sampleFiles.map((file, index) => (
                 <FileTreeItem key={`${file.name}-${index}`} item={file} depth={0} />
               ))}
@@ -421,56 +425,70 @@ const Sidebar: React.FC<SidebarProps> = () => {
   };
   
   return (
-    <div className="sidebar">
-      <div className="sidebar-tabs">
-        <div 
-          className={`sidebar-tab ${activeSidebarIcon === 'files' ? 'active' : ''}`}
-          onClick={() => setActiveSidebarIcon('files')}
-        >
-          Files
+    <div className="advanced-sidebar-container">
+      <div className="sidebar-activity-bar">
+        <div className="activity-bar-top">
+          <button 
+            className={`activity-bar-item ${activeSidebarIcon === 'files' ? 'active' : ''}`}
+            onClick={() => setActiveSidebarIcon('files')}
+            title="Explorer"
+          >
+            <FolderTree size={22} />
+            {activeSidebarIcon === 'files' && <div className="activity-bar-active-indicator" />}
+          </button>
+          
+          <button 
+            className={`activity-bar-item ${activeSidebarIcon === 'search' ? 'active' : ''}`}
+            onClick={() => setActiveSidebarIcon('search')}
+            title="Search"
+          >
+            <Search size={22} />
+            {activeSidebarIcon === 'search' && <div className="activity-bar-active-indicator" />}
+          </button>
+          
+          <button 
+            className={`activity-bar-item ${activeSidebarIcon === 'git' ? 'active' : ''}`}
+            onClick={() => setActiveSidebarIcon('git')}
+            title="Source Control"
+          >
+            <GitBranch size={22} />
+            {activeSidebarIcon === 'git' && <div className="activity-bar-active-indicator" />}
+          </button>
+          
+          <button 
+            className={`activity-bar-item ${activeSidebarIcon === 'extensions' ? 'active' : ''}`}
+            onClick={() => setActiveSidebarIcon('extensions')}
+            title="Extensions"
+          >
+            <Package size={22} />
+            {activeSidebarIcon === 'extensions' && <div className="activity-bar-active-indicator" />}
+          </button>
+          
+          <button 
+            className={`activity-bar-item ${activeSidebarIcon === 'collab' ? 'active' : ''}`}
+            onClick={() => setActiveSidebarIcon('collab')}
+            title="Collaboration"
+          >
+            <Users size={22} />
+            {activeSidebarIcon === 'collab' && <div className="activity-bar-active-indicator" />}
+            <div className="activity-notification" title="3 users online">3</div>
+          </button>
         </div>
-        <div 
-          className={`sidebar-tab ${activeSidebarIcon === 'search' ? 'active' : ''}`}
-          onClick={() => setActiveSidebarIcon('search')}
-        >
-          Search
-        </div>
-        <div 
-          className={`sidebar-tab ${activeSidebarIcon === 'git' ? 'active' : ''}`}
-          onClick={() => setActiveSidebarIcon('git')}
-        >
-          Git
+        
+        <div className="activity-bar-bottom">
+          <button 
+            className={`activity-bar-item ${activeSidebarIcon === 'settings' ? 'active' : ''}`}
+            onClick={() => setActiveSidebarIcon('settings')}
+            title="Settings"
+          >
+            <Settings size={22} />
+            {activeSidebarIcon === 'settings' && <div className="activity-bar-active-indicator" />}
+          </button>
         </div>
       </div>
       
-      <div className="sidebar-content">
-        <div className="sidebar-section">
-          <div className="sidebar-section-header">
-            <div>EXPLORER</div>
-            <div className="sidebar-section-actions">
-              <button 
-                className="btn btn-ghost btn-xs"
-                aria-label="New file" 
-                title="New file"
-              >
-                <FilePlus size={16} />
-              </button>
-              <button 
-                className="btn btn-ghost btn-xs"
-                aria-label="New folder" 
-                title="New folder"
-              >
-                <FolderPlus size={16} />
-              </button>
-            </div>
-          </div>
-          
-          <div className="file-tree">
-            {sampleFiles.map((file, index) => (
-              <FileTreeItem key={`${file.name}-${index}`} item={file} depth={0} />
-            ))}
-          </div>
-        </div>
+      <div className="sidebar-content-panel">
+        {renderSidebarContent()}
       </div>
     </div>
   );

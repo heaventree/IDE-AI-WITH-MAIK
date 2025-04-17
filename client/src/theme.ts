@@ -322,8 +322,210 @@ const theme: Theme = {
         cursor: 'not-allowed',
       },
     },
+    
+    // Outline button
+    outline: {
+      bg: 'transparent',
+      color: 'primary',
+      fontSize: 1,
+      fontWeight: 500,
+      borderRadius: '4px',
+      transition: 'all 0.2s ease',
+      border: '1px solid',
+      borderColor: 'primary',
+      cursor: 'pointer',
+      '&:hover': {
+        bg: 'primaryMuted',
+      },
+      '&:active': {
+        bg: 'primaryMuted',
+        opacity: 0.8,
+      },
+      '&:focus-visible': {
+        outline: '2px solid',
+        outlineColor: 'borderFocus',
+        outlineOffset: '2px',
+      },
+      '&:disabled': {
+        color: 'foregroundDisabled',
+        borderColor: 'borderMuted',
+        cursor: 'not-allowed',
+      },
+    },
+    
+    // Danger button
+    danger: {
+      bg: 'danger',
+      color: 'white',
+      fontSize: 1,
+      fontWeight: 500,
+      borderRadius: '4px',
+      transition: 'all 0.2s ease',
+      border: 'none',
+      cursor: 'pointer',
+      '&:hover': {
+        bg: 'danger',
+        opacity: 0.9,
+        transform: 'translateY(-1px)',
+        boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+      },
+      '&:active': {
+        opacity: 1,
+        transform: 'translateY(0px)',
+        boxShadow: 'none',
+      },
+      '&:focus-visible': {
+        outline: '2px solid',
+        outlineColor: 'danger',
+        outlineOffset: '2px',
+      },
+      '&:disabled': {
+        bg: 'backgroundDisabled',
+        color: 'foregroundDisabled',
+        cursor: 'not-allowed',
+        transform: 'none',
+        boxShadow: 'none',
+      },
+    },
+    
+    // Icon button
+    icon: {
+      bg: 'transparent',
+      color: 'foreground',
+      p: 1,
+      width: '32px',
+      height: '32px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: '4px',
+      transition: 'all 0.2s ease',
+      border: 'none',
+      cursor: 'pointer',
+      '&:hover': {
+        bg: 'sidebarItemHover',
+        color: 'primary',
+      },
+      '&:active': {
+        bg: 'sidebarItemActive',
+      },
+      '&:focus-visible': {
+        outline: '2px solid',
+        outlineColor: 'borderFocus',
+        outlineOffset: '2px',
+      },
+      '&:disabled': {
+        color: 'foregroundDisabled',
+        cursor: 'not-allowed',
+      },
+    },
+    
+    // Text button (no background or border)
+    text: {
+      bg: 'transparent',
+      color: 'foreground',
+      p: 1,
+      fontSize: 1,
+      borderRadius: '4px',
+      transition: 'all 0.2s ease',
+      border: 'none',
+      cursor: 'pointer',
+      '&:hover': {
+        color: 'primary',
+      },
+      '&:active': {
+        opacity: 0.8,
+      },
+      '&:focus-visible': {
+        outline: '2px solid',
+        outlineColor: 'borderFocus',
+        outlineOffset: '2px',
+      },
+      '&:disabled': {
+        color: 'foregroundDisabled',
+        cursor: 'not-allowed',
+      },
+    },
   },
-  
+
+  // Enhanced card components for modern UI
+  cards: {
+    // Standard card
+    primary: {
+      p: 3,
+      borderRadius: '6px',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+      bg: 'backgroundElevated',
+      border: '1px solid',
+      borderColor: 'borderMuted',
+      transition: 'all 0.2s ease',
+      '&:hover': {
+        boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+        transform: 'translateY(-2px)',
+        borderColor: 'border',
+      },
+    },
+    
+    // Compact card for tight spaces
+    compact: {
+      p: 2,
+      borderRadius: '4px',
+      boxShadow: '0 1px 3px rgba(0,0,0,0.12)',
+      bg: 'backgroundElevated',
+      border: '1px solid',
+      borderColor: 'borderMuted',
+    },
+    
+    // Floating card for popups/tooltips
+    floating: {
+      p: 3,
+      borderRadius: '8px',
+      boxShadow: '0 4px 20px rgba(0,0,0,0.25)',
+      bg: 'backgroundFloating',
+      border: '1px solid',
+      borderColor: 'border',
+    },
+    
+    // Panel card for IDE sections
+    panel: {
+      p: 0,
+      borderRadius: '0',
+      bg: 'backgroundElevated', 
+      borderBottom: '1px solid',
+      borderColor: 'border',
+    },
+    
+    // Glass card with blur effect
+    glass: {
+      p: 3,
+      borderRadius: '12px',
+      bg: 'rgba(26, 31, 51, 0.6)',
+      backdropFilter: 'blur(10px)',
+      border: '1px solid',
+      borderColor: 'rgba(255, 255, 255, 0.1)',
+    },
+    
+    // Interactive card with stronger hover effects
+    interactive: {
+      p: 3,
+      borderRadius: '6px',
+      bg: 'backgroundElevated',
+      border: '1px solid',
+      borderColor: 'borderMuted',
+      cursor: 'pointer',
+      transition: 'all 0.2s ease',
+      '&:hover': {
+        boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+        transform: 'translateY(-2px)',
+        borderColor: 'primary',
+      },
+      '&:active': {
+        transform: 'translateY(0)',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.15)',
+      },
+    },
+  },
+
   // Enhanced layout components for a sophisticated IDE
   layout: {
     // Main container
@@ -387,59 +589,688 @@ const theme: Theme = {
     // Collapsible sidebar
     sidebar: {
       gridArea: 'sidebar',
+      width: '100%',
       bg: 'sidebar',
-      display: 'flex',
-      flexDirection: 'column',
       height: '100%',
+      overflow: 'auto',
       borderRight: '1px solid',
       borderColor: 'border',
+      transition: 'all 0.3s ease',
+      display: 'flex',
+      flexDirection: 'column',
+      '&.collapsed': {
+        width: '60px',
+      },
+      // Custom scrollbar
+      '&::-webkit-scrollbar': {
+        width: '8px',
+      },
+      '&::-webkit-scrollbar-track': {
+        background: 'transparent',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        background: 'rgba(114, 124, 245, 0.3)',
+        borderRadius: '4px',
+      },
+      '&::-webkit-scrollbar-thumb:hover': {
+        background: 'rgba(114, 124, 245, 0.5)',
+      },
     },
     
-    // Menu bar at the top of the IDE
-    menubar: {
-      gridArea: 'menubar',
-      bg: 'menuBar',
-      borderBottom: '1px solid',
-      borderColor: 'border',
+    // Sidebar section
+    sidebarSection: {
+      p: 0,
+      my: 2,
+      '& h3': {
+        fontSize: 1,
+        fontWeight: 600,
+        color: 'foregroundMuted',
+        mx: 3,
+        my: 2,
+        textTransform: 'uppercase',
+        letterSpacing: '0.5px',
+      }
+    },
+    
+    // Sidebar item
+    sidebarItem: {
+      py: 2,
+      px: 3,
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'space-between',
-      padding: '0 16px',
-      height: '60px',
+      color: 'sidebarText',
+      cursor: 'pointer',
+      transition: 'all 0.2s ease',
+      borderLeft: '3px solid',
+      borderColor: 'transparent',
+      '&:hover': {
+        bg: 'sidebarItemHover',
+        color: 'primary',
+      },
+      '&.active': {
+        bg: 'sidebarItemActive',
+        color: 'primary',
+        borderColor: 'primary',
+      },
+      '& svg': {
+        mr: 2,
+        flexShrink: 0,
+      },
     },
     
-    // The editor area
+    // Main editor area
     editor: {
       gridArea: 'editor',
       bg: 'editor',
-      overflowY: 'auto',
+      height: '100%',
+      overflow: 'hidden',
       display: 'flex',
       flexDirection: 'column',
     },
     
-    // The terminal area below the editor
+    // Editor tabs
+    editorTabs: {
+      display: 'flex',
+      bg: 'backgroundElevated',
+      borderBottom: '1px solid',
+      borderColor: 'border',
+      overflowX: 'auto',
+      '&::-webkit-scrollbar': {
+        height: '0px',
+      },
+    },
+    
+    // Editor tab
+    editorTab: {
+      py: 2,
+      px: 3,
+      display: 'flex',
+      alignItems: 'center',
+      fontSize: 0,
+      color: 'foregroundMuted',
+      bg: 'transparent',
+      cursor: 'pointer',
+      borderRight: '1px solid',
+      borderColor: 'borderMuted',
+      whiteSpace: 'nowrap',
+      transition: 'all 0.2s ease',
+      '&:hover': {
+        color: 'foreground',
+        bg: 'backgroundHover',
+      },
+      '&.active': {
+        color: 'foreground',
+        bg: 'editor',
+        borderBottom: '2px solid',
+        borderColor: 'primary',
+        fontWeight: 500,
+      },
+      '& svg': {
+        mr: 2,
+        flexShrink: 0,
+      },
+      '& .close': {
+        ml: 2,
+        opacity: 0.5,
+        '&:hover': {
+          opacity: 1,
+        },
+      },
+    },
+    
+    // Editor content
+    editorContent: {
+      flex: 1,
+      overflow: 'auto',
+      position: 'relative',
+      fontSize: 1,
+      fontFamily: 'monospace',
+      lineHeight: 1.6,
+      '&::-webkit-scrollbar': {
+        width: '10px',
+        height: '10px',
+      },
+      '&::-webkit-scrollbar-track': {
+        background: 'transparent',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        background: 'rgba(45, 50, 75, 0.5)',
+        borderRadius: '4px',
+      },
+      '&::-webkit-scrollbar-thumb:hover': {
+        background: 'rgba(45, 50, 75, 0.8)',
+      },
+    },
+    
+    // Terminal
     terminal: {
       gridArea: 'terminal',
       bg: 'terminal',
-      borderTop: '1px solid',
-      borderColor: 'border',
+      color: 'terminalText',
+      fontFamily: 'monospace',
+      p: 0,
+      height: '100%',
+      overflow: 'hidden',
       display: 'flex',
       flexDirection: 'column',
-    },
-    
-    // Status bar at the bottom of the IDE
-    statusbar: {
-      gridArea: 'statusbar',
-      bg: 'statusBar',
       borderTop: '1px solid',
       borderColor: 'border',
+    },
+    
+    // Terminal header
+    terminalHeader: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      padding: '0 8px',
-      fontSize: 0,
-      color: 'foregroundMuted',
+      bg: 'backgroundElevated',
+      px: 3,
+      py: 1,
+      borderBottom: '1px solid',
+      borderColor: 'borderMuted',
+      '& h3': {
+        fontSize: 0,
+        fontWeight: 600,
+        color: 'foregroundMuted',
+        margin: 0,
+      },
+    },
+    
+    // Terminal content
+    terminalContent: {
+      flex: 1,
+      overflow: 'auto',
+      p: 2,
+      '&::-webkit-scrollbar': {
+        width: '8px',
+      },
+      '&::-webkit-scrollbar-track': {
+        background: 'transparent',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        background: 'rgba(45, 50, 75, 0.5)',
+        borderRadius: '4px',
+      },
+      '&::-webkit-scrollbar-thumb:hover': {
+        background: 'rgba(45, 50, 75, 0.8)',
+      },
+      '& .command': {
+        color: 'terminalCommand',
+        fontWeight: 600,
+      },
+      '& .output': {
+        color: 'terminalOutput',
+      },
+      '& .error': {
+        color: 'danger',
+      },
+      '& .success': {
+        color: 'success',
+      },
+    },
+    
+    // Menu bar
+    menuBar: {
+      gridArea: 'menubar',
+      bg: 'menuBar',
+      color: 'menuText',
+      height: '60px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      px: 3,
+      borderBottom: '1px solid',
+      borderColor: 'border',
+      zIndex: 10,
+    },
+    
+    // Menu bar brand section
+    menuBarBrand: {
+      display: 'flex',
+      alignItems: 'center',
+      '& .logo': {
+        mr: 2,
+        height: '32px',
+        width: 'auto',
+      },
+      '& h1': {
+        fontSize: 3,
+        fontWeight: 700,
+        margin: 0,
+        background: 'linear-gradient(90deg, #727cf5 0%, #6571ff 50%, #4a57eb 100%)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+      },
+    },
+    
+    // Menu list
+    menuList: {
+      display: 'flex',
+      alignItems: 'center',
+      listStyle: 'none',
+      margin: 0,
+      padding: 0,
+      '& li': {
+        mr: 3,
+        position: 'relative',
+      },
+      '& li:last-child': {
+        mr: 0,
+      },
+    },
+    
+    // Menu item
+    menuItem: {
+      cursor: 'pointer',
+      px: 2,
+      py: 1,
+      borderRadius: '4px',
+      transition: 'all 0.2s ease',
+      '&:hover': {
+        bg: 'menuItemHover',
+      },
+      '&.active': {
+        color: 'primary',
+      },
+    },
+    
+    // Status bar
+    statusBar: {
+      gridArea: 'statusbar',
+      bg: 'statusBar',
+      color: 'statusText',
       height: '24px',
+      fontSize: 0,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      px: 2,
+      borderTop: '1px solid',
+      borderColor: 'border',
+    },
+    
+    // Status bar items
+    statusBarItems: {
+      display: 'flex',
+      alignItems: 'center',
+      '& .status-item': {
+        display: 'flex',
+        alignItems: 'center',
+        px: 2,
+        borderRight: '1px solid',
+        borderColor: 'borderMuted',
+        '& svg': {
+          mr: 1,
+        },
+      },
+      '& .status-item:last-child': {
+        borderRight: 'none',
+      },
+    },
+    
+    // Collaboration panel
+    collaborationPanel: {
+      position: 'absolute',
+      bottom: '50px',
+      right: '20px',
+      width: '300px',
+      maxHeight: '50vh',
+      bg: 'backgroundFloating',
+      borderRadius: '8px',
+      boxShadow: '0 4px 20px rgba(0,0,0,0.25)',
+      border: '1px solid',
+      borderColor: 'border',
+      overflow: 'hidden',
+      display: 'flex',
+      flexDirection: 'column',
+      zIndex: 1000,
+    },
+    
+    // Collaboration header
+    collaborationHeader: {
+      bg: 'primary',
+      color: 'white',
+      py: 2,
+      px: 3,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      '& h3': {
+        margin: 0,
+        fontSize: 1,
+        fontWeight: 600,
+      },
+    },
+    
+    // Collaboration content
+    collaborationContent: {
+      flex: 1,
+      overflow: 'auto',
+      p: 0,
+      '&::-webkit-scrollbar': {
+        width: '8px',
+      },
+      '&::-webkit-scrollbar-track': {
+        background: 'transparent',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        background: 'rgba(114, 124, 245, 0.3)',
+        borderRadius: '4px',
+      },
+      '&::-webkit-scrollbar-thumb:hover': {
+        background: 'rgba(114, 124, 245, 0.5)',
+      },
+    },
+    
+    // Modal
+    modal: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100vw',
+      height: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      bg: 'rgba(21, 25, 55, 0.7)', // Based on background color
+      backdropFilter: 'blur(4px)',
+      zIndex: 1000,
+    },
+    
+    // Modal content
+    modalContent: {
+      width: '600px',
+      maxWidth: '90vw',
+      maxHeight: '85vh',
+      bg: 'backgroundFloating',
+      borderRadius: '8px',
+      boxShadow: '0 8px 32px rgba(0,0,0,0.35)',
+      overflow: 'hidden',
+      display: 'flex',
+      flexDirection: 'column',
+      border: '1px solid',
+      borderColor: 'border',
+    },
+    
+    // Modal header
+    modalHeader: {
+      bg: 'backgroundElevated',
+      py: 3,
+      px: 4,
+      borderBottom: '1px solid',
+      borderColor: 'borderMuted',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      '& h2': {
+        margin: 0,
+        fontSize: 2,
+        fontWeight: 600,
+      },
+    },
+    
+    // Modal body
+    modalBody: {
+      flex: 1,
+      overflow: 'auto',
+      p: 4,
+      '&::-webkit-scrollbar': {
+        width: '8px',
+      },
+      '&::-webkit-scrollbar-track': {
+        background: 'transparent',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        background: 'rgba(114, 124, 245, 0.3)',
+        borderRadius: '4px',
+      },
+      '&::-webkit-scrollbar-thumb:hover': {
+        background: 'rgba(114, 124, 245, 0.5)',
+      },
+    },
+    
+    // Modal footer
+    modalFooter: {
+      bg: 'backgroundElevated',
+      py: 3,
+      px: 4,
+      borderTop: '1px solid',
+      borderColor: 'borderMuted',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+      '& button': {
+        ml: 2,
+      },
+    },
+  },
+  
+  // Text variants for different UI contexts
+  text: {
+    heading: {
+      fontFamily: 'heading',
+      fontWeight: 700,
+      lineHeight: '1.3',
+      color: 'foreground',
+    },
+    title: {
+      fontFamily: 'heading',
+      fontSize: 4,
+      fontWeight: 700,
+      lineHeight: '1.3',
+      color: 'foreground',
+      mb: 3,
+    },
+    subtitle: {
+      fontFamily: 'heading',
+      fontSize: 3,
+      fontWeight: 600,
+      lineHeight: '1.4',
+      color: 'foregroundMuted',
+      mb: 2,
+    },
+    label: {
+      fontFamily: 'body',
+      fontSize: 1,
+      fontWeight: 600,
+      color: 'foreground',
+      mb: 1,
+    },
+    caption: {
+      fontFamily: 'body',
+      fontSize: 0,
+      fontWeight: 400,
+      color: 'foregroundMuted',
+    },
+    code: {
+      fontFamily: 'monospace',
+      fontSize: 1,
+      bg: 'rgba(45, 50, 75, 0.5)',
+      color: 'foreground',
+      p: 1,
+      borderRadius: '4px',
+    },
+    gradient: {
+      background: 'linear-gradient(90deg, #727cf5 0%, #6571ff 50%, #4a57eb 100%)',
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+    },
+  },
+  
+  // Form elements
+  forms: {
+    // Standard input
+    input: {
+      borderColor: 'border',
+      borderWidth: '1px',
+      borderStyle: 'solid',
+      borderRadius: '4px',
+      p: 2,
+      bg: 'backgroundElevated',
+      color: 'foreground',
+      fontFamily: 'body',
+      fontSize: 1,
+      outline: 'none',
+      width: '100%',
+      transition: 'all 0.2s ease',
+      '&:hover': {
+        borderColor: 'primary',
+      },
+      '&:focus': {
+        borderColor: 'primary',
+        boxShadow: '0 0 0 3px rgba(114, 124, 245, 0.15)',
+      },
+      '&:disabled': {
+        bg: 'backgroundDisabled',
+        color: 'foregroundDisabled',
+        cursor: 'not-allowed',
+      },
+      '&::placeholder': {
+        color: 'foregroundSubtle',
+      },
+    },
+    
+    // Textarea
+    textarea: {
+      borderColor: 'border',
+      borderWidth: '1px',
+      borderStyle: 'solid',
+      borderRadius: '4px',
+      p: 2,
+      bg: 'backgroundElevated',
+      color: 'foreground',
+      fontFamily: 'body',
+      fontSize: 1,
+      outline: 'none',
+      width: '100%',
+      minHeight: '120px',
+      resize: 'vertical',
+      transition: 'all 0.2s ease',
+      '&:hover': {
+        borderColor: 'primary',
+      },
+      '&:focus': {
+        borderColor: 'primary',
+        boxShadow: '0 0 0 3px rgba(114, 124, 245, 0.15)',
+      },
+      '&:disabled': {
+        bg: 'backgroundDisabled',
+        color: 'foregroundDisabled',
+        cursor: 'not-allowed',
+      },
+      '&::placeholder': {
+        color: 'foregroundSubtle',
+      },
+    },
+    
+    // Select
+    select: {
+      borderColor: 'border',
+      borderWidth: '1px',
+      borderStyle: 'solid',
+      borderRadius: '4px',
+      p: 2,
+      paddingRight: '2rem',
+      bg: 'backgroundElevated',
+      color: 'foreground',
+      fontFamily: 'body',
+      fontSize: 1,
+      outline: 'none',
+      width: '100%',
+      transition: 'all 0.2s ease',
+      cursor: 'pointer',
+      '&:hover': {
+        borderColor: 'primary',
+      },
+      '&:focus': {
+        borderColor: 'primary',
+        boxShadow: '0 0 0 3px rgba(114, 124, 245, 0.15)',
+      },
+      '&:disabled': {
+        bg: 'backgroundDisabled',
+        color: 'foregroundDisabled',
+        cursor: 'not-allowed',
+      },
+    },
+    
+    // Checkbox
+    checkbox: {
+      color: 'primary',
+      borderColor: 'border',
+      borderWidth: '2px',
+      borderStyle: 'solid',
+      borderRadius: '3px',
+      bg: 'backgroundElevated',
+      '&:hover': {
+        borderColor: 'primary',
+      },
+      '&:checked': {
+        bg: 'primary',
+        borderColor: 'primary',
+      },
+      '&:focus': {
+        boxShadow: '0 0 0 3px rgba(114, 124, 245, 0.15)',
+      },
+      '&:disabled': {
+        bg: 'backgroundDisabled',
+        borderColor: 'borderMuted',
+        cursor: 'not-allowed',
+      },
+    },
+    
+    // Radio
+    radio: {
+      color: 'primary',
+      borderColor: 'border',
+      borderWidth: '2px',
+      borderStyle: 'solid',
+      bg: 'backgroundElevated',
+      '&:hover': {
+        borderColor: 'primary',
+      },
+      '&:checked': {
+        bg: 'primary',
+        borderColor: 'primary',
+      },
+      '&:focus': {
+        boxShadow: '0 0 0 3px rgba(114, 124, 245, 0.15)',
+      },
+      '&:disabled': {
+        bg: 'backgroundDisabled',
+        borderColor: 'borderMuted',
+        cursor: 'not-allowed',
+      },
+    },
+    
+    // Slider
+    slider: {
+      color: 'primary',
+      '&::-webkit-slider-thumb': {
+        bg: 'primary',
+        border: 'none',
+        '&:hover': {
+          bg: 'primaryHover',
+        },
+      },
+      '&:focus': {
+        '&::-webkit-slider-thumb': {
+          boxShadow: '0 0 0 3px rgba(114, 124, 245, 0.15)',
+        },
+      },
+      '&:disabled': {
+        bg: 'backgroundDisabled',
+        '&::-webkit-slider-thumb': {
+          bg: 'foregroundDisabled',
+        },
+      },
+    },
+    
+    // Label
+    label: {
+      fontSize: 1,
+      fontWeight: 600,
+      mb: 1,
+      display: 'block',
+      color: 'foreground',
     },
   },
 };

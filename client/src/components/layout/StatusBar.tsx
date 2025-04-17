@@ -1,4 +1,3 @@
-/** @jsxImportSource theme-ui */
 import React, { useEffect, useState } from 'react';
 import { 
   Zap, Clock, GitBranch, Circle, 
@@ -20,8 +19,8 @@ interface StatusItemProps {
 
 const StatusItem: React.FC<StatusItemProps> = ({ icon, text, title, className = '' }) => (
   <div className={`statusbar-item ${className}`} title={title}>
-    <span className="statusbar-item-icon">{icon}</span>
-    <span>{text}</span>
+    <div className="statusbar-item-icon">{icon}</div>
+    <div className="statusbar-item-text">{text}</div>
   </div>
 );
 
@@ -39,53 +38,59 @@ const StatusBar: React.FC<StatusBarProps> = () => {
   }, []);
   
   return (
-    <>
+    <div className="statusbar-container">
       {/* Left status items */}
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <span style={{ display: 'flex', alignItems: 'center', marginRight: '12px' }}>
-          <Circle size={8} style={{ marginRight: '4px' }} fill={connected ? '#0dcb97' : 'none'} color={connected ? '#0dcb97' : '#7a7e96'} />
-          <span style={{ color: connected ? '#0dcb97' : '#7a7e96' }}>{connected ? 'Connected' : 'Disconnected'}</span>
-        </span>
+      <div className="statusbar-left">
+        <StatusItem 
+          icon={<Circle size={8} fill={connected ? 'currentColor' : 'none'} />}
+          text={connected ? 'Connected' : 'Disconnected'}
+          className={connected ? 'success' : 'muted'}
+        />
         
-        <span style={{ display: 'flex', alignItems: 'center', marginRight: '12px' }}>
-          <Zap size={12} style={{ marginRight: '4px' }} />
-          <span>Ready</span>
-        </span>
+        <StatusItem 
+          icon={<Zap size={12} />}
+          text="Ready"
+        />
         
-        <span style={{ display: 'flex', alignItems: 'center', marginRight: '12px' }}>
-          <FileCode size={12} style={{ marginRight: '4px' }} />
-          <span>TypeScript</span>
-        </span>
+        <StatusItem 
+          icon={<FileCode size={12} />}
+          text="TypeScript"
+        />
         
-        <span style={{ display: 'flex', alignItems: 'center' }}>
-          <Terminal size={12} style={{ marginRight: '4px' }} />
-          <span>main.ts</span>
-        </span>
+        <StatusItem 
+          icon={<Terminal size={12} />}
+          text="main.ts"
+        />
       </div>
       
       {/* Right status items */}
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <span style={{ display: 'flex', alignItems: 'center', marginRight: '12px' }}>
-          <GitBranch size={12} style={{ marginRight: '4px' }} />
-          <span>main</span>
-        </span>
+      <div className="statusbar-right">
+        <StatusItem 
+          icon={<GitBranch size={12} />}
+          text="main"
+          title="Git branch"
+        />
         
-        <span style={{ display: 'flex', alignItems: 'center', marginRight: '12px' }}>
-          <Cpu size={12} style={{ marginRight: '4px' }} />
-          <span>98%</span>
-        </span>
+        <StatusItem 
+          icon={<Cpu size={12} />}
+          text="98%"
+          title="Performance: 98% efficient"
+        />
         
-        <span style={{ display: 'flex', alignItems: 'center', marginRight: '12px', color: '#0dcb97' }}>
-          <CheckCircle size={12} style={{ marginRight: '4px' }} />
-          <span>All good</span>
-        </span>
+        <StatusItem 
+          icon={<CheckCircle size={12} color="#0acf97" />}
+          text="All good"
+          title="All systems normal"
+          className="success"
+        />
         
-        <span style={{ display: 'flex', alignItems: 'center' }}>
-          <Clock size={12} style={{ marginRight: '4px' }} />
-          <span>{time}</span>
-        </span>
+        <StatusItem 
+          icon={<Clock size={12} />}
+          text={time}
+          title="Current time"
+        />
       </div>
-    </>
+    </div>
   );
 };
 
