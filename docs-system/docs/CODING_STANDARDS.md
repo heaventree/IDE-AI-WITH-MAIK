@@ -14,8 +14,8 @@
 
 - Use meaningful and descriptive names
 - Keep functions small and focused on a single task
-- Limit line length to {{MAX_LINE_LENGTH}} characters
-- Use consistent indentation ({{INDENTATION_SIZE}} spaces)
+- Limit line length to 100 characters
+- Use consistent indentation (2 spaces)
 - Add appropriate comments for complex logic
 - Organize imports in a consistent manner
 - Remove unused code, imports, and variables
@@ -24,13 +24,13 @@
 
 | Element | Convention | Example |
 |---------|------------|---------|
-| Variables | {{VARIABLE_NAMING_CONVENTION}} | {{VARIABLE_EXAMPLE}} |
-| Functions | {{FUNCTION_NAMING_CONVENTION}} | {{FUNCTION_EXAMPLE}} |
-| Classes | {{CLASS_NAMING_CONVENTION}} | {{CLASS_EXAMPLE}} |
-| Interfaces | {{INTERFACE_NAMING_CONVENTION}} | {{INTERFACE_EXAMPLE}} |
-| Constants | {{CONSTANT_NAMING_CONVENTION}} | {{CONSTANT_EXAMPLE}} |
-| Enums | {{ENUM_NAMING_CONVENTION}} | {{ENUM_EXAMPLE}} |
-| File names | {{FILE_NAMING_CONVENTION}} | {{FILE_EXAMPLE}} |
+| Variables | camelCase | userData, apiResponse, isValid |
+| Functions | camelCase, action verbs first | getUserData(), validateInput(), formatResponse() |
+| Classes | PascalCase, nouns | UserManager, ApiClient, ErrorHandler |
+| Interfaces | PascalCase with 'I' prefix | IUserData, IApiResponse, IErrorDetails |
+| Constants | UPPER_SNAKE_CASE | API_URL, MAX_RETRIES, DEFAULT_TIMEOUT |
+| Enums | PascalCase, singular nouns | ErrorType, UserRole, LogLevel |
+| File names | kebab-case for files, PascalCase for component files | api-client.ts, UserManager.tsx, error-types.ts |
 
 ### Frontend Code Style
 
@@ -38,4 +38,10 @@
 
 ```html
 <!-- Example of well-formatted HTML -->
-{{HTML_EXAMPLE}}
+<Button
+  variant="primary"
+  onClick={handleSubmit}
+  disabled={isLoading}
+>
+  Submit
+</Button>

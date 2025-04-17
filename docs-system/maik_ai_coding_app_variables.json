@@ -74,7 +74,15 @@
     "DATA_FLOW": "User requests flow from the client to the API server, which passes them to the Agent. The Agent orchestrates state retrieval, memory access, prompt construction, LLM calls, and tool execution before returning responses.",
     "API_ENDPOINTS": "/api/query (main endpoint for user interactions), /api/command (for tool execution), /api/session (for session management)",
     "DATABASE_SCHEMA": "Primary tables include users, sessions, conversations, memories, and governance_logs",
-    "INFRASTRUCTURE": "Node.js backend with TypeScript, deployed on Replit infrastructure"
+    "INFRASTRUCTURE": "Node.js backend with TypeScript, deployed on Replit infrastructure",
+    "ARCHITECTURE_OVERVIEW": "MAIK-AI-CODING-APP employs a modular monolith architecture with clean architecture principles, allowing for maintainable code, testability, and future scalability. The system is organized into distinct functional domains with clear boundaries and interfaces, supported by a centralized error handling and monitoring system.",
+    "ARCHITECTURE_PRINCIPLE_1": "Separation of Concerns: Each component has a single responsibility and is organized into appropriate layers",
+    "ARCHITECTURE_PRINCIPLE_2": "Dependency Inversion: High-level modules don't depend on low-level modules; both depend on abstractions",
+    "ARCHITECTURE_PRINCIPLE_3": "Interface Segregation: Components expose only what's needed by their consumers through well-defined interfaces",
+    "ARCHITECTURE_PRINCIPLE_4": "Dependency Injection: Components receive their dependencies rather than creating them",
+    "ARCHITECTURE_PRINCIPLE_5": "Explicit Dependencies: All dependencies are explicitly declared and passed to components",
+    "DATA_FLOW_DESCRIPTION": "Data flows through the application in a unidirectional manner, from UI through the application layers to the data storage and back. Each layer transforms the data as needed for its specific responsibility.",
+    "COMPONENT_DIAGRAM_DESCRIPTION": "The component diagram illustrates the major system components and their interactions. Core business logic components are at the center, with infrastructure and interface components surrounding them."
   },
   "tech_stack": {
     "FRONTEND_FRAMEWORK": "React",
@@ -109,7 +117,24 @@
     "CODE_ORGANIZATION": "Modules grouped by functionality, interfaces defined in separate files, clear dependency injection",
     "COMMENTING_STANDARDS": "JSDoc for all public methods, inline comments for complex logic, README.md for each module",
     "LINTING_TOOLS": "ESLint with TypeScript and Prettier plugins",
-    "COMMON_PATTERNS": "Repository pattern for data access, Strategy pattern for algorithm selection, Observer pattern for events"
+    "COMMON_PATTERNS": "Repository pattern for data access, Strategy pattern for algorithm selection, Observer pattern for events",
+    "MAX_LINE_LENGTH": "100",
+    "INDENTATION_SIZE": "2",
+    "VARIABLE_NAMING_CONVENTION": "camelCase",
+    "VARIABLE_EXAMPLE": "userData, apiResponse, isValid",
+    "FUNCTION_NAMING_CONVENTION": "camelCase, action verbs first",
+    "FUNCTION_EXAMPLE": "getUserData(), validateInput(), formatResponse()",
+    "CLASS_NAMING_CONVENTION": "PascalCase, nouns",
+    "CLASS_EXAMPLE": "UserManager, ApiClient, ErrorHandler",
+    "INTERFACE_NAMING_CONVENTION": "PascalCase with 'I' prefix",
+    "INTERFACE_EXAMPLE": "IUserData, IApiResponse, IErrorDetails",
+    "CONSTANT_NAMING_CONVENTION": "UPPER_SNAKE_CASE",
+    "CONSTANT_EXAMPLE": "API_URL, MAX_RETRIES, DEFAULT_TIMEOUT",
+    "ENUM_NAMING_CONVENTION": "PascalCase, singular nouns",
+    "ENUM_EXAMPLE": "ErrorType, UserRole, LogLevel",
+    "FILE_NAMING_CONVENTION": "kebab-case for files, PascalCase for component files",
+    "FILE_EXAMPLE": "api-client.ts, UserManager.tsx, error-types.ts",
+    "HTML_EXAMPLE": "<Button\n  variant=\"primary\"\n  onClick={handleSubmit}\n  disabled={isLoading}\n>\n  Submit\n</Button>"
   },
   "design_system": {
     "DESIGN_PHILOSOPHY": "Clean, accessible interfaces that prioritize developer productivity and minimize cognitive load",
