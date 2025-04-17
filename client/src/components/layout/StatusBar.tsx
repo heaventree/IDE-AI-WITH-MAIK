@@ -1,3 +1,4 @@
+/** @jsxImportSource theme-ui */
 import React, { useEffect, useState } from 'react';
 import { 
   Zap, Clock, GitBranch, Circle, 

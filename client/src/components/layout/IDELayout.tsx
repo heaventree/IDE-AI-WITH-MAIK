@@ -1,3 +1,4 @@
+/** @jsxImportSource theme-ui */
 import React, { ReactNode, useState, useEffect } from 'react';
 import MenuBar from './MenuBar';
 import Sidebar from './Sidebar';
@@ -96,31 +97,90 @@ const IDELayout: React.FC<IDELayoutProps> = ({ children }) => {
   }
 
   return (
-    <div className="app-container">
+    <div sx={{ 
+      display: 'grid',
+      gridTemplateColumns: 'var(--sidebar-width) 1fr',
+      gridTemplateRows: 'var(--menubar-height) 1fr var(--statusbar-height)',
+      gridTemplateAreas: `
+        'menubar menubar'
+        'sidebar editor'
+        'statusbar statusbar'
+      `,
+      height: '100vh',
+      width: '100vw',
+      overflow: 'hidden',
+      bg: 'background'
+    }}>
       {/* Top menu bar */}
-      <div className="menubar">
+      <div sx={{ 
+        gridArea: 'menubar',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        bg: 'menuBar',
+        borderBottom: '1px solid',
+        borderColor: 'border',
+        padding: '0 16px',
+        height: 'var(--menubar-height)',
+        zIndex: 20
+      }}>
         <MenuBar toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
       </div>
       
       {/* Sidebar */}
-      <div className={`sidebar ${sidebarOpen ? '' : 'collapsed'}`}>
+      <div sx={{ 
+        gridArea: 'sidebar',
+        bg: 'sidebar',
+        borderRight: '1px solid',
+        borderColor: 'border',
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        overflow: 'hidden',
+        transition: 'transform var(--transition-medium)',
+        transform: sidebarOpen ? 'translateX(0)' : 'translateX(-100%)'
+      }}>
         <Sidebar />
       </div>
       
       {/* Main editor area */}
-      <div className="editor-area">
+      <div sx={{ 
+        gridArea: 'editor',
+        bg: 'editor',
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'relative',
+        overflow: 'hidden'
+      }}>
         {editorComponent || (
-          <div className="flex-center flex-column">
-            <Zap size={48} style={{ marginBottom: '16px' }} />
-            <h1 style={{ marginBottom: '8px' }}>Welcome to MAIK IDE</h1>
-            <p style={{ marginBottom: '16px' }}>Your AI-powered development environment</p>
+          <div sx={{ 
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100%',
+            textAlign: 'center'
+          }}>
+            <Zap size={48} sx={{ mb: 3 }} />
+            <h1 sx={{ fontSize: 4, fontWeight: 'bold', mb: 2 }}>Welcome to MAIK IDE</h1>
+            <p sx={{ fontSize: 2, color: 'foregroundMuted', mb: 4 }}>Your AI-powered development environment</p>
             
-            <div className="flex-center" style={{ gap: '16px' }}>
-              <button style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', background: '#7b68ee', color: 'white', border: 'none', borderRadius: '4px' }}>
+            <div sx={{ display: 'flex', gap: 3 }}>
+              <button sx={{ 
+                variant: 'buttons.primary',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 2
+              }}>
                 <Zap size={16} />
                 <span>New Project</span>
               </button>
-              <button style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', background: '#151831', color: 'white', border: '1px solid rgba(72, 82, 133, 0.8)', borderRadius: '4px' }}>
+              <button sx={{ 
+                variant: 'buttons.secondary',
+                display: 'flex', 
+                alignItems: 'center',
+                gap: 2
+              }}>
                 <Coffee size={16} />
                 <span>Open Recent</span>
               </button>
@@ -130,12 +190,35 @@ const IDELayout: React.FC<IDELayoutProps> = ({ children }) => {
       </div>
       
       {/* Terminal area */}
-      <div className={`terminal-area ${terminalVisible ? 'visible' : ''}`}>
+      <div sx={{
+        position: 'absolute',
+        bottom: 'var(--statusbar-height)',
+        left: sidebarOpen ? 'var(--sidebar-width)' : '0',
+        right: '0',
+        height: 'var(--terminal-height)',
+        bg: 'terminal',
+        borderTop: '1px solid',
+        borderColor: 'border',
+        zIndex: 10,
+        transition: 'left var(--transition-medium)'
+      }}>
         {terminalComponent}
       </div>
       
       {/* Bottom status bar */}
-      <div className="statusbar">
+      <div sx={{ 
+        gridArea: 'statusbar',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        bg: 'statusBar',
+        borderTop: '1px solid',
+        borderColor: 'border',
+        padding: '0 8px',
+        height: 'var(--statusbar-height)',
+        fontSize: 0,
+        color: 'foregroundMuted'
+      }}>
         <StatusBar />
       </div>
     </div>

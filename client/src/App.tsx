@@ -1,4 +1,4 @@
-// Primary App Component
+/** @jsxImportSource theme-ui */
 import { Switch, Route } from "wouter";
 import NotFound from "@/pages/not-found";
 import IDELayout from "./components/layout/IDELayout";
