@@ -1,0 +1,184 @@
+{
+  "project": {
+    "PROJECT_NAME": "Project name (e.g., 'Customer Dashboard')",
+    "PROJECT_DESCRIPTION": "Brief description of the project",
+    "PROJECT_VISION": "Long-form vision statement for the project",
+    "PROJECT_BACKGROUND": "Background and context for the project",
+    "PROJECT_CHALLENGES": "Current challenges that the project aims to solve",
+    "PROJECT_GOAL_1": "First major goal of the project",
+    "PROJECT_GOAL_2": "Second major goal of the project",
+    "PROJECT_GOAL_3": "Third major goal of the project",
+    "PROJECT_GOAL_4": "Fourth major goal of the project",
+    "PROJECT_GOAL_5": "Fifth major goal of the project",
+    "SUCCESS_FACTOR_1": "First critical success factor",
+    "SUCCESS_FACTOR_2": "Second critical success factor",
+    "SUCCESS_FACTOR_3": "Third critical success factor",
+    "PROJECT_BUDGET_RESOURCES": "Description of budget and resources"
+  },
+  "stakeholders": {
+    "STAKEHOLDER_ROLE_1": "First stakeholder role (e.g., 'Project Manager')",
+    "STAKEHOLDER_RESPONSIBILITY_1": "Responsibilities of first stakeholder",
+    "STAKEHOLDER_ROLE_2": "Second stakeholder role",
+    "STAKEHOLDER_RESPONSIBILITY_2": "Responsibilities of second stakeholder",
+    "STAKEHOLDER_ROLE_3": "Third stakeholder role",
+    "STAKEHOLDER_RESPONSIBILITY_3": "Responsibilities of third stakeholder"
+  },
+  "timeline": {
+    "MILESTONE_1": "First milestone name",
+    "MILESTONE_1_DATE": "Target date for first milestone (e.g., 'Q2 2025')",
+    "MILESTONE_1_DESCRIPTION": "Description of first milestone",
+    "MILESTONE_2": "Second milestone name",
+    "MILESTONE_2_DATE": "Target date for second milestone",
+    "MILESTONE_2_DESCRIPTION": "Description of second milestone",
+    "MILESTONE_3": "Third milestone name",
+    "MILESTONE_3_DATE": "Target date for third milestone",
+    "MILESTONE_3_DESCRIPTION": "Description of third milestone"
+  },
+  "scope": {
+    "IN_SCOPE_1": "First feature/component in scope",
+    "IN_SCOPE_2": "Second feature/component in scope",
+    "IN_SCOPE_3": "Third feature/component in scope",
+    "OUT_OF_SCOPE_1": "First feature/component out of scope",
+    "OUT_OF_SCOPE_2": "Second feature/component out of scope",
+    "OUT_OF_SCOPE_3": "Third feature/component out of scope"
+  },
+  "risks": {
+    "RISK_1": "First risk description",
+    "RISK_1_IMPACT": "Impact level of first risk (e.g., 'High')",
+    "RISK_1_LIKELIHOOD": "Likelihood of first risk (e.g., 'Medium')",
+    "RISK_1_MITIGATION": "Mitigation strategy for first risk",
+    "RISK_2": "Second risk description",
+    "RISK_2_IMPACT": "Impact level of second risk",
+    "RISK_2_LIKELIHOOD": "Likelihood of second risk",
+    "RISK_2_MITIGATION": "Mitigation strategy for second risk",
+    "RISK_3": "Third risk description",
+    "RISK_3_IMPACT": "Impact level of third risk",
+    "RISK_3_LIKELIHOOD": "Likelihood of third risk",
+    "RISK_3_MITIGATION": "Mitigation strategy for third risk"
+  },
+  "metrics": {
+    "METRIC_1": "First success metric",
+    "METRIC_1_TARGET": "Target value for first metric",
+    "METRIC_1_METHOD": "Measurement method for first metric",
+    "METRIC_2": "Second success metric",
+    "METRIC_2_TARGET": "Target value for second metric",
+    "METRIC_2_METHOD": "Measurement method for second metric",
+    "METRIC_3": "Third success metric",
+    "METRIC_3_TARGET": "Target value for third metric",
+    "METRIC_3_METHOD": "Measurement method for third metric"
+  },
+  "architecture": {
+    "SYSTEM_OVERVIEW": "High-level overview of the system architecture",
+    "SYSTEM_COMPONENTS": "List of main system components",
+    "NETWORK_DIAGRAM": "Description of network architecture",
+    "DATA_FLOW": "Description of data flow between components",
+    "API_ENDPOINTS": "List of primary API endpoints",
+    "DATABASE_SCHEMA": "Overview of database schema",
+    "INFRASTRUCTURE": "Description of infrastructure setup"
+  },
+  "tech_stack": {
+    "FRONTEND_FRAMEWORK": "Frontend framework used (e.g., 'React')",
+    "FRONTEND_LANGUAGES": "Frontend languages used (e.g., 'TypeScript, HTML, CSS')",
+    "BACKEND_FRAMEWORK": "Backend framework used (e.g., 'Node.js with Express')",
+    "BACKEND_LANGUAGES": "Backend languages used (e.g., 'TypeScript, JavaScript')",
+    "DATABASE_TYPE": "Database system(s) used (e.g., 'PostgreSQL')",
+    "API_FRAMEWORK": "API framework used (e.g., 'REST with Express')",
+    "DEVOPS_TOOLS": "DevOps tools used (e.g., 'Docker, Jenkins, AWS')",
+    "TESTING_FRAMEWORK": "Testing frameworks used (e.g., 'Jest, Cypress')"
+  },
+  "development_workflow": {
+    "BRANCHING_STRATEGY": "Git branching strategy",
+    "PR_PROCESS": "Pull request process",
+    "CODE_REVIEW_PROCESS": "Code review guidelines",
+    "TESTING_PROCESS": "Testing process overview",
+    "RELEASE_PROCESS": "Release process overview",
+    "DEPLOYMENT_PROCESS": "Deployment process overview",
+    "LOCAL_SETUP": "Local development setup instructions"
+  },
+  "coding_standards": {
+    "STYLE_GUIDE": "Coding style guide reference",
+    "NAMING_CONVENTIONS": "Naming conventions overview",
+    "CODE_ORGANIZATION": "Code organization principles",
+    "COMMENTING_STANDARDS": "Documentation and commenting standards",
+    "LINTING_TOOLS": "Linting tools and configurations",
+    "COMMON_PATTERNS": "Common coding patterns to use"
+  },
+  "design_system": {
+    "DESIGN_PHILOSOPHY": "Overall design philosophy and principles",
+    "BRAND_GUIDELINES": "Brand guidelines overview",
+    "COMPONENT_LIBRARY": "Component library reference"
+  },
+  "accessibility": {
+    "WCAG_LEVEL": "Target WCAG compliance level (e.g., 'WCAG 2.1 AA')",
+    "ACCESSIBILITY_FEATURES": "Key accessibility features",
+    "SCREEN_READER_SUPPORT": "Screen reader support approach",
+    "KEYBOARD_NAVIGATION": "Keyboard navigation approach",
+    "COLOR_CONTRAST": "Color contrast requirements",
+    "ACCESSIBILITY_TESTING": "Accessibility testing process"
+  },
+  "testing": {
+    "UNIT_TESTING": "Unit testing approach",
+    "INTEGRATION_TESTING": "Integration testing approach",
+    "E2E_TESTING": "End-to-end testing approach",
+    "PERFORMANCE_TESTING": "Performance testing approach",
+    "ACCESSIBILITY_TESTING": "Accessibility testing approach",
+    "SECURITY_TESTING": "Security testing approach",
+    "TEST_ENVIRONMENTS": "Test environments description"
+  },
+  "security": {
+    "AUTHENTICATION": "Authentication method",
+    "AUTHORIZATION": "Authorization approach",
+    "DATA_PROTECTION": "Data protection approach",
+    "SECURITY_STANDARDS": "Security standards followed",
+    "COMPLIANCE_REQUIREMENTS": "Compliance requirements",
+    "VULNERABILITY_MANAGEMENT": "Vulnerability management process",
+    "SECURITY_TESTING": "Security testing approach"
+  },
+  "deployment": {
+    "DEPLOYMENT_ENVIRONMENTS": "Description of deployment environments",
+    "CI_CD_PIPELINE": "CI/CD pipeline description",
+    "ROLLBACK_STRATEGY": "Rollback strategy",
+    "MONITORING_APPROACH": "Monitoring approach",
+    "ALERTING_SYSTEM": "Alerting system",
+    "HEALTH_CHECKS": "Health check implementation",
+    "SCALING_STRATEGY": "Scaling strategy"
+  },
+  "ai_integration": {
+    "AI_CAPABILITIES": "AI capabilities overview",
+    "AI_MODELS": "AI models used",
+    "DATA_PIPELINE": "Data pipeline for AI",
+    "TRAINING_PROCESS": "AI training process",
+    "ETHICAL_CONSIDERATIONS": "Ethical considerations for AI",
+    "PERFORMANCE_METRICS": "AI performance metrics",
+    "FALLBACK_STRATEGIES": "Fallback strategies for AI"
+  },
+  "wordpress_integration": {
+    "WORDPRESS_INTEGRATION_OVERVIEW": "Overview of WordPress integration approach",
+    "WORDPRESS_ARCHITECTURE": "Architecture of WordPress integration",
+    "PLUGIN_STRATEGY": "WordPress plugin strategy",
+    "THEME_CUSTOMIZATION": "Theme customization approach",
+    "DATA_SYNCHRONIZATION": "Data synchronization between app and WordPress",
+    "AUTHENTICATION_FLOW": "Authentication flow with WordPress",
+    "CONTENT_MANAGEMENT": "Content management workflow"
+  },
+  "tasks": {
+    "HIGH_PRIORITY_TASK_1": "First high-priority task",
+    "HIGH_PRIORITY_TASK_1_ASSIGNEE": "Person assigned to first high-priority task",
+    "HIGH_PRIORITY_TASK_1_DUE_DATE": "Due date for first high-priority task",
+    "HIGH_PRIORITY_TASK_1_STATUS": "Status of first high-priority task",
+    "HIGH_PRIORITY_TASK_1_BLOCKERS": "Blockers for first high-priority task",
+    "HIGH_PRIORITY_TASK_1_NOTES": "Notes for first high-priority task",
+    "HIGH_PRIORITY_TASK_2": "Second high-priority task",
+    "HIGH_PRIORITY_TASK_2_ASSIGNEE": "Person assigned to second high-priority task",
+    "HIGH_PRIORITY_TASK_2_DUE_DATE": "Due date for second high-priority task",
+    "HIGH_PRIORITY_TASK_2_STATUS": "Status of second high-priority task",
+    "HIGH_PRIORITY_TASK_2_BLOCKERS": "Blockers for second high-priority task",
+    "HIGH_PRIORITY_TASK_2_NOTES": "Notes for second high-priority task",
+    "HIGH_PRIORITY_TASK_3": "Third high-priority task",
+    "HIGH_PRIORITY_TASK_3_ASSIGNEE": "Person assigned to third high-priority task",
+    "HIGH_PRIORITY_TASK_3_DUE_DATE": "Due date for third high-priority task",
+    "HIGH_PRIORITY_TASK_3_STATUS": "Status of third high-priority task",
+    "HIGH_PRIORITY_TASK_3_BLOCKERS": "Blockers for third high-priority task",
+    "HIGH_PRIORITY_TASK_3_NOTES": "Notes for third high-priority task"
+  }
+}

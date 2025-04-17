@@ -1,0 +1,86 @@
+[vite] connecting...
+DOMException {}
+
+useProject must be used within a ProjectProvider
+useProject must be used within a ProjectProvider
+useProject must be used within a ProjectProvider
+useProject must be used within a ProjectProvider
+useProject must be used within a ProjectProvider
+useProject must be used within a ProjectProvider
+useProject must be used within a ProjectProvider
+useProject must be used within a ProjectProvider
+The above error occurred in the <Sidebar> component:
+
+    at Sidebar (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/components/layout/Sidebar.tsx?v=giiNaV7RlUwVKis-nz00E:22:64)
+    at div
+    at div
+    at SimpleIDE (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/main.tsx?v=giiNaV7RlUwVKis-nz00E:36:33)
+    at Route (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=84208b22:323:16)
+    at Switch (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=84208b22:379:17)
+    at div
+    at div
+    at ThemedLayout (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/main.tsx?v=giiNaV7RlUwVKis-nz00E:82:25)
+    at AppWithRouting
+    at ProjectProvider (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/contexts/ProjectContext.tsx?v=giiNaV7RlUwVKis-nz00E:37:35)
+    at QueryClientProvider (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=84208b22:2805:3)
+    at ThemeProvider (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/contexts/ThemeContext.tsx?v=giiNaV7RlUwVKis-nz00E:43:33)
+    at App
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+The above error occurred in the <CodeEditor> component:
+
+    at CodeEditor (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/components/editor/CodeEditor.tsx?v=giiNaV7RlUwVKis-nz00E:32:38)
+    at div
+    at div
+    at SimpleIDE (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/main.tsx?v=giiNaV7RlUwVKis-nz00E:36:33)
+    at Route (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=84208b22:323:16)
+    at Switch (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=84208b22:379:17)
+    at div
+    at div
+    at ThemedLayout (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/main.tsx?v=giiNaV7RlUwVKis-nz00E:82:25)
+    at AppWithRouting
+    at ProjectProvider (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/contexts/ProjectContext.tsx?v=giiNaV7RlUwVKis-nz00E:37:35)
+    at QueryClientProvider (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=84208b22:2805:3)
+    at ThemeProvider (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/contexts/ThemeContext.tsx?v=giiNaV7RlUwVKis-nz00E:43:33)
+    at App
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+The above error occurred in the <Terminal> component:
+
+    at Terminal (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/components/terminal/Terminal.tsx?v=giiNaV7RlUwVKis-nz00E:22:30)
+    at div
+    at SimpleIDE (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/main.tsx?v=giiNaV7RlUwVKis-nz00E:36:33)
+    at Route (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=84208b22:323:16)
+    at Switch (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=84208b22:379:17)
+    at div
+    at div
+    at ThemedLayout (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/main.tsx?v=giiNaV7RlUwVKis-nz00E:82:25)
+    at AppWithRouting
+    at ProjectProvider (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/contexts/ProjectContext.tsx?v=giiNaV7RlUwVKis-nz00E:37:35)
+    at QueryClientProvider (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=84208b22:2805:3)
+    at ThemeProvider (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/contexts/ThemeContext.tsx?v=giiNaV7RlUwVKis-nz00E:43:33)
+    at App
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+The above error occurred in the <StatusBar> component:
+
+    at StatusBar (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/components/layout/StatusBar.tsx?v=giiNaV7RlUwVKis-nz00E:21:28)
+    at div
+    at SimpleIDE (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/main.tsx?v=giiNaV7RlUwVKis-nz00E:36:33)
+    at Route (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=84208b22:323:16)
+    at Switch (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=84208b22:379:17)
+    at div
+    at div
+    at ThemedLayout (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/main.tsx?v=giiNaV7RlUwVKis-nz00E:82:25)
+    at AppWithRouting
+    at ProjectProvider (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/contexts/ProjectContext.tsx?v=giiNaV7RlUwVKis-nz00E:37:35)
+    at QueryClientProvider (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=84208b22:2805:3)
+    at ThemeProvider (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/contexts/ThemeContext.tsx?v=giiNaV7RlUwVKis-nz00E:43:33)
+    at App
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+useProject must be used within a ProjectProvider
