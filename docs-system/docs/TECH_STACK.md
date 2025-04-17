@@ -2,7 +2,7 @@
 
 ## Overview
 
-{{TECH_STACK_OVERVIEW}}
+MAIK-AI-CODING-APP is built on a modern TypeScript-based stack with React for the frontend and Node.js/Express for the backend. The architecture emphasizes type safety, modular components, and clean separations of concerns to ensure maintainability and scalability.
 
 ## Frontend Stack
 
@@ -48,11 +48,11 @@
 
 | Technology | Version | Purpose |
 |------------|---------|---------|
-| {{DATABASE_TECH}} | {{DATABASE_VERSION}} | {{DATABASE_PURPOSE}} |
+| PostgreSQL | 14.x | Primary data storage for user accounts, projects, conversations, vector embeddings for semantic search, and system logs |
 
 ### Schema Overview
 
-{{DATABASE_SCHEMA_OVERVIEW}}
+The database schema follows a normalized design with clear relationships between entities. Key tables include users, sessions, projects, conversations, memory_vectors, and governance_logs.
 
 ## DevOps & Infrastructure
 
@@ -90,4 +90,11 @@
 
 ```bash
 # Example setup commands
-{{SETUP_COMMANDS}}
+```bash
+# Install PostgreSQL (if not using a managed service)
+npm install @neondatabase/serverless
+
+# Setup database schemas
+npm run drizzle:generate
+npm run drizzle:push
+```

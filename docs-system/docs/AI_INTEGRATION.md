@@ -2,7 +2,7 @@
 
 ## Overview
 
-{{AI_INTEGRATION_OVERVIEW}}
+MAIK-AI-CODING-APP leverages advanced AI models to enhance developer productivity through intelligent code assistance, error analysis, and context-aware recommendations. The integration is designed to be seamless, reliable, and transparent, with a focus on providing accurate, helpful guidance while respecting user control and preferences.
 
 ## AI Services & Capabilities
 

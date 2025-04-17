@@ -92,7 +92,13 @@
     "DATABASE_TYPE": "PostgreSQL with vector extensions for semantic search",
     "API_FRAMEWORK": "REST with Express, WebSockets for real-time updates",
     "DEVOPS_TOOLS": "Replit workflows, Sentry for monitoring",
-    "TESTING_FRAMEWORK": "Jest, React Testing Library"
+    "TESTING_FRAMEWORK": "Jest, React Testing Library",
+    "TECH_STACK_OVERVIEW": "MAIK-AI-CODING-APP is built on a modern TypeScript-based stack with React for the frontend and Node.js/Express for the backend. The architecture emphasizes type safety, modular components, and clean separations of concerns to ensure maintainability and scalability.",
+    "DATABASE_TECH": "PostgreSQL",
+    "DATABASE_VERSION": "14.x",
+    "DATABASE_PURPOSE": "Primary data storage for user accounts, projects, conversations, vector embeddings for semantic search, and system logs",
+    "DATABASE_SCHEMA_OVERVIEW": "The database schema follows a normalized design with clear relationships between entities. Key tables include users, sessions, projects, conversations, memory_vectors, and governance_logs.",
+    "SETUP_COMMANDS": "```bash\n# Install PostgreSQL (if not using a managed service)\nnpm install @neondatabase/serverless\n\n# Setup database schemas\nnpm run drizzle:generate\nnpm run drizzle:push\n```"
   },
   "development_workflow": {
     "BRANCHING_STRATEGY": "GitHub Flow with feature branches and pull requests",
@@ -373,7 +379,10 @@
     "PERFORMANCE_TESTING": "Load testing with k6, performance monitoring with Sentry",
     "ACCESSIBILITY_TESTING": "Automated testing with axe-core, manual testing with screen readers",
     "SECURITY_TESTING": "Static analysis, dependency scanning, and penetration testing",
-    "TEST_ENVIRONMENTS": "Local, development, staging, and production environments"
+    "TEST_ENVIRONMENTS": "Local, development, staging, and production environments",
+    "TESTING_OVERVIEW": "MAIK-AI-CODING-APP follows a comprehensive testing strategy that encompasses unit, integration, end-to-end, performance, accessibility, and security testing. Our approach aims to ensure high code quality, reliable functionality, and a smooth user experience across all aspects of the application.",
+    "UNIT_TEST_COVERAGE_TARGET": "80%",
+    "UNIT_TEST_EXAMPLE": "```typescript\ndescribe('ErrorHandler', () => {\n  it('should categorize and format API errors', () => {\n    // Arrange\n    const errorHandler = new ErrorHandler();\n    const apiError = new Error('API rate limit exceeded');\n    \n    // Act\n    const result = errorHandler.handle(apiError, { source: 'api' });\n    \n    // Assert\n    expect(result.userFacingMessage).toContain('API service');\n    expect(result.internalDetails).toContain('rate limit');\n    expect(result.errorId).toBeDefined();\n  });\n});\n```"
   },
   "security": {
     "AUTHENTICATION": "JWT-based authentication with secure cookie storage",
@@ -382,7 +391,16 @@
     "SECURITY_STANDARDS": "OWASP Top 10 compliance, regular security audits",
     "COMPLIANCE_REQUIREMENTS": "GDPR, CCPA, and industry-standard data protection",
     "VULNERABILITY_MANAGEMENT": "Regular dependency updates, vulnerability scanning, responsible disclosure program",
-    "SECURITY_TESTING": "Static analysis, dependency scanning, and regular penetration testing"
+    "SECURITY_TESTING": "Static analysis, dependency scanning, and regular penetration testing",
+    "SECURITY_OVERVIEW": "MAIK-AI-CODING-APP implements comprehensive security measures to protect user data, maintain system integrity, and ensure secure AI operations. Security is integrated at every level of the application, from authentication and authorization to data protection and compliance with regulations.",
+    "AUTH_METHOD": "JSON Web Tokens (JWT) with secure, HttpOnly cookies",
+    "SESSION_MANAGEMENT": "Stateless JWT authentication with expiration and refresh tokens",
+    "PASSWORD_POLICY": "Minimum 12 characters with a mix of uppercase, lowercase, numbers, and special characters. Passwords are hashed using bcrypt with appropriate work factors.",
+    "MFA_STRATEGY": "Optional Time-based One-Time Password (TOTP) for high-privilege accounts",
+    "RBAC_DESCRIPTION": "Role-based access control with predefined roles including User, Developer, Administrator, and System",
+    "PERMISSION_STRUCTURE": "Hierarchical permissions grouped by resource types and actions (create, read, update, delete)",
+    "ACCESS_CONTROL_IMPLEMENTATION": "Middleware-based authorization checks at API routes and component-level access control in the UI",
+    "AUTH_IMPLEMENTATION_EXAMPLE": "```typescript\nconst authenticate = async (req, res, next) => {\n  try {\n    const token = req.cookies.authToken;\n    if (!token) throw new AuthError('Authentication required');\n    \n    const decoded = verifyJWT(token);\n    req.user = await userService.getById(decoded.userId);\n    next();\n  } catch (error) {\n    res.status(401).json({ error: 'Authentication failed' });\n  }\n};\n```"
   },
   "deployment": {
     "DEPLOYMENT_ENVIRONMENTS": "Development, Staging, and Production environments on Replit",
@@ -391,7 +409,20 @@
     "MONITORING_APPROACH": "Sentry for error tracking, custom analytics for performance monitoring",
     "ALERTING_SYSTEM": "Sentry alerts for critical errors, custom alerts for performance thresholds",
     "HEALTH_CHECKS": "Regular API endpoint health checks and system diagnostics",
-    "SCALING_STRATEGY": "Horizontal scaling based on user load and resource utilization"
+    "SCALING_STRATEGY": "Horizontal scaling based on user load and resource utilization",
+    "DEPLOYMENT_OVERVIEW": "MAIK-AI-CODING-APP uses a multi-environment deployment strategy with continuous integration and deployment pipelines. Each environment serves a specific purpose in the development lifecycle, with automated testing and deployment processes to ensure consistency and reliability.",
+    "DEV_ENV_PURPOSE": "Used for ongoing development and testing new features in isolation",
+    "DEV_ENV_URL": "dev.maik-ai-coding-app.replit.app",
+    "DEV_ENV_ACCESS": "Available to development team and internal stakeholders with developer credentials",
+    "TEST_ENV_PURPOSE": "Dedicated environment for automated and manual testing with test data",
+    "TEST_ENV_URL": "test.maik-ai-coding-app.replit.app",
+    "TEST_ENV_ACCESS": "Available to QA team and developers with test environment credentials",
+    "STAGING_ENV_PURPOSE": "Pre-production environment that mirrors production for final verification",
+    "STAGING_ENV_URL": "staging.maik-ai-coding-app.replit.app",
+    "STAGING_ENV_ACCESS": "Available to QA, product managers, and key stakeholders with staging credentials",
+    "PROD_ENV_PURPOSE": "Live environment used by end users with production data",
+    "PROD_ENV_URL": "maik-ai-coding-app.replit.app",
+    "PROD_ENV_ACCESS": "Publicly available to authorized end users with valid credentials"
   },
   "ai_integration": {
     "AI_CAPABILITIES": "Code generation, error analysis, natural language to code conversion, context-aware assistance",
@@ -400,7 +431,8 @@
     "TRAINING_PROCESS": "Models use pretrained weights with optional fine-tuning for code-specific tasks",
     "ETHICAL_CONSIDERATIONS": "Bias detection, transparency in AI decisions, responsible AI usage",
     "PERFORMANCE_METRICS": "Response time, accuracy, hallucination rate, and user satisfaction",
-    "FALLBACK_STRATEGIES": "Graceful degradation to simpler models or rule-based approaches when needed"
+    "FALLBACK_STRATEGIES": "Graceful degradation to simpler models or rule-based approaches when needed",
+    "AI_INTEGRATION_OVERVIEW": "MAIK-AI-CODING-APP leverages advanced AI models to enhance developer productivity through intelligent code assistance, error analysis, and context-aware recommendations. The integration is designed to be seamless, reliable, and transparent, with a focus on providing accurate, helpful guidance while respecting user control and preferences."
   },
   "wordpress_integration": {
     "WORDPRESS_INTEGRATION_OVERVIEW": "Not applicable for MAIK-AI-CODING-APP",
