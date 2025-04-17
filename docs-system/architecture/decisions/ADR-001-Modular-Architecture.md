@@ -6,7 +6,7 @@ Accepted
 
 ## Context
 
-The Bolt DIY system is currently implemented as a monolithic application with tightly coupled components. This architecture makes it difficult to maintain, test, and extend the system. Key issues include:
+The MAIK-AI-CODING-APP system is currently implemented as a monolithic application with tightly coupled components. This architecture makes it difficult to maintain, test, and extend the system. Key issues include:
 
 1. Tight coupling between components leads to cascading changes when one part is modified
 2. Limited testability due to lack of isolation

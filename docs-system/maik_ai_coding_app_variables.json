@@ -1,9 +1,9 @@
 {
   "project": {
-    "PROJECT_NAME": "Bolt DIY",
+    "PROJECT_NAME": "MAIK-AI-CODING-APP",
     "PROJECT_DESCRIPTION": "An advanced AI-powered collaborative IDE with intelligent code suggestions, error monitoring, and developer productivity tools",
-    "PROJECT_VISION": "Bolt DIY aims to be the most advanced, reliable, and accessible AI-powered development environment that enhances developer productivity through intelligent assistance, comprehensive error monitoring, and collaborative tools.",
-    "PROJECT_BACKGROUND": "The Bolt DIY platform began as a way to democratize AI-assisted development, but encountered challenges with memory management, token optimization, and error handling that impacted user experience. The remediation project addresses these core issues to make the platform robust and enterprise-ready.",
+    "PROJECT_VISION": "MAIK-AI-CODING-APP aims to be the most advanced, reliable, and accessible AI-powered development environment that enhances developer productivity through intelligent assistance, comprehensive error monitoring, and collaborative tools.",
+    "PROJECT_BACKGROUND": "The MAIK-AI-CODING-APP platform began as a way to democratize AI-assisted development, but encountered challenges with memory management, token optimization, and error handling that impacted user experience. The remediation project addresses these core issues to make the platform robust and enterprise-ready.",
     "PROJECT_CHALLENGES": "The current implementation suffers from monolithic architecture, inconsistent error handling, memory limitations, and lack of observability. These issues lead to context loss, hallucinations, crashes, and poor performance under load.",
     "PROJECT_GOAL_1": "Implement a modular, maintainable architecture with clearly defined interfaces",
     "PROJECT_GOAL_2": "Create a robust memory management system to prevent context loss and hallucinations",
@@ -68,7 +68,7 @@
     "METRIC_3_METHOD": "Automated testing with conversation simulations"
   },
   "architecture": {
-    "SYSTEM_OVERVIEW": "Bolt DIY uses a modular architecture with clear interfaces between components. The system employs dependency injection for flexibility and testability, with a central Agent orchestrating interactions between specialized managers for state, memory, prompts, and tools.",
+    "SYSTEM_OVERVIEW": "MAIK-AI-CODING-APP uses a modular architecture with clear interfaces between components. The system employs dependency injection for flexibility and testability, with a central Agent orchestrating interactions between specialized managers for state, memory, prompts, and tools.",
     "SYSTEM_COMPONENTS": "Agent, StateManager, MemoryManager, PromptManager, ToolExecutor, ErrorHandler, AIGovernance",
     "NETWORK_DIAGRAM": "Client <-> API Server <-> Agent System <-> LLM API",
     "DATA_FLOW": "User requests flow from the client to the API server, which passes them to the Agent. The Agent orchestrates state retrieval, memory access, prompt construction, LLM calls, and tool execution before returning responses.",
@@ -106,10 +106,10 @@
   "design_system": {
     "DESIGN_PHILOSOPHY": "Clean, accessible interfaces that prioritize developer productivity and minimize cognitive load",
     "BRAND_GUIDELINES": "Modern, professional aesthetic with a focus on readability and usability",
-    "COMPONENT_LIBRARY": "Shadcn UI components with custom Bolt DIY theme"
+    "COMPONENT_LIBRARY": "Shadcn UI components with custom MAIK-AI-CODING-APP theme"
   },
   "accessibility": {
-    "ACCESSIBILITY_OVERVIEW": "Bolt DIY is committed to providing an accessible development environment for all users, including those with disabilities. Our accessibility standards ensure that all developers, regardless of ability, can utilize the full power of our AI-assisted coding platform.",
+    "ACCESSIBILITY_OVERVIEW": "MAIK-AI-CODING-APP is committed to providing an accessible development environment for all users, including those with disabilities. Our accessibility standards ensure that all developers, regardless of ability, can utilize the full power of our AI-assisted coding platform.",
     "WCAG_LEVEL": "WCAG 2.1 AA",
     "SPECIFIC_REQUIREMENTS": "Support for screen readers, keyboard navigation, and high-contrast mode",
     "LEGAL_CONSIDERATIONS": "Compliance with ADA requirements and international accessibility standards",
@@ -156,13 +156,13 @@
     "FALLBACK_STRATEGIES": "Graceful degradation to simpler models or rule-based approaches when needed"
   },
   "wordpress_integration": {
-    "WORDPRESS_INTEGRATION_OVERVIEW": "Not applicable for Bolt DIY",
-    "WORDPRESS_ARCHITECTURE": "Not applicable for Bolt DIY",
-    "PLUGIN_STRATEGY": "Not applicable for Bolt DIY",
-    "THEME_CUSTOMIZATION": "Not applicable for Bolt DIY",
-    "DATA_SYNCHRONIZATION": "Not applicable for Bolt DIY",
-    "AUTHENTICATION_FLOW": "Not applicable for Bolt DIY",
-    "CONTENT_MANAGEMENT": "Not applicable for Bolt DIY"
+    "WORDPRESS_INTEGRATION_OVERVIEW": "Not applicable for MAIK-AI-CODING-APP",
+    "WORDPRESS_ARCHITECTURE": "Not applicable for MAIK-AI-CODING-APP",
+    "PLUGIN_STRATEGY": "Not applicable for MAIK-AI-CODING-APP",
+    "THEME_CUSTOMIZATION": "Not applicable for MAIK-AI-CODING-APP",
+    "DATA_SYNCHRONIZATION": "Not applicable for MAIK-AI-CODING-APP",
+    "AUTHENTICATION_FLOW": "Not applicable for MAIK-AI-CODING-APP",
+    "CONTENT_MANAGEMENT": "Not applicable for MAIK-AI-CODING-APP"
   },
   "tasks": {
     "HIGH_PRIORITY_TASK_1": "Implement ErrorHandler with Sentry integration",

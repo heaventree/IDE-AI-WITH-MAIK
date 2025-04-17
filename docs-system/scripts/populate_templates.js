@@ -11,7 +11,7 @@ const path = require('path');
 // Configuration
 const TEMPLATES_DIR = path.join(__dirname, '..', 'templates');
 const OUTPUT_DIR = path.join(__dirname, '..', 'docs');
-const VARIABLES_FILE = path.join(__dirname, '..', 'bolt_diy_variables.json');
+const VARIABLES_FILE = path.join(__dirname, '..', 'maik_ai_coding_app_variables.json');
 
 // Create output directory if it doesn't exist
 if (!fs.existsSync(OUTPUT_DIR)) {
