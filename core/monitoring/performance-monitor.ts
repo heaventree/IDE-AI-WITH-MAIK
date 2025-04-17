@@ -1,23 +1,41 @@
 /**
- * Monitoring Module for Bolt DIY
+ * Performance Monitoring for Bolt DIY
  * 
- * This module exports monitoring tools for tracking performance,
- * errors, and user interactions.
+ * This module provides performance monitoring tools to track
+ * request timing, resource usage, and error rates.
  */
 
-export * from './sentry-sdk';
+import { MonitoredError } from '../error-handler';
 
-// Performance Monitoring
+/**
+ * Metrics for a single request
+ */
 export interface RequestMetrics {
   /** Unique request ID */
   requestId: string;
+  
+  /** Session ID associated with request */
   sessionId: string;
+  
+  /** Start time of request */
   startTime: number;
+  
+  /** End time of request */
   endTime?: number;
+  
+  /** Duration in milliseconds */
   duration?: number;
+  
+  /** Whether an error occurred */
   errorOccurred: boolean;
+  
+  /** Type of error if one occurred */
   errorType?: string;
+  
+  /** Prompt token count if applicable */
   promptTokens?: number;
+  
+  /** Response token count if applicable */
   responseTokens?: number;
 }
 
@@ -55,7 +73,7 @@ export class PerformanceMonitor {
    * @param response - Final response or error
    * @returns Updated metrics
    */
-  static endRequest(metrics: RequestMetrics, response: any): RequestMetrics {
+  static endRequest(metrics: RequestMetrics, response: string | MonitoredError): RequestMetrics {
     // Set end time and calculate duration
     metrics.endTime = Date.now();
     metrics.duration = metrics.endTime - metrics.startTime;
@@ -67,7 +85,7 @@ export class PerformanceMonitor {
     }
     
     // Store metrics
-    this.storeMetrics(metrics);
+    PerformanceMonitor.storeMetrics(metrics);
     
     return metrics;
   }
@@ -78,11 +96,11 @@ export class PerformanceMonitor {
    */
   private static storeMetrics(metrics: RequestMetrics): void {
     // Add to metrics store
-    this.metrics.push(metrics);
+    PerformanceMonitor.metrics.push(metrics);
     
     // Limit size of metrics store
-    if (this.metrics.length > this.maxMetricsEntries) {
-      this.metrics.shift();
+    if (PerformanceMonitor.metrics.length > PerformanceMonitor.maxMetricsEntries) {
+      PerformanceMonitor.metrics.shift();
     }
     
     // Log metrics for monitoring
@@ -100,7 +118,7 @@ export class PerformanceMonitor {
    * @returns Recent metrics
    */
   static getRecentMetrics(limit = 10): RequestMetrics[] {
-    return this.metrics
+    return PerformanceMonitor.metrics
       .slice(-limit)
       .sort((a, b) => b.startTime - a.startTime);
   }
@@ -112,8 +130,8 @@ export class PerformanceMonitor {
    */
   static getAverageDuration(sessionId?: string): number {
     const filteredMetrics = sessionId
-      ? this.metrics.filter(m => m.sessionId === sessionId)
-      : this.metrics;
+      ? PerformanceMonitor.metrics.filter(m => m.sessionId === sessionId)
+      : PerformanceMonitor.metrics;
     
     if (filteredMetrics.length === 0) {
       return 0;
@@ -133,8 +151,8 @@ export class PerformanceMonitor {
    */
   static getErrorRate(sessionId?: string): number {
     const filteredMetrics = sessionId
-      ? this.metrics.filter(m => m.sessionId === sessionId)
-      : this.metrics;
+      ? PerformanceMonitor.metrics.filter(m => m.sessionId === sessionId)
+      : PerformanceMonitor.metrics;
     
     if (filteredMetrics.length === 0) {
       return 0;

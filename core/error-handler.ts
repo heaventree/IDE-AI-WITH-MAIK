@@ -76,15 +76,15 @@ export class ErrorHandler {
       monitoredError.userFacingMessage = 'Unable to generate a response right now. Please try again in a moment.';
       
       // Add HTTP status code if available
-      if (error.statusCode) {
-        monitoredError.internalDetails = `${errorMessage} (Status: ${error.statusCode})`;
+      if ((error as LLMAPIError).statusCode) {
+        monitoredError.internalDetails = `${errorMessage} (Status: ${(error as LLMAPIError).statusCode})`;
       }
     } else if (error instanceof ContextWindowExceededError) {
       monitoredError.userFacingMessage = 'Your conversation is too long for me to process. Please start a new conversation or simplify your request.';
-      monitoredError.internalDetails = `${errorMessage} (Tokens: ${error.tokenCount}/${error.maxTokens})`;
+      monitoredError.internalDetails = `${errorMessage} (Tokens: ${(error as ContextWindowExceededError).tokenCount}/${(error as ContextWindowExceededError).maxTokens})`;
     } else if (error instanceof AIGovernanceError) {
       monitoredError.userFacingMessage = 'This request could not be processed due to content guidelines.';
-      monitoredError.internalDetails = `${errorMessage} (Category: ${error.category})`;
+      monitoredError.internalDetails = `${errorMessage} (Category: ${(error as AIGovernanceError).category})`;
     } else if (error instanceof BoltDIYError) {
       // Generic Bolt DIY error
       monitoredError.userFacingMessage = 'An error occurred with the BoltDIY system. Please try again.';
