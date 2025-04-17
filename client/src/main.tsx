@@ -1,20 +1,23 @@
 import { createRoot } from "react-dom/client";
-import "./styles/basic.css"; // Import basic CSS file
+import "./index.css";
 import { Toaster } from "@/components/ui/toaster";
 import { WebSocketProvider } from "./contexts/WebSocketContext";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/queryClient";
+import ThemeUIContextProvider from "./contexts/ThemeUIProvider";
 import App from "./App";
 
 // App with all providers in the correct order
 function AppWithProviders() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <WebSocketProvider>
-        <App />
-        <Toaster />
-      </WebSocketProvider>
-    </QueryClientProvider>
+    <ThemeUIContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <WebSocketProvider>
+          <App />
+          <Toaster />
+        </WebSocketProvider>
+      </QueryClientProvider>
+    </ThemeUIContextProvider>
   );
 }
 

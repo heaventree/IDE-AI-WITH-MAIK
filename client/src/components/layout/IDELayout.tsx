@@ -96,62 +96,48 @@ const IDELayout: React.FC<IDELayoutProps> = ({ children }) => {
   }
 
   return (
-    <div className="ide-container">
+    <div className="app-container">
       {/* Top menu bar */}
-      <header className="ide-menubar">
+      <div className="menubar">
         <MenuBar toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
-      </header>
+      </div>
       
-      {/* Main content area */}
-      <div className="ide-content">
-        {/* We always render the sidebar but control its visibility with CSS classes */}
-        <aside className={`ide-sidebar-wrapper ${sidebarOpen ? 'open' : 'closed'}`}>
-          <Sidebar />
-        </aside>
-        
-        {/* Main editor and terminal stack */}
-        <main className="ide-main">
-          {/* Main editor area */}
-          <div className="ide-editor">
-            {editorComponent || (
-              <div className="ide-welcome">
-                <div className="welcome-content">
-                  <h1 className="welcome-title">Welcome to MAIK IDE</h1>
-                  <p className="welcome-subtitle">Your AI-powered development environment</p>
-                  
-                  <div className="welcome-actions">
-                    <button className="welcome-action-button primary">
-                      <Zap size={16} />
-                      <span>New Project</span>
-                    </button>
-                    <button className="welcome-action-button secondary">
-                      <Coffee size={16} />
-                      <span>Open Recent</span>
-                    </button>
-                  </div>
-                  
-                  <div className="welcome-tips">
-                    <div className="welcome-tip-title">Quick Tips</div>
-                    <ul className="welcome-tips-list">
-                      <li>Use <kbd>Ctrl</kbd>+<kbd>P</kbd> to quickly open files</li>
-                      <li>Access AI assistance with <kbd>Ctrl</kbd>+<kbd>Space</kbd></li>
-                      <li>Toggle terminal with <kbd>Ctrl</kbd>+<kbd>`</kbd></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            )}
+      {/* Sidebar */}
+      <div className={`sidebar ${sidebarOpen ? '' : 'collapsed'}`}>
+        <Sidebar />
+      </div>
+      
+      {/* Main editor area */}
+      <div className="editor-area">
+        {editorComponent || (
+          <div className="flex-center flex-column">
+            <Zap size={48} style={{ marginBottom: '16px' }} />
+            <h1 style={{ marginBottom: '8px' }}>Welcome to MAIK IDE</h1>
+            <p style={{ marginBottom: '16px' }}>Your AI-powered development environment</p>
+            
+            <div className="flex-center" style={{ gap: '16px' }}>
+              <button style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', background: '#7b68ee', color: 'white', border: 'none', borderRadius: '4px' }}>
+                <Zap size={16} />
+                <span>New Project</span>
+              </button>
+              <button style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', background: '#151831', color: 'white', border: '1px solid rgba(72, 82, 133, 0.8)', borderRadius: '4px' }}>
+                <Coffee size={16} />
+                <span>Open Recent</span>
+              </button>
+            </div>
           </div>
-          
-          {/* Terminal container is positioned by the Terminal component itself */}
-          {terminalComponent}
-        </main>
+        )}
+      </div>
+      
+      {/* Terminal area */}
+      <div className={`terminal-area ${terminalVisible ? 'visible' : ''}`}>
+        {terminalComponent}
       </div>
       
       {/* Bottom status bar */}
-      <footer className="ide-statusbar">
+      <div className="statusbar">
         <StatusBar />
-      </footer>
+      </div>
     </div>
   );
 };
