@@ -26,7 +26,7 @@ State in the application is categorized as:
 
 ## State Management Solution
 
-MAIK-AI-CODING-APP uses {{STATE_MANAGEMENT_SOLUTION}} for state management with the following architecture:
+MAIK-AI-CODING-APP uses We use a combination of React Context for global application state and TanStack Query for server state management. Local component state is managed with useState and useReducer hooks. For more complex state requirements, we implement custom hooks that encapsulate state logic and provide a clean API for components to interact with. for state management with the following architecture:
 
 ### Store Configuration
 
