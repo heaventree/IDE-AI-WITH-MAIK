@@ -13,12 +13,12 @@
  * - Automatic conversation steering
  */
 
-import { injectable, inject } from 'tsyringe';
 import { 
   IPromptManager, 
   IMemoryManager,
   MemoryContext, 
-  ApplicationState 
+  ApplicationState,
+  ToolParameter
 } from '../interfaces';
 import { ContextWindowExceededError } from '../errors';
 
@@ -71,7 +71,6 @@ interface PromptManagerOptions {
 /**
  * Implementation of Prompt Manager with advanced token optimization
  */
-@injectable()
 export class PromptManager implements IPromptManager {
   // Configuration
   private systemPrompt: string;
@@ -81,6 +80,7 @@ export class PromptManager implements IPromptManager {
   private includeToolDescriptions: boolean;
   private rememberFunctionCalls: boolean;
   private enableContextCompression: boolean;
+  private memoryManager?: IMemoryManager;
   
   // Default estimation function for tokens
   private static readonly DEFAULT_TOKEN_ESTIMATOR = (text: string) => Math.ceil(text.length / 4);
@@ -92,8 +92,9 @@ export class PromptManager implements IPromptManager {
    */
   constructor(
     options: PromptManagerOptions = {},
-    @inject('IMemoryManager') private memoryManager?: IMemoryManager
+    memoryManager?: IMemoryManager
   ) {
+    this.memoryManager = memoryManager;
     this.systemPrompt = options.systemPrompt || 
       'You are a helpful AI assistant that provides accurate, helpful information, and prioritizes user success.';
     this.maxTokens = options.maxTokens || 4000;
@@ -320,7 +321,8 @@ export class PromptManager implements IPromptManager {
         if (tool.parameters) {
           prompt += "Parameters:\n";
           for (const [paramName, paramDetails] of Object.entries(tool.parameters)) {
-            prompt += `  - ${paramName}: ${paramDetails.description || ''} (${paramDetails.type || 'any'})\n`;
+            const details = paramDetails as ToolParameter;
+            prompt += `  - ${paramName}: ${details.description || ''} (${details.type || 'any'})\n`;
           }
         }
         

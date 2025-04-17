@@ -13,7 +13,6 @@
  * - Session persistence
  */
 
-import { injectable } from 'tsyringe';
 import { 
   IMemoryManager, 
   MemoryContext, 
@@ -72,7 +71,6 @@ interface MemoryManagerOptions {
  * Advanced implementation of Memory Manager with hybrid storage approach
  * Combines short-term and long-term memory with optimization strategies
  */
-@injectable()
 export class AdvancedMemoryManager implements IMemoryManager {
   // Short-term memory storage (recent turns) - quick access
   private shortTermMemory: Map<string, Interaction[]> = new Map();
