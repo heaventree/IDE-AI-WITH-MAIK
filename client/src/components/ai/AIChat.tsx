@@ -59,7 +59,7 @@ const AIChat = ({
   };
 
   // When in docked mode, only render the contents in the parent container
-  if (mode === 'docked' as AIChatMode) {
+  if (mode === 'docked') {
     return (
       <Box sx={{ 
         display: 'flex', 
@@ -302,7 +302,7 @@ const AIChat = ({
                 }}
                 sx={{ 
                   marginRight: 1,
-                  color: mode === ('docked' as AIChatMode) ? 'primary' : 'foreground'
+                  color: mode === 'docked' ? 'primary' : 'foreground'
                 }}
                 title="Dock to Panel"
                 aria-label="Switch to Docked Mode"
