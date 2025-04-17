@@ -1,96 +1,64 @@
-import React, { useEffect, useState } from 'react';
-import { 
-  Zap, Clock, GitBranch, Circle, 
-  FileCode, Bell, Wifi, Cpu, 
-  CheckCircle, Terminal
-} from 'lucide-react';
-import { useWebSocket } from '../../contexts/WebSocketContext';
+/** @jsxImportSource theme-ui */
+import React from 'react';
+import { Flex, Text, Box } from 'theme-ui';
+import { GitBranch, Wifi, Settings, BellRing } from 'lucide-react';
 
-interface StatusBarProps {
-  // Add props as needed
-}
-
-interface StatusItemProps {
-  icon: React.ReactNode;
-  text: string;
-  title?: string;
-  className?: string;
-}
-
-const StatusItem: React.FC<StatusItemProps> = ({ icon, text, title, className = '' }) => (
-  <div className={`statusbar-item ${className}`} title={title}>
-    <div className="statusbar-item-icon">{icon}</div>
-    <div className="statusbar-item-text">{text}</div>
-  </div>
-);
-
-const StatusBar: React.FC<StatusBarProps> = () => {
-  const { connected } = useWebSocket();
-  const [time, setTime] = useState(new Date().toLocaleTimeString());
-  
-  // Update time every second
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTime(new Date().toLocaleTimeString());
-    }, 1000);
-    
-    return () => clearInterval(timer);
-  }, []);
-  
+const StatusBar: React.FC = () => {
   return (
-    <div className="statusbar-container">
-      {/* Left status items */}
-      <div className="statusbar-left">
-        <StatusItem 
-          icon={<Circle size={8} fill={connected ? 'currentColor' : 'none'} />}
-          text={connected ? 'Connected' : 'Disconnected'}
-          className={connected ? 'success' : 'muted'}
-        />
+    <Flex
+      sx={{
+        width: '100%',
+        height: '100%',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        fontSize: '12px',
+        color: 'foregroundMuted',
+        padding: '0 8px',
+      }}
+    >
+      {/* Left section */}
+      <Flex sx={{ alignItems: 'center', gap: 2 }}>
+        <Flex sx={{ alignItems: 'center', gap: 1 }}>
+          <GitBranch size={14} />
+          <Text>main</Text>
+        </Flex>
         
-        <StatusItem 
-          icon={<Zap size={12} />}
-          text="Ready"
-        />
-        
-        <StatusItem 
-          icon={<FileCode size={12} />}
-          text="TypeScript"
-        />
-        
-        <StatusItem 
-          icon={<Terminal size={12} />}
-          text="main.ts"
-        />
-      </div>
+        <Flex 
+          sx={{ 
+            alignItems: 'center', 
+            gap: 1,
+            backgroundColor: 'backgroundActive',
+            padding: '2px 6px',
+            borderRadius: '4px'
+          }}
+        >
+          <Text sx={{ fontWeight: 'bold', color: 'primary' }}>Bolt DIY</Text>
+        </Flex>
+      </Flex>
       
-      {/* Right status items */}
-      <div className="statusbar-right">
-        <StatusItem 
-          icon={<GitBranch size={12} />}
-          text="main"
-          title="Git branch"
-        />
+      {/* Middle section - empty for now */}
+      <Box></Box>
+      
+      {/* Right section */}
+      <Flex sx={{ alignItems: 'center', gap: 3 }}>
+        <Flex sx={{ alignItems: 'center', gap: 1 }}>
+          <Text>TypeScript</Text>
+        </Flex>
         
-        <StatusItem 
-          icon={<Cpu size={12} />}
-          text="98%"
-          title="Performance: 98% efficient"
-        />
+        <Flex sx={{ alignItems: 'center', gap: 1 }}>
+          <Wifi size={14} />
+          <Text>Connected</Text>
+        </Flex>
         
-        <StatusItem 
-          icon={<CheckCircle size={12} color="#0acf97" />}
-          text="All good"
-          title="All systems normal"
-          className="success"
-        />
+        <Flex sx={{ alignItems: 'center', gap: 1 }}>
+          <BellRing size={14} />
+        </Flex>
         
-        <StatusItem 
-          icon={<Clock size={12} />}
-          text={time}
-          title="Current time"
-        />
-      </div>
-    </div>
+        <Flex sx={{ alignItems: 'center', gap: 1 }}>
+          <Text>Ln 1, Col 1</Text>
+        </Flex>
+      </Flex>
+    </Flex>
   );
 };
 

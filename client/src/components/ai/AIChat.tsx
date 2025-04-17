@@ -302,7 +302,7 @@ const AIChat = ({
                 }}
                 sx={{ 
                   marginRight: 1,
-                  color: mode === 'docked' ? 'primary' : 'foreground'
+                  color: mode === 'docked' ? 'primary' : 'foreground' as any
                 }}
                 title="Dock to Panel"
                 aria-label="Switch to Docked Mode"

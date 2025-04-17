@@ -151,24 +151,19 @@ const Sidebar: React.FC = () => {
         return (
           <Box sx={{ padding: 2 }}>
             <Text sx={{ fontWeight: 'bold', fontSize: 1, marginBottom: 3 }}>SEARCH</Text>
-            <Box
-              as="input"
+            <input
               type="text"
               placeholder="Search in files..."
-              sx={{
+              style={{
                 width: '100%',
-                backgroundColor: 'backgroundElevated',
-                border: '1px solid',
-                borderColor: 'border',
-                borderRadius: 'default',
-                padding: 2,
-                fontSize: 1,
-                color: 'foreground',
-                marginBottom: 3,
-                '&:focus': {
-                  outline: 'none',
-                  borderColor: 'primary',
-                },
+                backgroundColor: 'var(--theme-ui-colors-backgroundElevated)',
+                border: '1px solid var(--theme-ui-colors-border)',
+                borderRadius: '4px',
+                padding: '8px',
+                fontSize: '14px',
+                color: 'var(--theme-ui-colors-foreground)',
+                marginBottom: '12px',
+                outline: 'none',
               }}
             />
             <Text sx={{ fontSize: 0, color: 'foregroundMuted' }}>No search results yet</Text>
