@@ -1,39 +1,47 @@
 /**
  * Bolt DIY Remediation Demo
  * 
- * This script demonstrates the usage of the Bolt DIY core components
- * and the integration with AI governance.
+ * This script demonstrates the usage of the enhanced Bolt DIY core components 
+ * with dependency injection and AI governance integration.
+ * 
+ * This demo showcases:
+ * 1. The main agent handling multiple types of requests
+ * 2. Error handling with the centralized error handler
+ * 3. Bias detection and governance capabilities
+ * 4. Conversation context management
+ * 5. Registration of custom tools
  */
 
 import 'reflect-metadata';
 import { container } from 'tsyringe';
 
-// Import core components
+// Import core components and convenience functions
 import { 
-  initializeSystem, 
+  setupDependencyInjection,
+  getAgent,
   Agent, 
-  ErrorHandler,
   SentrySDK,
-  InMemoryStateManager,
-  AdvancedMemoryManager,
-  PromptManager,
   ToolExecutor,
-  Tool
+  Tool,
+  IToolExecutor
 } from './core';
 
 // Import AI governance
 import { AIGovernance } from './core/ai/governance';
 
-// Initialize Sentry (would use actual DSN in production)
+// Set up the dependency injection container
+setupDependencyInjection();
+
+// Initialize Sentry for error tracking (would use actual DSN in production)
 SentrySDK.initialize();
 
-// Retrieve the agent instance
-const agent = initializeSystem();
+// Get the agent instance using the convenience function
+const agent = getAgent();
 
-// Get AI governance instance
+// Get AI governance instance via DI container
 const governance = container.resolve(AIGovernance);
 
-// Register an AI model
+// Register a custom AI model (in addition to default model)
 const modelId = 'gpt-4';
 governance.registerModel(modelId, {
   name: 'GPT-4',
@@ -51,7 +59,7 @@ governance.registerModel(modelId, {
   useCases: ['Content creation', 'Code assistance', 'Documentation generation']
 });
 
-// Add sensitive terms for bias detection
+// Add additional sensitive terms for bias detection
 governance.addSensitiveTerms([
   'he is better than she', 
   'mankind', 
@@ -61,7 +69,24 @@ governance.addSensitiveTerms([
   'stewardess'
 ]);
 
-// Define a session ID for the demo
+// Register custom tools with the tool executor
+const toolExecutor = container.resolve<IToolExecutor>('IToolExecutor');
+
+// Add a custom tool for weather information
+const weatherTool: Tool = {
+  name: 'getWeather',
+  description: 'Get weather information for a location',
+  validateArgs: (args) => typeof args.location === 'string' && args.location.length > 0,
+  execute: async (args) => {
+    // Simulate weather API call
+    return `Weather for ${args.location}: 72°F, Sunny`;
+  }
+};
+
+// Register the custom tool
+(toolExecutor as ToolExecutor).registerTool(weatherTool);
+
+// Define a unique session ID for the demo
 const sessionId = `session-${Date.now()}`;
 
 /**
@@ -93,7 +118,7 @@ async function demonstrateBasicInteraction() {
 }
 
 /**
- * Demonstrate error handling
+ * Demonstrate error handling with the centralized error handler
  */
 async function demonstrateErrorHandling() {
   console.log('\n--- Error Handling ---\n');
@@ -110,7 +135,7 @@ async function demonstrateErrorHandling() {
 }
 
 /**
- * Demonstrate bias detection
+ * Demonstrate bias detection and governance capabilities
  */
 async function demonstrateBiasDetection() {
   console.log('\n--- Bias Detection ---\n');
@@ -148,16 +173,17 @@ async function demonstrateBiasDetection() {
 }
 
 /**
- * Demonstrate multiple turns of conversation
+ * Demonstrate conversation context management
  */
 async function demonstrateConversation() {
-  console.log('\n--- Conversation Context ---\n');
+  console.log('\n--- Conversation Context Management ---\n');
   
   const conversationSessionId = `conversation-${Date.now()}`;
   const turns = [
     'Hello, my name is Alex.',
     'What can you tell me about AI governance?',
-    'How does bias detection work?'
+    'How does bias detection work?',
+    'Can you use the getWeather tool to check the weather in San Francisco?'
   ];
   
   for (const userInput of turns) {
@@ -173,7 +199,7 @@ async function demonstrateConversation() {
 }
 
 /**
- * Run the demos
+ * Run all demos in sequence
  */
 async function runDemos() {
   try {
@@ -183,19 +209,28 @@ async function runDemos() {
     await demonstrateConversation();
     
     // Display governance data
-    console.log('\n--- Governance Data ---\n');
+    console.log('\n--- Governance Data Summary ---\n');
     console.log('Model Metadata:', JSON.stringify(governance.getModelMetadata(modelId), null, 2));
-    console.log('Decisions:', governance.getDecisionsByModel(modelId).length);
-    console.log('Bias Reports:', governance.getBiasReportsByModel(modelId).length);
-    console.log('Audit Log:', governance.getAuditLog().length);
+    console.log('Decisions Count:', governance.getDecisionsByModel(modelId).length);
+    console.log('Bias Reports Count:', governance.getBiasReportsByModel(modelId).length);
+    console.log('Audit Log Entries:', governance.getAuditLog().length);
+    
+    // Display tool information
+    console.log('\n--- Registered Tools ---\n');
+    const tools = [
+      { name: 'getCurrentTime', description: 'Get the current server time' },
+      { name: 'getWeather', description: 'Get weather information for a location' }
+    ];
+    console.table(tools);
   } catch (error) {
     console.error('Error running demos:', error);
   }
 }
 
 // Run all the demos
+console.log('🚀 Starting Bolt DIY Demo with Enhanced DI Container');
 runDemos().then(() => {
-  console.log('\nDemo completed successfully!');
+  console.log('\n✅ Demo completed successfully!');
 }).catch(error => {
-  console.error('Demo failed:', error);
+  console.error('❌ Demo failed:', error);
 });
