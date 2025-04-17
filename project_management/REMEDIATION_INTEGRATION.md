@@ -1,14 +1,14 @@
-# Bolt DIY Remediation Integration
+# MAIK-AI-CODING-APP Remediation Integration
 
 ## Overview
 
-This document details the integration of the Bolt DIY Remediation Plan with the new documentation system (docs-system). The integration follows a systematic approach to address the issues identified in the remediation plan while incorporating the governance and structural improvements from the docs-system.
+This document details the integration of the MAIK-AI-CODING-APP Remediation Plan with the new documentation system (docs-system). The integration follows a systematic approach to address the issues identified in the remediation plan while incorporating the governance and structural improvements from the docs-system.
 
 ## Integration Components
 
 ### 1. Core Architecture Components
 
-We've implemented the following core components from the Bolt DIY Remediation Plan:
+We've implemented the following core components from the MAIK-AI-CODING-APP Remediation Plan:
 
 #### 1.1 Error Handling System
 
@@ -181,6 +181,6 @@ For complete migration to the new architecture:
 
 ## References
 
-- [Bolt DIY Remediation Plan](attached_assets/Pasted-Bolt-DIY-Remediation-Refactoring-BlueprintDocument-Version-2-1-Incorporates-v2-1-structure-tab-1744899519764.txt)
+- [MAIK-AI-CODING-APP Remediation Plan](attached_assets/Pasted-Bolt-DIY-Remediation-Refactoring-BlueprintDocument-Version-2-1-Incorporates-v2-1-structure-tab-1744899519764.txt)
 - [AI Governance Implementation](docs-system/handover/2025-04-16_AI-Governance-Implementation_Handover.md)
 - [Level 3 Remediation Plan](docs-system/remediation/Level_3_Remediation_Plan.md)

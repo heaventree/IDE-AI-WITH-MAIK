@@ -6,7 +6,7 @@ Accepted
 
 ## Context
 
-The current Bolt DIY system suffers from limitations in its memory management, leading to:
+The current MAIK-AI-CODING-APP system suffers from limitations in its memory management, leading to:
 
 1. Context loss in longer conversations
 2. Hallucinations due to missing or incorrect context

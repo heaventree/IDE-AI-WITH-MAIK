@@ -6,7 +6,7 @@ Accepted
 
 ## Context
 
-As Bolt DIY integrates advanced AI capabilities, we need to address several concerns related to AI governance:
+As MAIK-AI-CODING-APP integrates advanced AI capabilities, we need to address several concerns related to AI governance:
 
 1. Lack of transparency in AI decision-making processes
 2. Potential for bias in AI-generated content and recommendations

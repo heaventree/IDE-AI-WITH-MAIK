@@ -1,8 +1,8 @@
-# Migration Guide: Bolt DIY System
+# Migration Guide: MAIK-AI-CODING-APP System
 
 ## Introduction
 
-This guide outlines the process for migrating from the current system to the new Bolt DIY architecture with integrated docs-system components. The migration follows a phased approach to minimize disruption while improving system stability, performance, and maintainability.
+This guide outlines the process for migrating from the current system to the new MAIK-AI-CODING-APP architecture with integrated docs-system components. The migration follows a phased approach to minimize disruption while improving system stability, performance, and maintainability.
 
 ## Migration Overview
 
@@ -198,10 +198,10 @@ The migration addresses the following technical debt items:
 ## Resources
 
 - [Remediation Integration Document](REMEDIATION_INTEGRATION.md)
-- [Bolt DIY Remediation Plan](attached_assets/Pasted-Bolt-DIY-Remediation-Refactoring-BlueprintDocument-Version-2-1-Incorporates-v2-1-structure-tab-1744899519764.txt)
+- [MAIK-AI-CODING-APP Remediation Plan](attached_assets/Pasted-Bolt-DIY-Remediation-Refactoring-BlueprintDocument-Version-2-1-Incorporates-v2-1-structure-tab-1744899519764.txt)
 - [Core Component Documentation](../core/README.md)
 - [AI Governance Documentation](../docs-system/docs/AI_GOVERNANCE_USAGE.md)
 
 ## Support
 
-For migration assistance, contact the Bolt DIY migration team at [support@boltdiy.example.com](mailto:support@boltdiy.example.com).
+For migration assistance, contact the MAIK-AI-CODING-APP migration team at [support@maik-ai-coding-app.example.com](mailto:support@maik-ai-coding-app.example.com).

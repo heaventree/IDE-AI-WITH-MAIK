@@ -1,8 +1,8 @@
-# Bolt DIY Core Architecture
+# MAIK-AI-CODING-APP Core Architecture
 
 ## Overview
 
-The Bolt DIY Core Architecture provides a modular, robust foundation for the Bolt DIY system. This architecture addresses key challenges identified in the remediation plan, focusing on memory optimization, token efficiency, and context window management.
+The MAIK-AI-CODING-APP Core Architecture provides a modular, robust foundation for the MAIK-AI-CODING-APP system. This architecture addresses key challenges identified in the remediation plan, focusing on memory optimization, token efficiency, and context window management.
 
 ## Core Components
 

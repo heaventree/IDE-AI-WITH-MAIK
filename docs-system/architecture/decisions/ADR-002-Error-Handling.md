@@ -6,7 +6,7 @@ Accepted
 
 ## Context
 
-The Bolt DIY system currently has inconsistent error handling, leading to several issues:
+The MAIK-AI-CODING-APP system currently has inconsistent error handling, leading to several issues:
 
 1. Unhandled exceptions causing system crashes
 2. Lack of user-friendly error messages
