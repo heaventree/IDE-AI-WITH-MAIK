@@ -2,74 +2,116 @@
 @tailwind components;
 @tailwind utilities;
 
+/**
+ * MAIK AI Coding App - CSS Variables
+ * 
+ * IMPORTANT: DO NOT EDIT THESE VARIABLES DIRECTLY!
+ * These variables are generated from client/src/lib/designTokens.ts.
+ * For changes:
+ * 1. Update designTokens.ts
+ * 2. Use the design system's exported functions
+ * 
+ * This ensures a single source of truth for styling values.
+ */
+
 :root {
-  /* Core colors - based on the provided UI examples with enhancements */
-  --primary: #7b68ee; /* Professional indigo-purple */
-  --primary-hover: #6658e5; 
+  /* Colors */
+  --primary: #7b68ee;
+  --primary-hover: #6658e5;
   --primary-pressed: #5a4cdb;
   --primary-muted: rgba(123, 104, 238, 0.15);
   --primary-transparent: rgba(123, 104, 238, 0.08);
   
-  --secondary: #8e77ff; /* Secondary purple, slightly lighter */
-  --accent: #00dfb5; /* Bright teal accent */
-  --highlight: #c678dd; /* Rich pink-purple highlight */
+  --secondary: #8e77ff;
+  --accent: #00dfb5;
+  --highlight: #c678dd;
   
-  --danger: #ec4899; /* More vibrant pink */
-  --warning: #f59e0b; /* Warmer amber */
-  --success: #0dcb97; /* Bright teal-green */
-  --info: #38bdf8; /* Sky blue */
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
   
-  /* Text colors */
   --foreground: #e2e4f3;
   --foreground-muted: #b8bcce;
   --foreground-subtle: #7a7e96;
   
-  /* UI background colors - deeper, richer darks */
-  --background: #0f1127; /* Darker background */
-  --background-elevated: #151831; /* Slightly elevated surfaces */
-  --background-floating: #1c1e38; /* Floating elements */
-  --background-hover: rgba(123, 104, 238, 0.08); /* Subtle hover state */
-  --background-active: rgba(123, 104, 238, 0.15); /* Active/selected state */
+  --background: #0f1127;
+  --background-elevated: #151831;
+  --background-floating: #1c1e38;
+  --background-hover: rgba(123, 104, 238, 0.08);
+  --background-active: rgba(123, 104, 238, 0.15);
   
-  /* Borders */
-  --border: rgba(72, 82, 133, 0.8); /* More sophisticated border color */
-  --border-muted: rgba(72, 82, 133, 0.5); /* Subtle borders */
+  --border: rgba(72, 82, 133, 0.8);
+  --border-muted: rgba(72, 82, 133, 0.5);
   
-  /* Component-specific colors */
-  --sidebar: #151831; /* Sidebar background */
-  --editor: #0f1127; /* Editor background - darkest */
-  --terminal: #0c0e20; /* Terminal background - even darker */
-  --menubar: #151831; /* Menu bar background */
-  --statusbar: #101328; /* Status bar background */
+  --sidebar: #151831;
+  --editor: #0f1127;
+  --terminal: #0c0e20;
+  --menubar: #151831;
+  --statusbar: #101328;
   
-  /* Shadow colors */
-  --shadow-light: rgba(0, 0, 0, 0.2);
-  --shadow-medium: rgba(0, 0, 0, 0.3);
-  --shadow-dark: rgba(0, 0, 0, 0.4);
-  --shadow-glow: 0 0 15px rgba(123, 104, 238, 0.2); /* Subtle glow effect */
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', Menlo, Monaco, Consolas, monospace;
   
-  /* Enhanced gradients */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 15px rgba(123, 104, 238, 0.2);
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease-out;
+  --transition-medium: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  
+  /* Enhanced gradients - derived from primary colors */
   --gradient-primary: linear-gradient(135deg, var(--primary) 0%, #9b66ff 100%);
   --gradient-purple: linear-gradient(135deg, #8e77ff 0%, #b26aff 100%);
   --gradient-blue: linear-gradient(135deg, #4c83ff 0%, #2b9cff 100%);
   --gradient-green: linear-gradient(135deg, #00dfb5 0%, #00b890 100%);
   
-  /* Blurs */
-  --blur-radius: 8px;
-  
   /* Dimensions */
-  --menubar-height: 44px; /* Lower height for menubar - more modern */
-  --sidebar-width: 300px; /* Slightly wider sidebar */
+  --menubar-height: 44px;
+  --sidebar-width: 300px;
   --statusbar-height: 24px;
-  --border-radius-sm: 4px;
-  --border-radius-md: 6px;
-  --border-radius-lg: 8px;
   --terminal-height: 300px;
-  
-  /* Transitions */
-  --transition-fast: 0.15s ease;
-  --transition-medium: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-spring: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 @layer base {
