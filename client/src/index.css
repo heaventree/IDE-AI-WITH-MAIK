@@ -2,6 +2,271 @@
 @tailwind components;
 @tailwind utilities;
 
+/* IDE Layout Styles */
+.ide-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  background-color: var(--theme-ui-colors-background);
+}
+
+.ide-content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.ide-menubar {
+  border-bottom: 1px solid var(--theme-ui-colors-border);
+  background-color: var(--theme-ui-colors-backgroundElevated);
+  z-index: 10;
+}
+
+.ide-sidebar-wrapper {
+  height: 100%;
+  border-right: 1px solid var(--theme-ui-colors-border);
+  background-color: var(--theme-ui-colors-backgroundElevated);
+  overflow-y: auto;
+}
+
+.ide-editor {
+  height: 100%;
+  padding: 1rem;
+  background-color: var(--theme-ui-colors-background);
+  overflow: auto;
+}
+
+.ide-terminal-container {
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--theme-ui-colors-backgroundFloating);
+  border-top: 1px solid var(--theme-ui-colors-border);
+}
+
+.ide-statusbar {
+  height: 24px;
+  border-top: 1px solid var(--theme-ui-colors-border);
+  background-color: var(--theme-ui-colors-backgroundElevated);
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  font-size: 0.75rem;
+}
+
+/* Resize Handle Styles */
+.resize-handle {
+  width: 8px;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+
+.resize-handle:hover {
+  background-color: var(--theme-ui-colors-primary);
+  opacity: 0.2;
+}
+
+.resize-handle:active {
+  background-color: var(--theme-ui-colors-primary);
+  opacity: 0.4;
+}
+
+.resize-handle-bar {
+  width: 1px;
+  height: 24px;
+  background-color: var(--theme-ui-colors-border);
+}
+
+.resize-handle:hover .resize-handle-bar {
+  background-color: var(--theme-ui-colors-primary);
+}
+
+/* Loading Screen */
+.ide-loading-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background-color: var(--theme-ui-colors-background);
+}
+
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.loading-logo {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--theme-ui-colors-primaryMuted);
+  border-radius: 50%;
+  padding: 1rem;
+  color: var(--theme-ui-colors-primary);
+  animation: pulse 2s infinite;
+}
+
+.loading-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0.5rem 0 0 0;
+  color: var(--theme-ui-colors-primary);
+}
+
+.loading-subtitle {
+  font-size: 1rem;
+  color: var(--theme-ui-colors-foregroundMuted);
+  margin-bottom: 2rem;
+}
+
+.loading-bar {
+  width: 300px;
+  height: 4px;
+  background-color: var(--theme-ui-colors-backgroundElevated);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.loading-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 30%;
+  background-color: var(--theme-ui-colors-primary);
+  border-radius: 2px;
+  animation: loading-animation 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes loading-animation {
+  0% {
+    left: -30%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Welcome Screen */
+.ide-welcome {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.welcome-content {
+  max-width: 600px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.welcome-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--theme-ui-colors-primary);
+  margin-bottom: 0.5rem;
+}
+
+.welcome-subtitle {
+  font-size: 1.2rem;
+  color: var(--theme-ui-colors-foregroundMuted);
+  margin-bottom: 2rem;
+}
+
+.welcome-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.welcome-action-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.welcome-action-button.primary {
+  background-color: var(--theme-ui-colors-primary);
+  color: white;
+}
+
+.welcome-action-button.secondary {
+  background-color: var(--theme-ui-colors-backgroundActive);
+  color: var(--theme-ui-colors-foreground);
+  border: 1px solid var(--theme-ui-colors-border);
+}
+
+.welcome-action-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-tips {
+  margin-top: 2rem;
+  text-align: left;
+  background-color: var(--theme-ui-colors-backgroundElevated);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--theme-ui-colors-border);
+}
+
+.welcome-tip-title {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  color: var(--theme-ui-colors-foreground);
+}
+
+.welcome-tips-list {
+  padding-left: 1.5rem;
+  list-style-type: disc;
+}
+
+.welcome-tips-list li {
+  margin-bottom: 0.5rem;
+  color: var(--theme-ui-colors-foregroundMuted);
+}
+
+.welcome-tips-list kbd {
+  background-color: var(--theme-ui-colors-backgroundActive);
+  padding: 0.1rem 0.3rem;
+  border-radius: 0.2rem;
+  font-size: 0.8rem;
+  color: var(--theme-ui-colors-foreground);
+  border: 1px solid var(--theme-ui-colors-border);
+}
+
 :root {
   /* Core colors - based on the provided UI examples with enhancements */
   --primary: #7b68ee; /* Professional indigo-purple */
