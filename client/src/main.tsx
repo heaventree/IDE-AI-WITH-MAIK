@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import "./styles/maik-ide.css"; // Import single comprehensive CSS file
+import "./styles/simple.css"; // Import simplified CSS file
 import { Toaster } from "@/components/ui/toaster";
 import { WebSocketProvider } from "./contexts/WebSocketContext";
 import { QueryClientProvider } from "@tanstack/react-query";

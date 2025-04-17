@@ -98,51 +98,36 @@ const IDELayout: React.FC<IDELayoutProps> = ({ children }) => {
   return (
     <div className="app-container">
       {/* Top menu bar */}
-      <header className="menubar">
+      <div className="menubar">
         <MenuBar toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
-      </header>
+      </div>
       
       {/* Sidebar */}
-      <aside className="sidebar">
+      <div className="sidebar">
         <Sidebar />
-      </aside>
+      </div>
       
       {/* Main editor area */}
-      <main className="editor-area">
+      <div className="editor-area">
         {editorComponent || (
-          <div className="editor-placeholder">
-            <div className="editor-placeholder-icon">
-              <Zap size={48} />
-            </div>
-            <h1 className="editor-placeholder-heading">Welcome to MAIK IDE</h1>
-            <p className="editor-placeholder-text">Your AI-powered development environment</p>
+          <div className="flex-center flex-column">
+            <Zap size={48} style={{ marginBottom: '16px' }} />
+            <h1 style={{ marginBottom: '8px' }}>Welcome to MAIK IDE</h1>
+            <p style={{ marginBottom: '16px' }}>Your AI-powered development environment</p>
             
-            <div className="flex-center" style={{ gap: 'var(--spacing-4)' }}>
-              <button className="btn btn-primary">
+            <div className="flex-center" style={{ gap: '16px' }}>
+              <button style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', background: '#7b68ee', color: 'white', border: 'none', borderRadius: '4px' }}>
                 <Zap size={16} />
                 <span>New Project</span>
               </button>
-              <button className="btn btn-secondary">
+              <button style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', background: '#151831', color: 'white', border: '1px solid rgba(72, 82, 133, 0.8)', borderRadius: '4px' }}>
                 <Coffee size={16} />
                 <span>Open Recent</span>
               </button>
             </div>
-            
-            <div className="card mt-8" style={{ maxWidth: '400px' }}>
-              <div className="card-header">
-                <div className="card-title">Quick Tips</div>
-              </div>
-              <div className="card-body">
-                <ul style={{ listStyleType: 'none', padding: 0 }}>
-                  <li className="mb-2">Use <kbd>Ctrl</kbd>+<kbd>P</kbd> to quickly open files</li>
-                  <li className="mb-2">Access AI assistance with <kbd>Ctrl</kbd>+<kbd>Space</kbd></li>
-                  <li>Toggle terminal with <kbd>Ctrl</kbd>+<kbd>`</kbd></li>
-                </ul>
-              </div>
-            </div>
           </div>
         )}
-      </main>
+      </div>
       
       {/* Terminal area */}
       <div className="terminal-area">
@@ -150,9 +135,9 @@ const IDELayout: React.FC<IDELayoutProps> = ({ children }) => {
       </div>
       
       {/* Bottom status bar */}
-      <footer className="statusbar">
+      <div className="statusbar">
         <StatusBar />
-      </footer>
+      </div>
     </div>
   );
 };
