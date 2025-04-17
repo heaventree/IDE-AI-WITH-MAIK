@@ -38,59 +38,53 @@ const StatusBar: React.FC<StatusBarProps> = () => {
   }, []);
   
   return (
-    <div className="flex-between">
+    <>
       {/* Left status items */}
-      <div className="statusbar-left">
-        <StatusItem 
-          icon={<Circle size={8} fill={connected ? 'currentColor' : 'none'} />}
-          text={connected ? 'Connected' : 'Disconnected'}
-          className={connected ? 'success' : 'muted'}
-        />
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <span style={{ display: 'flex', alignItems: 'center', marginRight: '12px' }}>
+          <Circle size={8} style={{ marginRight: '4px' }} fill={connected ? '#0dcb97' : 'none'} color={connected ? '#0dcb97' : '#7a7e96'} />
+          <span style={{ color: connected ? '#0dcb97' : '#7a7e96' }}>{connected ? 'Connected' : 'Disconnected'}</span>
+        </span>
         
-        <StatusItem 
-          icon={<Zap size={12} />}
-          text="Ready"
-        />
+        <span style={{ display: 'flex', alignItems: 'center', marginRight: '12px' }}>
+          <Zap size={12} style={{ marginRight: '4px' }} />
+          <span>Ready</span>
+        </span>
         
-        <StatusItem 
-          icon={<FileCode size={12} />}
-          text="TypeScript"
-        />
+        <span style={{ display: 'flex', alignItems: 'center', marginRight: '12px' }}>
+          <FileCode size={12} style={{ marginRight: '4px' }} />
+          <span>TypeScript</span>
+        </span>
         
-        <StatusItem 
-          icon={<Terminal size={12} />}
-          text="main.ts"
-        />
+        <span style={{ display: 'flex', alignItems: 'center' }}>
+          <Terminal size={12} style={{ marginRight: '4px' }} />
+          <span>main.ts</span>
+        </span>
       </div>
       
       {/* Right status items */}
-      <div className="statusbar-right">
-        <StatusItem 
-          icon={<GitBranch size={12} />}
-          text="main"
-          title="Git branch"
-        />
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <span style={{ display: 'flex', alignItems: 'center', marginRight: '12px' }}>
+          <GitBranch size={12} style={{ marginRight: '4px' }} />
+          <span>main</span>
+        </span>
         
-        <StatusItem 
-          icon={<Cpu size={12} />}
-          text="98%"
-          title="Performance: 98% efficient"
-        />
+        <span style={{ display: 'flex', alignItems: 'center', marginRight: '12px' }}>
+          <Cpu size={12} style={{ marginRight: '4px' }} />
+          <span>98%</span>
+        </span>
         
-        <StatusItem 
-          icon={<CheckCircle size={12} color="#0acf97" />}
-          text="All good"
-          title="All systems normal"
-          className="success"
-        />
+        <span style={{ display: 'flex', alignItems: 'center', marginRight: '12px', color: '#0dcb97' }}>
+          <CheckCircle size={12} style={{ marginRight: '4px' }} />
+          <span>All good</span>
+        </span>
         
-        <StatusItem 
-          icon={<Clock size={12} />}
-          text={time}
-          title="Current time"
-        />
+        <span style={{ display: 'flex', alignItems: 'center' }}>
+          <Clock size={12} style={{ marginRight: '4px' }} />
+          <span>{time}</span>
+        </span>
       </div>
-    </div>
+    </>
   );
 };
 

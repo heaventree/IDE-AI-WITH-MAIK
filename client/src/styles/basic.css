@@ -1,0 +1,155 @@
+/* Very simple styling */
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #0f1127;
+  color: #e2e4f3;
+}
+
+/* Main IDE container */
+.ide-container {
+  display: grid;
+  grid-template-rows: 44px 1fr 24px;
+  height: 100%;
+  width: 100%;
+}
+
+/* Menubar */
+.ide-menubar {
+  grid-row: 1;
+  background-color: #151831;
+  border-bottom: 1px solid rgba(72, 82, 133, 0.8);
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Content area */
+.ide-content {
+  grid-row: 2;
+  display: flex;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.ide-sidebar-wrapper {
+  width: 300px;
+  background-color: #151831;
+  border-right: 1px solid rgba(72, 82, 133, 0.8);
+  overflow-y: auto;
+}
+
+/* Main content */
+.ide-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Editor */
+.ide-editor {
+  flex: 1;
+  overflow: hidden;
+  background-color: #0f1127;
+}
+
+/* Editor welcome screen */
+.ide-welcome {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.welcome-content {
+  max-width: 500px;
+}
+
+.welcome-title {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.welcome-subtitle {
+  color: #b8bcce;
+  margin-bottom: 32px;
+}
+
+.welcome-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.welcome-action-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.welcome-action-button.primary {
+  background-color: #7b68ee;
+  color: white;
+  border: none;
+}
+
+.welcome-action-button.secondary {
+  background-color: transparent;
+  color: #e2e4f3;
+  border: 1px solid rgba(72, 82, 133, 0.8);
+}
+
+.welcome-tips {
+  background-color: #151831;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: left;
+}
+
+.welcome-tip-title {
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.welcome-tips-list {
+  list-style-type: none;
+}
+
+.welcome-tips-list li {
+  margin-bottom: 8px;
+}
+
+/* Status bar */
+.ide-statusbar {
+  grid-row: 3;
+  background-color: #101328;
+  border-top: 1px solid rgba(72, 82, 133, 0.8);
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+/* Keyboard shortcuts */
+kbd {
+  display: inline-block;
+  padding: 2px 4px;
+  background-color: #1c1e38;
+  border: 1px solid rgba(72, 82, 133, 0.8);
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 11px;
+  margin: 0 2px;
+}
