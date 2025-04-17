@@ -19,8 +19,8 @@ interface StatusItemProps {
 
 const StatusItem: React.FC<StatusItemProps> = ({ icon, text, title, className = '' }) => (
   <div className={`statusbar-item ${className}`} title={title}>
-    <div className="statusbar-item-icon">{icon}</div>
-    <div className="statusbar-item-text">{text}</div>
+    <span className="statusbar-item-icon">{icon}</span>
+    <span>{text}</span>
   </div>
 );
 
@@ -38,7 +38,7 @@ const StatusBar: React.FC<StatusBarProps> = () => {
   }, []);
   
   return (
-    <div className="statusbar-container">
+    <div className="flex-between">
       {/* Left status items */}
       <div className="statusbar-left">
         <StatusItem 
