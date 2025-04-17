@@ -4,22 +4,22 @@
 
 ### Prerequisites
 
-- {{PREREQUISITE_1}}
-- {{PREREQUISITE_2}}
-- {{PREREQUISITE_3}}
-- {{PREREQUISITE_4}}
+- Node.js 18+ and npm 8+
+- Git
+- Replit account (for deployment)
+- API keys for OpenAI (GPT-4)
 
 ### Setup Instructions
 
 ```bash
 # Clone the repository
-{{CLONE_COMMAND}}
+git clone https://github.com/maik-ai/coding-app.git && cd coding-app
 
 # Install dependencies
-{{INSTALL_COMMAND}}
+npm install
 
 # Configure environment
-{{CONFIG_COMMAND}}
+cp .env.example .env && nano .env  # Edit with your API keys
 
 # Start development server
-{{DEV_SERVER_COMMAND}}
+npm run dev
