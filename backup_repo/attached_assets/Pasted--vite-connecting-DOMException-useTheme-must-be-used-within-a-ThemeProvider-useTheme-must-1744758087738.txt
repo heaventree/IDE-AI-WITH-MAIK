@@ -1,0 +1,27 @@
+[vite] connecting...
+DOMException {}
+
+useTheme must be used within a ThemeProvider
+useTheme must be used within a ThemeProvider
+The above error occurred in the <App> component:
+
+    at App (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/App.tsx?v=GGmkWlcdqbZ7QylrfurSO:78:21)
+    at QueryClientProvider (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=84208b22:2805:3)
+    at ProjectProvider (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/contexts/ProjectContext.tsx?v=GGmkWlcdqbZ7QylrfurSO:37:35)
+    at ThemeProvider (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/contexts/ThemeContext.tsx?v=GGmkWlcdqbZ7QylrfurSO:20:33)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+at App (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/App.tsx?v=GGmkWlcdqbZ7QylrfurSO:78:21)
+at QueryClientProvider (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=84208b22:2805:3)
+at ProjectProvider (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/contexts/ProjectContext.tsx?v=GGmkWlcdqbZ7QylrfurSO:37:35)
+at ThemeProvider (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/src/contexts/ThemeContext.tsx?v=GGmkWlcdqbZ7QylrfurSO:20:33)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+at t.value (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://8a3782d4-af13-45d8-a3c1-57dedb70aa6d-00-18jgjt7h2593y.spock.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400
+useTheme must be used within a ThemeProvider
