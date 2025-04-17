@@ -39,11 +39,18 @@ const IDELayout: React.FC<IDELayoutProps> = ({ children }) => {
     (child.type as any).displayName === 'Terminal'
   );
   
+  // Find AI Chat component
+  const aiChatComponent = childrenArray.find(
+    child => React.isValidElement(child) && 
+    (child.type as any).displayName === 'AIChat'
+  );
+  
   // Other components that don't match specific areas
   const otherComponents = childrenArray.filter(
     child => 
       (!editorComponent || child !== editorComponent) && 
-      (!terminalComponent || child !== terminalComponent)
+      (!terminalComponent || child !== terminalComponent) &&
+      (!aiChatComponent || child !== aiChatComponent)
   );
 
   // Loading screen
@@ -121,6 +128,9 @@ const IDELayout: React.FC<IDELayoutProps> = ({ children }) => {
       <footer className="ide-statusbar">
         <StatusBar />
       </footer>
+
+      {/* AI Chat component */}
+      {aiChatComponent}
     </div>
   );
 };

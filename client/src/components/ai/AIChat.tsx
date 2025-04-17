@@ -226,4 +226,7 @@ const AIChat = ({ initialOpen = false }: AIChatProps) => {
   );
 };
 
+// Add displayName for component identification in IDELayout
+AIChat.displayName = 'AIChat';
+
 export default AIChat;
