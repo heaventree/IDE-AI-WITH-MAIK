@@ -43,10 +43,8 @@ const EditorTab: React.FC<{
     aria-selected={isActive}
     tabIndex={isActive ? 0 : -1}
   >
-    <div className="editor-tab-content">
-      <div className="editor-tab-icon">{getFileIcon(tab.name, 14)}</div>
-      <div className="editor-tab-name">{tab.name}</div>
-    </div>
+    <span className="editor-tab-icon">{getFileIcon(tab.name, 14)}</span>
+    <span className="editor-tab-name">{tab.name}</span>
     <span 
       className="editor-tab-close"
       onClick={onClose}
