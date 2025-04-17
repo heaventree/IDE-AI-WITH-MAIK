@@ -1,20 +1,21 @@
 /** @jsxImportSource theme-ui */
-import React, { useState, useRef, useEffect } from 'react';
-import { Zap, Send, Bot, User, Loader2 } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { Box, Button, Flex, Heading, Text, Textarea } from 'theme-ui';
+import { ChevronDown, ChevronUp, Send, X, Zap } from 'lucide-react';
 import { useAI } from '@/hooks/useAI';
-import { AIMessage } from '@/types';
+import { AIAgent } from '@/types';
 
 interface AIChatProps {
   initialOpen?: boolean;
 }
 
-const AIChat: React.FC<AIChatProps> = ({ initialOpen = false }) => {
+const AIChat = ({ initialOpen = false }: AIChatProps) => {
   const [isOpen, setIsOpen] = useState(initialOpen);
   const [query, setQuery] = useState('');
-  const { messages, isProcessing, sendQuery, clearMessages } = useAI();
+  const { messages, sendQuery, isProcessing, activeAgent, setAgent, clearMessages } = useAI();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Scroll to the bottom of the messages container when messages change
+  // Auto-scroll to bottom of messages
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -29,259 +30,199 @@ const AIChat: React.FC<AIChatProps> = ({ initialOpen = false }) => {
     }
   };
 
-  const toggleChat = () => {
+  const toggleOpen = () => {
     setIsOpen(!isOpen);
   };
 
-  return (
-    <div sx={{ position: 'fixed', bottom: 3, right: 3, zIndex: 1000 }}>
-      {/* Chat Button */}
-      <button
-        onClick={toggleChat}
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '48px',
-          height: '48px',
-          borderRadius: '50%',
-          backgroundColor: 'primary',
-          color: 'white',
-          border: 'none',
-          boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-          cursor: 'pointer',
-          position: isOpen ? 'absolute' : 'relative',
-          bottom: isOpen ? 0 : 'auto',
-          right: isOpen ? 0 : 'auto',
-          zIndex: 1001,
-          transition: 'all 0.3s ease'
-        }}
-      >
-        <Zap size={24} />
-      </button>
+  const handleAgentChange = (agent: AIAgent) => {
+    setAgent(agent);
+  };
 
-      {/* Chat Panel */}
+  return (
+    <Box
+      sx={{
+        position: 'fixed',
+        bottom: 0,
+        right: '20px',
+        width: isOpen ? '400px' : 'auto',
+        height: isOpen ? '500px' : 'auto',
+        backgroundColor: 'backgroundElevated',
+        borderTopLeftRadius: '8px',
+        borderTopRightRadius: '8px',
+        boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.1)',
+        display: 'flex',
+        flexDirection: 'column',
+        transition: 'all 0.3s ease',
+        zIndex: 1000,
+        border: '1px solid',
+        borderBottom: 'none',
+        borderColor: 'border',
+      }}
+    >
+      {/* Header */}
+      <Flex
+        sx={{
+          padding: 2,
+          backgroundColor: 'backgroundFloating',
+          borderTopLeftRadius: '8px',
+          borderTopRightRadius: '8px',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          borderBottom: '1px solid',
+          borderColor: 'border',
+          cursor: 'pointer',
+        }}
+        onClick={toggleOpen}
+      >
+        <Flex sx={{ alignItems: 'center' }}>
+          <Zap size={18} color="var(--theme-ui-colors-primary)" sx={{ marginRight: 2 }} />
+          <Heading as="h3" sx={{ fontSize: 2, margin: 0 }}>
+            AI Assistant ({activeAgent})
+          </Heading>
+        </Flex>
+        <Flex>
+          {isOpen && (
+            <Button
+              variant="icon"
+              onClick={(e) => {
+                e.stopPropagation();
+                clearMessages();
+              }}
+              sx={{ marginRight: 1 }}
+              aria-label="Clear chat"
+            >
+              <X size={18} />
+            </Button>
+          )}
+          {isOpen ? <ChevronDown size={18} /> : <ChevronUp size={18} />}
+        </Flex>
+      </Flex>
+
       {isOpen && (
-        <div
-          sx={{
-            position: 'absolute',
-            bottom: '60px',
-            right: 0,
-            width: ['100vw', '350px'],
-            maxWidth: ['calc(100vw - 20px)', '350px'],
-            height: '500px',
-            backgroundColor: 'background',
-            borderRadius: '8px',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
-            display: 'flex',
-            flexDirection: 'column',
-            overflow: 'hidden',
-            border: '1px solid',
-            borderColor: 'border'
-          }}
-        >
-          {/* Chat Header */}
-          <div
+        <>
+          {/* Agent selection tabs */}
+          <Flex
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              padding: 3,
-              backgroundColor: 'primary',
-              color: 'white',
-              fontWeight: 'bold'
+              borderBottom: '1px solid',
+              borderColor: 'border',
+              backgroundColor: 'backgroundElevated',
             }}
           >
-            <Zap size={18} sx={{ marginRight: 2 }} />
-            <span>AI Assistant</span>
-            <button
-              onClick={clearMessages}
-              sx={{
-                marginLeft: 'auto',
-                background: 'transparent',
-                border: 'none',
-                color: 'white',
-                cursor: 'pointer',
-                padding: 1,
-                borderRadius: '4px',
-                '&:hover': {
-                  backgroundColor: 'rgba(255, 255, 255, 0.1)'
-                }
-              }}
-            >
-              Clear Chat
-            </button>
-          </div>
+            {(['Coder', 'Debugger', 'WCAG Auditor'] as AIAgent[]).map((agent) => (
+              <Button
+                key={agent}
+                variant={activeAgent === agent ? 'tabActive' : 'tab'}
+                onClick={() => handleAgentChange(agent)}
+                sx={{
+                  flex: 1,
+                  minWidth: 0,
+                  justifyContent: 'center',
+                  borderTop: 'none',
+                  borderLeft: 'none',
+                }}
+              >
+                {agent}
+              </Button>
+            ))}
+          </Flex>
 
-          {/* Messages Container */}
-          <div
+          {/* Messages */}
+          <Box
             sx={{
               flex: 1,
               overflowY: 'auto',
               padding: 3,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 3
+              backgroundColor: 'background',
             }}
           >
             {messages.length === 0 ? (
-              <div
+              <Flex
                 sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
+                  height: '100%',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  height: '100%',
+                  flexDirection: 'column',
+                  color: 'foregroundMuted',
                   textAlign: 'center',
-                  color: 'text',
-                  opacity: 0.7
+                  padding: 3,
                 }}
               >
-                <Bot size={40} sx={{ marginBottom: 3, opacity: 0.5 }} />
-                <p>How can I help you today?</p>
-                <div sx={{ marginTop: 3 }}>
-                  <p sx={{ fontWeight: 'bold', marginBottom: 2 }}>Try asking:</p>
-                  <ul sx={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                    <li sx={{ marginBottom: 2 }}>How do I implement a WebContainer?</li>
-                    <li sx={{ marginBottom: 2 }}>Debug this useEffect code</li>
-                    <li sx={{ marginBottom: 2 }}>Is my website WCAG compliant?</li>
-                  </ul>
-                </div>
-              </div>
+                <Zap size={32} sx={{ marginBottom: 3, opacity: 0.5 }} />
+                <Text sx={{ fontSize: 1 }}>
+                  Ask the {activeAgent} for help with your code.
+                </Text>
+              </Flex>
             ) : (
-              messages.map((message: AIMessage) => (
-                <div
+              messages.map((message) => (
+                <Box
                   key={message.id}
                   sx={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    marginBottom: 3
+                    marginBottom: 3,
+                    padding: 2,
+                    borderRadius: '8px',
+                    backgroundColor:
+                      message.role === 'user' ? 'primaryMuted' : 'backgroundElevated',
+                    alignSelf: message.role === 'user' ? 'flex-end' : 'flex-start',
+                    maxWidth: '90%',
+                    marginLeft: message.role === 'user' ? 'auto' : 0,
                   }}
                 >
-                  <div
+                  <Text
                     sx={{
-                      width: '28px',
-                      height: '28px',
-                      borderRadius: '50%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      backgroundColor: message.role === 'user' ? 'gray' : 'primary',
-                      color: 'white',
-                      marginRight: 2,
-                      flexShrink: 0
+                      color: message.role === 'user' ? 'primary' : 'foreground',
+                      fontWeight: message.role === 'user' ? 'bold' : 'normal',
+                      marginBottom: 1,
+                      fontSize: 0,
                     }}
                   >
-                    {message.role === 'user' ? <User size={16} /> : <Bot size={16} />}
-                  </div>
-                  <div
-                    sx={{
-                      flex: 1,
-                      backgroundColor: message.role === 'user' ? 'muted' : 'highlight',
-                      padding: 3,
-                      borderRadius: '8px',
-                      fontSize: 1,
-                      whiteSpace: 'pre-wrap'
-                    }}
-                  >
-                    {message.content}
-                  </div>
-                </div>
+                    {message.role === 'user' ? 'You' : message.agent || 'Assistant'}
+                  </Text>
+                  <Text sx={{ whiteSpace: 'pre-wrap', fontSize: 1 }}>{message.content}</Text>
+                </Box>
               ))
             )}
-            {isProcessing && (
-              <div
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  marginBottom: 3
-                }}
-              >
-                <div
-                  sx={{
-                    width: '28px',
-                    height: '28px',
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    backgroundColor: 'primary',
-                    color: 'white',
-                    marginRight: 2
-                  }}
-                >
-                  <Bot size={16} />
-                </div>
-                <div
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    backgroundColor: 'highlight',
-                    padding: 3,
-                    borderRadius: '8px',
-                    fontSize: 1
-                  }}
-                >
-                  <Loader2 size={16} sx={{ marginRight: 2, animation: 'spin 1s linear infinite' }} />
-                  Thinking...
-                </div>
-              </div>
-            )}
             <div ref={messagesEndRef} />
-          </div>
+          </Box>
 
-          {/* Input Form */}
-          <form
-            onSubmit={handleSubmit}
-            sx={{
-              display: 'flex',
-              padding: 3,
-              borderTop: '1px solid',
-              borderColor: 'border'
-            }}
-          >
-            <input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Type your message..."
-              disabled={isProcessing}
-              sx={{
-                flex: 1,
-                padding: 2,
-                borderRadius: '4px',
-                border: '1px solid',
-                borderColor: 'border',
-                backgroundColor: 'background',
-                color: 'text',
-                '&:focus': {
-                  outline: 'none',
-                  borderColor: 'primary'
-                }
-              }}
-            />
-            <button
-              type="submit"
-              disabled={!query.trim() || isProcessing}
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: 'primary',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                padding: '0 16px',
-                marginLeft: 2,
-                cursor: query.trim() && !isProcessing ? 'pointer' : 'not-allowed',
-                opacity: query.trim() && !isProcessing ? 1 : 0.6
-              }}
-            >
-              <Send size={16} />
-            </button>
-          </form>
-        </div>
+          {/* Input */}
+          <Box as="form" onSubmit={handleSubmit} sx={{ padding: 2, borderTop: '1px solid', borderColor: 'border' }}>
+            <Flex sx={{ alignItems: 'flex-end' }}>
+              <Textarea
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder={`Ask ${activeAgent} a question...`}
+                rows={2}
+                sx={{
+                  resize: 'none',
+                  flex: 1,
+                  borderRadius: '4px',
+                  padding: 2,
+                  fontSize: 1,
+                  backgroundColor: 'backgroundActive',
+                  border: '1px solid',
+                  borderColor: 'border',
+                  color: 'foreground',
+                  '&:focus': {
+                    outline: 'none',
+                    borderColor: 'primary',
+                  },
+                }}
+                disabled={isProcessing}
+              />
+              <Button
+                type="submit"
+                variant="primary"
+                sx={{ marginLeft: 2, height: '36px', width: '36px', padding: 0 }}
+                disabled={!query.trim() || isProcessing}
+                aria-label="Send message"
+              >
+                <Send size={16} />
+              </Button>
+            </Flex>
+          </Box>
+        </>
       )}
-    </div>
+    </Box>
   );
 };
 

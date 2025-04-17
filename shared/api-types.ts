@@ -1,79 +1,26 @@
 /**
- * Shared API types between client and server
+ * API Types for MAIK IDE
+ * These types are shared between the client and server to ensure consistency
  */
 
-// Project and file operations
-export interface IProjectFile {
-  path: string;
-  content: string;
-  lastModified: string;
-}
-
-export interface IProject {
-  id: string;
-  name: string;
-  files: IProjectFile[];
-  createdAt: string;
-  updatedAt: string;
-}
-
-// Backup operations
-export interface IBackupRequest {
-  projectId: string;
-  targets: Array<'local' | 'github' | 'onedrive'>;
-  encrypt: boolean;
-}
-
-export interface IBackupMetadata {
-  id: string;
-  projectId: string;
-  timestamp: string;
-  files: string[];
-  size: number;
-  checksum: string;
-  target: 'local' | 'github' | 'onedrive';
-}
-
-export interface IBackupResponse {
-  id: string;
-  metadata: IBackupMetadata;
-}
-
-export interface IRestoreBackupRequest {
-  backupId: string;
-}
-
-// Cloud sync operations
-export interface ISyncRequest {
-  projectId: string;
-  targets: Array<'github' | 'onedrive'>;
-}
-
-export interface ISyncResponse {
+// Standard API response envelope
+export interface IApiResponse<T> {
   success: boolean;
-  targets: Array<{
-    name: 'github' | 'onedrive';
-    status: 'success' | 'error';
-    message?: string;
-    timestamp: string;
-  }>;
+  data?: T;
+  error?: IErrorResponse;
 }
 
-// Cloud service configuration
-export interface ICloudServiceConfig {
-  service: 'github' | 'onedrive';
-  token: string;
-  repository?: string; // For GitHub
-  folder?: string; // For OneDrive
+// Error response structure
+export interface IErrorResponse {
+  message: string;
+  details?: any;
+  code?: string;
 }
 
-// AI related types
-export type AIAgent = 'Coder' | 'Debugger' | 'WCAG Auditor';
-export type AIModel = 'GPT-4' | 'Tabby' | 'Claude-3';
-
+// AI Query request
 export interface IAIQueryRequest {
-  agent: AIAgent;
-  model?: AIModel;
+  agent: 'Coder' | 'Debugger' | 'WCAG Auditor';
+  model?: 'GPT-4' | 'Tabby' | 'Claude-3';
   query: string;
   context: {
     projectId?: string;
@@ -82,35 +29,26 @@ export interface IAIQueryRequest {
   };
 }
 
-export interface IAIQueryResponse {
-  response: string;
-  agent: AIAgent;
-  model: AIModel;
-  timestamp: string;
-}
-
-// WebContainer execution
+// Command execution request
 export interface ICommandExecutionRequest {
   command: string;
   workingDirectory?: string;
 }
 
-export interface ICommandExecutionResponse {
-  stdout: string;
-  stderr: string;
-  exitCode: number;
+// Sync request
+export interface ISyncRequest {
+  projectId: string;
+  targets: Array<'github' | 'onedrive'>;
 }
 
-// Error responses
-export interface IErrorResponse {
-  message: string;
-  code?: string;
-  details?: Record<string, any>;
+// Backup request
+export interface IBackupRequest {
+  projectId: string;
+  targets: Array<'local' | 'github' | 'onedrive'>;
+  encrypt: boolean;
 }
 
-// API Response wrapper
-export interface IApiResponse<T> {
-  success: boolean;
-  data?: T;
-  error?: IErrorResponse;
+// Restore backup request
+export interface IRestoreBackupRequest {
+  backupId: string;
 }
