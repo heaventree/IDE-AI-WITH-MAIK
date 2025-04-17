@@ -37,6 +37,33 @@ export interface MemoryContext {
 }
 
 /**
+ * Tool parameter specification
+ */
+export interface ToolParameter {
+  description?: string;
+  type?: string;
+  required?: boolean;
+  default?: any;
+}
+
+/**
+ * Tool definition for function calling
+ */
+export interface Tool {
+  /** Name of the tool */
+  name: string;
+  
+  /** Description of what the tool does */
+  description: string;
+  
+  /** Tool parameters specification */
+  parameters?: Record<string, ToolParameter>;
+  
+  /** Function to execute the tool */
+  execute?: (params: Record<string, any>) => Promise<any>;
+}
+
+/**
  * Application state maintained across interactions
  */
 export interface ApplicationState {
@@ -48,6 +75,18 @@ export interface ApplicationState {
   
   /** Most recent system response */
   lastResponse?: string;
+  
+  /** Programming language for code-related responses */
+  programmingLanguage?: string;
+  
+  /** Project context for code generation */
+  projectContext?: string;
+  
+  /** Available tools that can be called */
+  availableTools?: Tool[];
+  
+  /** Last function/tool call made */
+  lastFunctionCall?: string;
   
   /** Custom state variables */
   [key: string]: any;
@@ -90,6 +129,41 @@ export interface IMemoryManager {
    * @param interaction - The interaction to store
    */
   storeInteraction(sessionId: string, interaction: Interaction): Promise<void>;
+  
+  /**
+   * Clear all memory for a session
+   * @param sessionId - Unique session identifier
+   */
+  clearMemory(sessionId: string): Promise<void>;
+  
+  /**
+   * Export all memory data for a session (for persistence)
+   * @param sessionId - Unique session identifier
+   * @returns Exportable memory data
+   */
+  exportMemory(sessionId: string): any;
+  
+  /**
+   * Import memory data for a session (for persistence restoration)
+   * @param sessionId - Unique session identifier
+   * @param data - Exported memory data
+   */
+  importMemory(sessionId: string, data: any): void;
+  
+  /**
+   * Optimize context to fit within token limit
+   * @param context - Memory context to optimize
+   * @param maxTokens - Maximum number of tokens allowed
+   * @returns Optimized context
+   */
+  optimizeContext(context: MemoryContext, maxTokens: number): MemoryContext;
+  
+  /**
+   * Calculate token estimate for context
+   * @param context - Memory context
+   * @returns Estimated token count
+   */
+  estimateTokenCount(context: MemoryContext): number;
 }
 
 /**
@@ -104,6 +178,32 @@ export interface IPromptManager {
    * @returns Constructed prompt string
    */
   constructPrompt(userInput: string, context: MemoryContext, state: ApplicationState): Promise<string>;
+  
+  /**
+   * Set the system prompt
+   * @param systemPrompt - New system prompt
+   */
+  setSystemPrompt(systemPrompt: string): void;
+  
+  /**
+   * Set the maximum tokens
+   * @param maxTokens - New maximum tokens
+   */
+  setMaxTokens(maxTokens: number): void;
+  
+  /**
+   * Estimate token count for a prompt
+   * @param prompt - Prompt to estimate tokens for
+   * @returns Estimated token count
+   */
+  estimateTokens(prompt: string): number;
+  
+  /**
+   * Check if a prompt will fit within token limits
+   * @param prompt - Prompt to check
+   * @returns Whether the prompt fits within token limits
+   */
+  willFitInContext(prompt: string): boolean;
 }
 
 /**
