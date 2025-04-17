@@ -83,8 +83,8 @@ The database schema follows a normalized design with clear relationships between
 
 | AI Service | Purpose | Integration Method |
 |------------|---------|-------------------|
-| {{AI_SERVICE_1}} | {{AI_SERVICE_1_PURPOSE}} | {{AI_SERVICE_1_METHOD}} |
-| {{AI_SERVICE_2}} | {{AI_SERVICE_2_PURPOSE}} | {{AI_SERVICE_2_METHOD}} |
+| Code Completion | {{AI_SERVICE_1_PURPOSE}} | API calls to GPT-4 with code-specific prompt engineering |
+| Error Diagnosis | {{AI_SERVICE_2_PURPOSE}} | Claude API integration with error context preprocessing |
 
 ## Development Environment Setup
 

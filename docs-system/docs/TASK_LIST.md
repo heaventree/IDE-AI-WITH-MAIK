@@ -27,88 +27,88 @@
 
 ### Medium Priority
 
-- [ ] {{MEDIUM_PRIORITY_TASK_1}}
-  - **Assigned to**: {{MEDIUM_PRIORITY_TASK_1_ASSIGNEE}}
-  - **Due date**: {{MEDIUM_PRIORITY_TASK_1_DUE_DATE}}
-  - **Status**: {{MEDIUM_PRIORITY_TASK_1_STATUS}}
-  - **Blockers**: {{MEDIUM_PRIORITY_TASK_1_BLOCKERS}}
-  - **Notes**: {{MEDIUM_PRIORITY_TASK_1_NOTES}}
+- [ ] Refactor legacy UI components
+  - **Assigned to**: UI Team
+  - **Due date**: Q3 2025
+  - **Status**: Not Started
+  - **Blockers**: Dependency on core architecture implementation
+  - **Notes**: Follow new design system guidelines
 
-- [ ] {{MEDIUM_PRIORITY_TASK_2}}
-  - **Assigned to**: {{MEDIUM_PRIORITY_TASK_2_ASSIGNEE}}
-  - **Due date**: {{MEDIUM_PRIORITY_TASK_2_DUE_DATE}}
-  - **Status**: {{MEDIUM_PRIORITY_TASK_2_STATUS}}
-  - **Blockers**: {{MEDIUM_PRIORITY_TASK_2_BLOCKERS}}
-  - **Notes**: {{MEDIUM_PRIORITY_TASK_2_NOTES}}
+- [ ] Optimize API caching strategy
+  - **Assigned to**: Backend Team
+  - **Due date**: Q3 2025
+  - **Status**: Not Started
+  - **Blockers**: None
+  - **Notes**: Focus on reducing API calls and response time
 
-- [ ] {{MEDIUM_PRIORITY_TASK_3}}
-  - **Assigned to**: {{MEDIUM_PRIORITY_TASK_3_ASSIGNEE}}
-  - **Due date**: {{MEDIUM_PRIORITY_TASK_3_DUE_DATE}}
-  - **Status**: {{MEDIUM_PRIORITY_TASK_3_STATUS}}
-  - **Blockers**: {{MEDIUM_PRIORITY_TASK_3_BLOCKERS}}
-  - **Notes**: {{MEDIUM_PRIORITY_TASK_3_NOTES}}
+- [ ] Implement unit and integration tests
+  - **Assigned to**: QA Team
+  - **Due date**: Q3 2025
+  - **Status**: Not Started
+  - **Blockers**: Dependency on completed components
+  - **Notes**: Target 80% code coverage
 
 ### Low Priority
 
-- [ ] {{LOW_PRIORITY_TASK_1}}
-  - **Assigned to**: {{LOW_PRIORITY_TASK_1_ASSIGNEE}}
-  - **Due date**: {{LOW_PRIORITY_TASK_1_DUE_DATE}}
-  - **Status**: {{LOW_PRIORITY_TASK_1_STATUS}}
-  - **Blockers**: {{LOW_PRIORITY_TASK_1_BLOCKERS}}
-  - **Notes**: {{LOW_PRIORITY_TASK_1_NOTES}}
+- [ ] Add internationalization support
+  - **Assigned to**: UI Team
+  - **Due date**: Q4 2025
+  - **Status**: Not Started
+  - **Blockers**: None
+  - **Notes**: Start with English and Spanish
 
-- [ ] {{LOW_PRIORITY_TASK_2}}
-  - **Assigned to**: {{LOW_PRIORITY_TASK_2_ASSIGNEE}}
-  - **Due date**: {{LOW_PRIORITY_TASK_2_DUE_DATE}}
-  - **Status**: {{LOW_PRIORITY_TASK_2_STATUS}}
-  - **Blockers**: {{LOW_PRIORITY_TASK_2_BLOCKERS}}
-  - **Notes**: {{LOW_PRIORITY_TASK_2_NOTES}}
+- [ ] Create comprehensive user documentation
+  - **Assigned to**: Documentation Team
+  - **Due date**: Q4 2025
+  - **Status**: Not Started
+  - **Blockers**: Dependency on finalized UI
+  - **Notes**: Include video tutorials and examples
 
 ## Debugging Tasks
 
-- [ ] {{DEBUG_TASK_1}}
-  - **Assigned to**: {{DEBUG_TASK_1_ASSIGNEE}}
-  - **Priority**: {{DEBUG_TASK_1_PRIORITY}}
-  - **Status**: {{DEBUG_TASK_1_STATUS}}
-  - **Related Error**: {{DEBUG_TASK_1_ERROR}}
+- [ ] Fix Sentry integration type errors
+  - **Assigned to**: Backend Team
+  - **Priority**: Medium
+  - **Status**: In Progress
+  - **Related Error**: Type incompatibility in Sentry SDK integration
   - **Steps to Reproduce**: 
-    1. {{DEBUG_TASK_1_STEP_1}}
-    2. {{DEBUG_TASK_1_STEP_2}}
-    3. {{DEBUG_TASK_1_STEP_3}}
-  - **Notes**: {{DEBUG_TASK_1_NOTES}}
+    1. Identify specific type mismatches
+    2. Create adapter layer
+    3. Update integration tests
+  - **Notes**: Consider upgrading Sentry SDK if needed
 
-- [ ] {{DEBUG_TASK_2}}
-  - **Assigned to**: {{DEBUG_TASK_2_ASSIGNEE}}
-  - **Priority**: {{DEBUG_TASK_2_PRIORITY}}
-  - **Status**: {{DEBUG_TASK_2_STATUS}}
-  - **Related Error**: {{DEBUG_TASK_2_ERROR}}
+- [ ] Resolve memory leaks in state manager
+  - **Assigned to**: Backend Team
+  - **Priority**: High
+  - **Status**: Not Started
+  - **Related Error**: Unbounded memory growth over time
   - **Steps to Reproduce**: 
-    1. {{DEBUG_TASK_2_STEP_1}}
-    2. {{DEBUG_TASK_2_STEP_2}}
-    3. {{DEBUG_TASK_2_STEP_3}}
-  - **Notes**: {{DEBUG_TASK_2_NOTES}}
+    1. Add session timeout mechanism
+    2. Implement periodic garbage collection
+    3. Add memory usage monitoring
+  - **Notes**: Use heap snapshots to verify resolution
 
 ## Feature Tasks
 
-- [ ] {{FEATURE_TASK_1}}
-  - **Assigned to**: {{FEATURE_TASK_1_ASSIGNEE}}
-  - **Priority**: {{FEATURE_TASK_1_PRIORITY}}
-  - **Status**: {{FEATURE_TASK_1_STATUS}}
+- [ ] Implement prompt template management
+  - **Assigned to**: AI Team
+  - **Priority**: High
+  - **Status**: Not Started
   - **Requirements**: 
-    - {{FEATURE_TASK_1_REQ_1}}
-    - {{FEATURE_TASK_1_REQ_2}}
-    - {{FEATURE_TASK_1_REQ_3}}
-  - **Notes**: {{FEATURE_TASK_1_NOTES}}
+    - Support variable interpolation
+    - Include version control
+    - Add template validation
+  - **Notes**: Consider adding a visual template editor
 
-- [ ] {{FEATURE_TASK_2}}
-  - **Assigned to**: {{FEATURE_TASK_2_ASSIGNEE}}
-  - **Priority**: {{FEATURE_TASK_2_PRIORITY}}
-  - **Status**: {{FEATURE_TASK_2_STATUS}}
+- [ ] Create AI model selection interface
+  - **Assigned to**: AI Team
+  - **Priority**: Medium
+  - **Status**: Not Started
   - **Requirements**: 
-    - {{FEATURE_TASK_2_REQ_1}}
-    - {{FEATURE_TASK_2_REQ_2}}
-    - {{FEATURE_TASK_2_REQ_3}}
-  - **Notes**: {{FEATURE_TASK_2_NOTES}}
+    - Support switching between multiple AI providers
+    - Include cost estimation
+    - Add performance metrics comparison
+  - **Notes**: Start with OpenAI and Anthropic models
 
 ## Refactoring Tasks
 
