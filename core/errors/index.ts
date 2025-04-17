@@ -1,27 +1,37 @@
 /**
- * Custom error types for Bolt DIY system
+ * Custom Error Types for Bolt DIY
  * 
- * This file contains all custom error classes used throughout the application
- * to provide more specific error handling and better diagnostics.
+ * This module defines custom error types to facilitate better error handling
+ * and provide more descriptive error messages.
  */
 
 /**
- * Base error class for Bolt DIY system errors
- * Provides a common base for all application-specific errors
+ * Base error class for Bolt DIY errors
  */
-export class BoltError extends Error {
+export class BoltDIYError extends Error {
   constructor(message: string) {
     super(message);
     this.name = this.constructor.name;
-    // This fixes the prototype chain in TypeScript
-    Object.setPrototypeOf(this, BoltError.prototype);
+    
+    // This is needed to make instanceof work correctly in TypeScript
+    Object.setPrototypeOf(this, BoltDIYError.prototype);
   }
 }
 
 /**
- * Error for invalid input validation
+ * Error thrown when there's an issue with memory storage
  */
-export class InputValidationError extends BoltError {
+export class MemoryStorageError extends BoltDIYError {
+  constructor(message: string) {
+    super(message);
+    Object.setPrototypeOf(this, MemoryStorageError.prototype);
+  }
+}
+
+/**
+ * Error thrown when input validation fails
+ */
+export class InputValidationError extends BoltDIYError {
   constructor(message: string) {
     super(message);
     Object.setPrototypeOf(this, InputValidationError.prototype);
@@ -29,51 +39,55 @@ export class InputValidationError extends BoltError {
 }
 
 /**
- * Error for tool execution failures
+ * Error thrown when there's an issue with tool execution
  */
-export class ToolExecutionError extends BoltError {
-  constructor(message: string, public toolName: string) {
-    super(`Error executing tool ${toolName}: ${message}`);
+export class ToolExecutionError extends BoltDIYError {
+  readonly toolName: string;
+  
+  constructor(message: string, toolName: string) {
+    super(message);
+    this.toolName = toolName;
     Object.setPrototypeOf(this, ToolExecutionError.prototype);
   }
 }
 
 /**
- * Error for LLM API failures
+ * Error thrown when there's an issue with the LLM API
  */
-export class LLMAPIError extends BoltError {
-  constructor(message: string, public statusCode?: number) {
-    super(`LLM API Error: ${message}`);
+export class LLMAPIError extends BoltDIYError {
+  readonly statusCode?: number;
+  
+  constructor(message: string, statusCode?: number) {
+    super(message);
+    this.statusCode = statusCode;
     Object.setPrototypeOf(this, LLMAPIError.prototype);
   }
 }
 
 /**
- * Error for memory storage/retrieval issues
+ * Error thrown when the context window size is exceeded
  */
-export class MemoryStorageError extends BoltError {
-  constructor(message: string) {
-    super(`Memory Storage Error: ${message}`);
-    Object.setPrototypeOf(this, MemoryStorageError.prototype);
-  }
-}
-
-/**
- * Error for context window size exceeded
- */
-export class ContextWindowExceededError extends BoltError {
-  constructor(message: string, public tokenCount: number, public maxTokens: number) {
-    super(`Context window exceeded: ${message}. Token count: ${tokenCount}, Max allowed: ${maxTokens}`);
+export class ContextWindowExceededError extends BoltDIYError {
+  readonly tokenCount: number;
+  readonly maxTokens: number;
+  
+  constructor(message: string, tokenCount: number, maxTokens: number) {
+    super(message);
+    this.tokenCount = tokenCount;
+    this.maxTokens = maxTokens;
     Object.setPrototypeOf(this, ContextWindowExceededError.prototype);
   }
 }
 
 /**
- * Error for unauthorized operation
+ * Error thrown when there's an issue with AI governance
  */
-export class UnauthorizedError extends BoltError {
-  constructor(message: string) {
-    super(`Unauthorized: ${message}`);
-    Object.setPrototypeOf(this, UnauthorizedError.prototype);
+export class AIGovernanceError extends BoltDIYError {
+  readonly category: string;
+  
+  constructor(message: string, category: string) {
+    super(message);
+    this.category = category;
+    Object.setPrototypeOf(this, AIGovernanceError.prototype);
   }
 }

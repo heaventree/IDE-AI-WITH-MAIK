@@ -6,14 +6,16 @@
  * while logging detailed diagnostic information.
  */
 
-import { AnalyticsSDK, SentrySDK } from './monitoring';
+import { injectable } from 'tsyringe';
+import { SentrySDK } from './monitoring/sentry-sdk';
 import { 
-  BoltError, 
-  InputValidationError, 
-  ToolExecutionError, 
-  LLMAPIError, 
+  BoltDIYError, 
   MemoryStorageError,
-  ContextWindowExceededError
+  InputValidationError,
+  ToolExecutionError,
+  LLMAPIError,
+  ContextWindowExceededError,
+  AIGovernanceError
 } from './errors';
 
 /**
@@ -33,6 +35,7 @@ export interface MonitoredError {
 /**
  * Centralized error handler for consistent error processing
  */
+@injectable()
 export class ErrorHandler {
   /**
    * Process and monitor any error
@@ -41,51 +44,67 @@ export class ErrorHandler {
    * @returns Structured error object with user-facing message
    */
   handle(error: unknown, context: Record<string, any> = {}): MonitoredError {
-    let userFacingMessage = 'Sorry, I encountered an unexpected error while processing your request.';
-    let internalDetails = 'Unknown error type';
-    let errorId: string | undefined;
-
-    // Process different error types
-    if (error instanceof InputValidationError) {
-      userFacingMessage = `Input validation error: ${error.message}`;
-      internalDetails = `Validation error: ${error.message}\nContext: ${JSON.stringify(context)}`;
-    } else if (error instanceof ToolExecutionError) {
-      userFacingMessage = `Sorry, I encountered an issue while performing an operation (${error.toolName}).`;
-      internalDetails = `Tool execution error: ${error.message}\nTool: ${error.toolName}\nContext: ${JSON.stringify(context)}`;
-    } else if (error instanceof LLMAPIError) {
-      userFacingMessage = 'Sorry, there was an issue connecting to the AI service. Please try again in a moment.';
-      internalDetails = `LLM API error: ${error.message}\nStatus: ${error.statusCode}\nContext: ${JSON.stringify(context)}`;
-    } else if (error instanceof ContextWindowExceededError) {
-      userFacingMessage = 'Sorry, the conversation has grown too long for me to process. Try starting a new conversation or summarizing the current topic.';
-      internalDetails = `Context window exceeded: ${error.message}\nTokens: ${error.tokenCount}/${error.maxTokens}\nContext: ${JSON.stringify(context)}`;
-    } else if (error instanceof MemoryStorageError) {
-      userFacingMessage = 'Sorry, I encountered an issue accessing conversation history.';
-      internalDetails = `Memory storage error: ${error.message}\nContext: ${JSON.stringify(context)}`;
-    } else if (error instanceof BoltError) {
-      userFacingMessage = `Sorry, an error occurred: ${error.message}`;
-      internalDetails = `Bolt error: ${error.message}\nContext: ${JSON.stringify(context)}`;
-    } else if (error instanceof Error) {
-      internalDetails = `Standard error: ${error.message}\nContext: ${JSON.stringify(context)}\nStack: ${error.stack}`;
-    } else {
-      internalDetails = `Unknown error occurred: ${JSON.stringify(error)}\nContext: ${JSON.stringify(context)}`;
-    }
-
-    // Log to console
-    console.error(`Error occurred: ${internalDetails}`);
-    
-    // Track in analytics
-    AnalyticsSDK.trackError(error instanceof Error ? error : String(error), context);
-    
-    // Log to Sentry/monitoring
-    errorId = SentrySDK.captureException(error, context);
-
-    // Return structured error response
-    return {
-      userFacingMessage: errorId 
-        ? `${userFacingMessage} (Ref: ${errorId.substring(0, 8)})` 
-        : userFacingMessage,
-      internalDetails,
-      errorId
+    // Initialize standardized error response
+    const monitoredError: MonitoredError = {
+      userFacingMessage: 'Something went wrong. Please try again later.',
+      internalDetails: 'Unknown error'
     };
+    
+    // Extract error message and stack trace
+    let errorMessage = 'Unknown error';
+    let errorStack = '';
+    
+    if (error instanceof Error) {
+      errorMessage = error.message;
+      errorStack = error.stack || '';
+    } else if (typeof error === 'string') {
+      errorMessage = error;
+    } else {
+      errorMessage = `Unknown error type: ${JSON.stringify(error)}`;
+    }
+    
+    monitoredError.internalDetails = errorMessage;
+    
+    // Process based on error type to provide user-friendly messages
+    if (error instanceof MemoryStorageError) {
+      monitoredError.userFacingMessage = 'Unable to access conversation history. Please try again.';
+    } else if (error instanceof InputValidationError) {
+      monitoredError.userFacingMessage = 'Invalid input. Please try a different request.';
+    } else if (error instanceof ToolExecutionError) {
+      monitoredError.userFacingMessage = `Unable to complete the requested action using ${error.toolName}. Please try again or use a different approach.`;
+    } else if (error instanceof LLMAPIError) {
+      monitoredError.userFacingMessage = 'Unable to generate a response right now. Please try again in a moment.';
+      
+      // Add HTTP status code if available
+      if (error.statusCode) {
+        monitoredError.internalDetails = `${errorMessage} (Status: ${error.statusCode})`;
+      }
+    } else if (error instanceof ContextWindowExceededError) {
+      monitoredError.userFacingMessage = 'Your conversation is too long for me to process. Please start a new conversation or simplify your request.';
+      monitoredError.internalDetails = `${errorMessage} (Tokens: ${error.tokenCount}/${error.maxTokens})`;
+    } else if (error instanceof AIGovernanceError) {
+      monitoredError.userFacingMessage = 'This request could not be processed due to content guidelines.';
+      monitoredError.internalDetails = `${errorMessage} (Category: ${error.category})`;
+    } else if (error instanceof BoltDIYError) {
+      // Generic Bolt DIY error
+      monitoredError.userFacingMessage = 'An error occurred with the BoltDIY system. Please try again.';
+    }
+    
+    // Report error to monitoring system
+    monitoredError.errorId = SentrySDK.captureException(error, {
+      ...context,
+      errorMessage,
+      errorStack
+    });
+    
+    // Log locally as well
+    console.error('[ErrorHandler]', {
+      errorType: error instanceof Error ? error.constructor.name : typeof error,
+      errorMessage,
+      context,
+      errorId: monitoredError.errorId
+    });
+    
+    return monitoredError;
   }
 }

@@ -8,7 +8,7 @@
 
 import * as Sentry from '@sentry/node';
 import { RewriteFrames } from '@sentry/integrations';
-import { ProfilingIntegration } from '@sentry/profiling-node';
+import { nodeProfilingIntegration } from '@sentry/profiling-node';
 import { MemoryStorageError, InputValidationError, ToolExecutionError, LLMAPIError, ContextWindowExceededError } from '../errors';
 
 // Environment variables for configuration
@@ -35,7 +35,7 @@ export function initializeSentry() {
         // Rewrite stack frames to get proper file paths
         new RewriteFrames({ root: process.cwd() }),
         // Add profiling integration for performance monitoring
-        new ProfilingIntegration(),
+        nodeProfilingIntegration(),
       ],
       // Set tracesSampleRate to 1.0 to capture 100% of transactions for monitoring
       // Adjust this in production for performance

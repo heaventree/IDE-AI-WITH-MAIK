@@ -1,28 +1,12 @@
 /**
- * Core Interfaces for Bolt DIY System
+ * Core Interface Definitions for Bolt DIY
  * 
- * This file contains the interface definitions for the core components
- * of the Bolt DIY system. These interfaces define the contracts that
- * implementations must adhere to, enabling dependency injection and
- * modular design.
+ * This module defines the interfaces used by the core components
+ * of the Bolt DIY system.
  */
 
 /**
- * Represents the session context with history and memories
- */
-export interface MemoryContext {
-  /** List of previous interaction turns */
-  history: Interaction[];
-  
-  /** Retrieved long-term memories relevant to current context */
-  memories: string[];
-  
-  /** Optional summary of older conversation */
-  summary?: string;
-}
-
-/**
- * Represents a single interaction between user and system
+ * Defines the structure of an interaction between a user and the system
  */
 export interface Interaction {
   /** User input text */
@@ -33,11 +17,63 @@ export interface Interaction {
   
   /** Timestamp of the interaction */
   timestamp?: string;
+  
+  /** Optional metadata about the interaction */
+  metadata?: Record<string, any>;
 }
 
 /**
- * Memory Manager Interface
- * Responsible for storing and retrieving conversation history and context
+ * Memory context containing conversation history and semantic memories
+ */
+export interface MemoryContext {
+  /** Recent conversation history as a list of interactions */
+  history: Interaction[];
+  
+  /** Relevant semantic memories as strings */
+  memories: string[];
+  
+  /** Optional summary of previous conversations */
+  summary?: string;
+}
+
+/**
+ * Application state maintained across interactions
+ */
+export interface ApplicationState {
+  /** User preferences */
+  preferences?: Record<string, any>;
+  
+  /** Current conversation topic */
+  currentTopic?: string;
+  
+  /** Most recent system response */
+  lastResponse?: string;
+  
+  /** Custom state variables */
+  [key: string]: any;
+}
+
+/**
+ * Interface for state management
+ */
+export interface IStateManager {
+  /**
+   * Get current state for a session
+   * @param sessionId - Unique session identifier
+   * @returns Current application state
+   */
+  getState(sessionId: string): Promise<ApplicationState>;
+  
+  /**
+   * Update state for a session
+   * @param sessionId - Unique session identifier
+   * @param updates - State changes to apply
+   */
+  updateState(sessionId: string, updates: Partial<ApplicationState>): Promise<void>;
+}
+
+/**
+ * Interface for memory management
  */
 export interface IMemoryManager {
   /**
@@ -57,36 +93,7 @@ export interface IMemoryManager {
 }
 
 /**
- * Application state interface
- */
-export interface ApplicationState {
-  lastResponse?: string;
-  [key: string]: any;
-}
-
-/**
- * State Manager Interface
- * Responsible for maintaining application state across interactions
- */
-export interface IStateManager {
-  /**
-   * Get current state for a session
-   * @param sessionId - Unique session identifier
-   * @returns Current application state
-   */
-  getState(sessionId: string): Promise<ApplicationState>;
-  
-  /**
-   * Update state for a session
-   * @param sessionId - Unique session identifier
-   * @param updates - State changes to apply
-   */
-  updateState(sessionId: string, updates: Partial<ApplicationState>): Promise<void>;
-}
-
-/**
- * Prompt Manager Interface
- * Responsible for constructing optimized prompts for LLM
+ * Interface for prompt management
  */
 export interface IPromptManager {
   /**
@@ -100,8 +107,7 @@ export interface IPromptManager {
 }
 
 /**
- * Tool Execution Interface
- * Responsible for parsing LLM responses and executing tools
+ * Interface for tool execution
  */
 export interface IToolExecutor {
   /**

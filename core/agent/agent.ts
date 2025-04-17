@@ -46,7 +46,7 @@ export class Agent {
   async handleRequest(userInput: string, sessionId: string): Promise<string> {
     // Start performance monitoring
     const metrics = PerformanceMonitor.startRequest(sessionId);
-    let response: string | MonitoredError;
+    let response: string | MonitoredError = 'Unknown response'; // Initialize with default
     
     try {
       // 1. Validate Input
@@ -73,10 +73,10 @@ export class Agent {
 
       response = finalResponse; // Assign successful response
       return finalResponse;
-    } catch (error) {
+    } catch (error: any) { // Use 'any' to access constructor.name
       // Update metrics for error tracking
       metrics.errorOccurred = true;
-      metrics.errorType = error.constructor.name;
+      metrics.errorType = error.constructor?.name || 'UnknownError';
       
       // Handle error with centralized handler
       const monitoredError = this.errorHandler.handle(error, { userInput, sessionId });
