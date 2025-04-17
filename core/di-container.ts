@@ -81,35 +81,40 @@ export function setupDependencyInjection() {
   
   // Register memory manager with configuration
   container.register<IMemoryManager>('IMemoryManager', {
-    useFactory: () => {
-      return new AdvancedMemoryManager({
-        maxShortTermTurns: MEMORY_MAX_SHORT_TERM_TURNS
-      });
-    }
+    useClass: AdvancedMemoryManager
   }, { lifecycle: Lifecycle.Singleton });
+  
+  // Configure the memory manager after registration
+  container.resolve<IMemoryManager>('IMemoryManager');
   
   // ===== PROMPT MANAGEMENT =====
   
-  // Register prompt manager with system prompt configuration
+  // Register prompt manager
   container.register<IPromptManager>('IPromptManager', {
-    useFactory: () => {
-      return new PromptManager({
-        systemPrompt: SYSTEM_PROMPT,
-        maxTokens: MAX_TOKENS,
-        // Custom token estimator could be added here if needed
-      });
-    }
+    useClass: PromptManager
   }, { lifecycle: Lifecycle.Singleton });
+  
+  // Configure the prompt manager after registration
+  const promptManager = container.resolve<PromptManager>('IPromptManager');
+  // Initialize with system prompt and token settings
+  Object.assign(promptManager, {
+    systemPrompt: SYSTEM_PROMPT,
+    maxTokens: MAX_TOKENS
+  });
   
   // ===== TOOL EXECUTION =====
   
-  // Register tool executor with dependencies and default tools
+  // Register tool executor
   container.register<IToolExecutor>('IToolExecutor', {
-    useFactory: (dependencyContainer) => {
-      const stateManager = dependencyContainer.resolve<IStateManager>('IStateManager');
-      return new ToolExecutor(stateManager, defaultTools);
-    }
+    useClass: ToolExecutor
   }, { lifecycle: Lifecycle.Singleton });
+  
+  // Configure the tool executor after registration
+  const toolExecutor = container.resolve<ToolExecutor>('IToolExecutor');
+  const stateManager = container.resolve<IStateManager>('IStateManager');
+  
+  // Initialize the tool executor with default tools
+  defaultTools.forEach(tool => toolExecutor.registerTool(tool));
   
   // ===== MAIN AGENT =====
   
@@ -159,16 +164,6 @@ function initializeAIGovernance(container: DependencyContainer) {
       'Be transparent about limitations'
     ]
   });
-}
-
-/**
- * Get an initialized instance of the Agent class
- * This is a convenience function for code that doesn't want to 
- * interact with the DI container directly
- * @returns Initialized Agent instance
- */
-export function getAgent(): Agent {
-  return container.resolve(Agent);
 }
 
 // Export container setup function

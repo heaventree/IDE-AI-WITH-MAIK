@@ -54,3 +54,13 @@ export function initializeSystem() {
   // Resolve and return the agent
   return container.resolve(Agent);
 }
+
+/**
+ * Get an initialized instance of the Agent class
+ * This is a convenience function for code that doesn't want to 
+ * interact with the DI container directly
+ * @returns Initialized Agent instance
+ */
+export function getAgent(): Agent {
+  return container.resolve(Agent);
+}
