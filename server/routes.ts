@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { WebSocket, WebSocketServer } from 'ws';
 import { z } from 'zod';
 import { IApiResponse, IAIQueryRequest, ICommandExecutionRequest, ISyncRequest, IBackupRequest, IRestoreBackupRequest, IErrorResponse } from "@shared/api-types";
+import { handleBoltQuery } from "./bolt-integration";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   const httpServer = createServer(app);
@@ -181,9 +182,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const validatedData = schema.parse(req.body) as IAIQueryRequest;
       
-      // In a real implementation, route to the appropriate AI model
-      // For now, return a simulated response
-      const response = await simulateAIResponse(validatedData);
+      // Option 1: Use the Bolt DIY agent for processing (production)
+      let response: string;
+      try {
+        response = await handleBoltQuery(validatedData);
+      } catch (error) {
+        console.error('Bolt DIY error:', error);
+        // Fallback to simulation if Bolt fails
+        response = await simulateAIResponse(validatedData);
+      }
       
       res.json({
         success: true,

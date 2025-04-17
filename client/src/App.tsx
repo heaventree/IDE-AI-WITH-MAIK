@@ -4,6 +4,7 @@ import NotFound from "@/pages/not-found";
 import IDELayout from "./components/layout/IDELayout";
 import Editor from "./components/editor/Editor";
 import Terminal from "./components/terminal/Terminal";
+import AIChat from "./components/ai/AIChat";
 
 // HomePage component with IDE layout
 const HomePage = () => {
@@ -18,6 +19,9 @@ const HomePage = () => {
       
       {/* Terminal at the bottom */}
       <Terminal initialOpen={false} />
+      
+      {/* AI Chat component */}
+      <AIChat initialOpen={false} />
     </IDELayout>
   );
 };

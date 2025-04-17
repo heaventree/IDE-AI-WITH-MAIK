@@ -1,78 +1,113 @@
 import { useState, useCallback } from 'react';
-import { AIMessage, AIAgent, AIModel } from '../types';
 import { nanoid } from 'nanoid';
-import { AIOrchestrator } from '../services/AIOrchestrator';
-import { useProject } from '../contexts/ProjectContext';
+import { AIMessage, AIAgent } from '@/types';
+import { useToast } from './use-toast';
 
 export const useAI = () => {
   const [messages, setMessages] = useState<AIMessage[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
-  const { projectState } = useProject();
+  const [activeAgent, setActiveAgent] = useState<AIAgent>('Coder');
+  const { toast } = useToast();
 
-  const sendQuery = useCallback(async (query: string, agent: AIAgent = 'Coder', model: AIModel = 'GPT-4') => {
-    if (!query.trim() || isProcessing) return;
+  // Send a query to the AI API
+  const sendQuery = useCallback(async (query: string, agent?: AIAgent) => {
+    if (isProcessing) return;
     
-    // Add user message
+    // Set the agent to use (default to active agent if not specified)
+    const selectedAgent = agent || activeAgent;
+    
+    // Create a user message
     const userMessage: AIMessage = {
       id: nanoid(),
       role: 'user',
       content: query,
-      timestamp: new Date()
+      timestamp: new Date(),
+      agent: selectedAgent
     };
     
+    // Add the user message to the messages list
     setMessages(prev => [...prev, userMessage]);
     setIsProcessing(true);
     
     try {
-      // Get response from AI
-      const response = await AIOrchestrator.routeQuery({
-        agent,
-        model,
-        query,
-        context: {
-          files: projectState.files,
-          selectedFile: projectState.activeFile
-        }
+      // Make API request to the backend
+      const response = await fetch('/api/ai/query', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          agent: selectedAgent,
+          query,
+          context: {
+            projectId: 'demo-project',
+            files: [],
+            activeFile: ''
+          }
+        })
       });
       
-      // Add AI message
-      const aiMessage: AIMessage = {
+      if (!response.ok) {
+        throw new Error(`AI request failed: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      
+      if (!data.success) {
+        throw new Error(data.error?.message || 'Unknown API error');
+      }
+      
+      // Create an assistant message from the response
+      const assistantMessage: AIMessage = {
         id: nanoid(),
         role: 'assistant',
-        content: response,
+        content: data.data.response,
         timestamp: new Date(),
-        agent,
-        model
+        agent: data.data.agent,
+        model: data.data.model
       };
       
-      setMessages(prev => [...prev, aiMessage]);
+      // Add the assistant message to the messages list
+      setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
-      console.error('AI query failed:', error);
+      console.error('AI request error:', error);
       
-      // Add error message
+      toast({
+        title: 'AI Request Error',
+        description: (error as Error).message,
+        type: 'error'
+      });
+      
+      // Create an error message
       const errorMessage: AIMessage = {
         id: nanoid(),
         role: 'assistant',
-        content: `I'm sorry, I encountered an error while processing your request. Please try again later.`,
+        content: `Sorry, I encountered an error: ${(error as Error).message}. Please try again.`,
         timestamp: new Date(),
-        agent,
-        model
+        agent: selectedAgent
       };
       
+      // Add the error message to the messages list
       setMessages(prev => [...prev, errorMessage]);
     } finally {
       setIsProcessing(false);
     }
-  }, [isProcessing, projectState.files, projectState.activeFile]);
-
+  }, [activeAgent, isProcessing, toast]);
+  
+  // Change the active agent
+  const setAgent = useCallback((agent: AIAgent) => {
+    setActiveAgent(agent);
+  }, []);
+  
+  // Clear all messages
   const clearMessages = useCallback(() => {
     setMessages([]);
   }, []);
-
+  
   return {
     messages,
     isProcessing,
+    activeAgent,
     sendQuery,
+    setAgent,
     clearMessages
   };
 };

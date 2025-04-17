@@ -1,62 +1,156 @@
 /**
  * Tool Executor for Bolt DIY
  * 
- * This module provides functionality for executing tools based on
- * LLM responses. It parses the response to identify tool calls and
- * executes the appropriate tools.
+ * This service is responsible for executing tools based on AI requests.
+ * It provides a standardized interface for tool registration and execution.
  */
 
+import { singleton, injectable } from 'tsyringe';
+import { ErrorHandler, ErrorCategory, ErrorSeverity } from '../error-handler';
 import { IToolExecutor } from '../interfaces';
-import { ToolExecutionError, InputValidationError } from '../errors';
-import { IStateManager } from '../interfaces';
 
 /**
- * Tool interface defining the structure of a tool
+ * Tool interface for implementing custom tools
  */
 export interface Tool {
-  /** Unique name of the tool */
+  /** Unique identifier for the tool */
   name: string;
   
-  /** Description of what the tool does */
+  /** Human-readable description of what the tool does */
   description: string;
   
-  /** Function that executes the tool's functionality */
-  execute: (args: Record<string, any>, sessionId: string) => Promise<string>;
+  /** Function to execute the tool with provided parameters */
+  execute: (params: Record<string, any>) => Promise<any>;
   
-  /** Optional validation function to validate tool arguments */
-  validateArgs?: (args: Record<string, any>) => boolean;
+  /** Optional tool category for grouping */
+  category?: string;
+  
+  /** Optional schema for parameter validation */
+  parameterSchema?: Record<string, any>;
 }
 
 /**
- * Implementation of Tool Executor
+ * Result of a tool execution attempt
  */
+export interface ToolExecutionResult {
+  /** Success status of the execution */
+  success: boolean;
+  
+  /** Result data if successful */
+  data?: any;
+  
+  /** Error information if unsuccessful */
+  error?: {
+    message: string;
+    details?: any;
+  };
+}
+
+/**
+ * Service for registering and executing tools
+ */
+@injectable()
+@singleton()
 export class ToolExecutor implements IToolExecutor {
+  /** Map of registered tools by name */
   private tools: Map<string, Tool> = new Map();
-  private stateManager: IStateManager;
   
   /**
-   * Create a new tool executor
-   * @param stateManager - State manager for accessing application state
-   * @param tools - Optional array of tools to register initially
+   * Constructor
+   * @param errorHandler - Error handler for standardized error processing
    */
-  constructor(stateManager: IStateManager, tools: Tool[] = []) {
-    this.stateManager = stateManager;
-    
-    // Register initial tools
-    tools.forEach(tool => this.registerTool(tool));
-  }
+  constructor(private errorHandler: ErrorHandler) {}
   
   /**
-   * Register a new tool
+   * Register a tool with the executor
    * @param tool - Tool to register
-   * @throws Error if a tool with the same name is already registered
    */
   registerTool(tool: Tool): void {
     if (this.tools.has(tool.name)) {
-      throw new Error(`Tool with name '${tool.name}' is already registered`);
+      throw new Error(`Tool with name "${tool.name}" is already registered`);
     }
     
     this.tools.set(tool.name, tool);
+  }
+  
+  /**
+   * Register multiple tools at once
+   * @param tools - Array of tools to register
+   */
+  registerTools(tools: Tool[]): void {
+    for (const tool of tools) {
+      this.registerTool(tool);
+    }
+  }
+  
+  /**
+   * Check if a tool is registered
+   * @param toolName - Name of the tool to check
+   * @returns Whether the tool is registered
+   */
+  hasTool(toolName: string): boolean {
+    return this.tools.has(toolName);
+  }
+  
+  /**
+   * Get a registered tool by name
+   * @param toolName - Name of the tool to get
+   * @returns The requested tool or undefined if not found
+   */
+  getTool(toolName: string): Tool | undefined {
+    return this.tools.get(toolName);
+  }
+  
+  /**
+   * Get all registered tools
+   * @returns Array of all registered tools
+   */
+  getAllTools(): Tool[] {
+    return Array.from(this.tools.values());
+  }
+  
+  /**
+   * Execute a tool by name with provided parameters
+   * @param toolName - Name of the tool to execute
+   * @param params - Parameters to pass to the tool
+   * @returns Result of the tool execution
+   */
+  async executeTool(toolName: string, params: Record<string, any> = {}): Promise<ToolExecutionResult> {
+    try {
+      const tool = this.tools.get(toolName);
+      
+      if (!tool) {
+        return {
+          success: false,
+          error: {
+            message: `Tool "${toolName}" not found`
+          }
+        };
+      }
+      
+      // Execute the tool and return the result
+      const result = await tool.execute(params);
+      
+      return {
+        success: true,
+        data: result
+      };
+    } catch (error) {
+      // Process the error through the error handler
+      const monitoredError = this.errorHandler.handle(error, {
+        toolName,
+        params,
+        timestamp: new Date().toISOString()
+      });
+      
+      return {
+        success: false,
+        error: {
+          message: monitoredError.userFacingMessage,
+          details: monitoredError.internalDetails
+        }
+      };
+    }
   }
   
   /**
@@ -66,86 +160,125 @@ export class ToolExecutor implements IToolExecutor {
    * @returns Final processed response after tool execution
    */
   async processResponse(llmResponse: string, sessionId: string): Promise<string> {
-    // Check if the response contains a tool call
-    const toolCall = this.parseToolCall(llmResponse);
+    // Simple implementation that just returns the LLM response
+    // In a real implementation, this would parse the response, extract tool calls,
+    // execute them, and then return the final processed response
     
-    if (!toolCall) {
-      // No tool call found, return the original response
-      return llmResponse;
-    }
+    const toolCallPattern = /\[\[(\w+)\(([^)]*)\)\]\]/g;
+    let finalResponse = llmResponse;
+    let match;
     
-    try {
-      // Get the tool by name
-      const tool = this.tools.get(toolCall.name);
+    while ((match = toolCallPattern.exec(llmResponse)) !== null) {
+      const toolName = match[1];
+      const paramsString = match[2];
       
-      if (!tool) {
-        throw new ToolExecutionError(`Tool '${toolCall.name}' not found`, toolCall.name);
+      // Parse parameters - this is a simple implementation
+      const params: Record<string, any> = {};
+      paramsString.split(',').forEach(param => {
+        const [key, value] = param.split('=').map(p => p.trim());
+        if (key && value) {
+          // Simple type conversion
+          if (value === 'true') params[key] = true;
+          else if (value === 'false') params[key] = false;
+          else if (!isNaN(Number(value))) params[key] = Number(value);
+          else params[key] = value.replace(/^["'](.*)["']$/, '$1'); // Remove quotes
+        }
+      });
+      
+      try {
+        // Execute the tool
+        const result = await this.executeTool(toolName, params);
+        
+        // Replace the tool call with the result
+        if (result.success) {
+          const resultString = typeof result.data === 'object' 
+            ? JSON.stringify(result.data) 
+            : String(result.data);
+          
+          finalResponse = finalResponse.replace(
+            match[0],
+            resultString
+          );
+        } else {
+          finalResponse = finalResponse.replace(
+            match[0],
+            `Error: ${result.error?.message || 'Unknown error'}`
+          );
+        }
+      } catch (error) {
+        finalResponse = finalResponse.replace(
+          match[0],
+          `Error executing tool ${toolName}: ${(error as Error).message}`
+        );
       }
-      
-      // Validate arguments if a validator is provided
-      if (tool.validateArgs && !tool.validateArgs(toolCall.args)) {
-        throw new InputValidationError(`Invalid arguments for tool '${toolCall.name}'`);
-      }
-      
-      // Execute the tool
-      const toolResult = await tool.execute(toolCall.args, sessionId);
-      
-      // Replace the tool call in the response with the result
-      return this.replaceTooCallWithResult(llmResponse, toolCall, toolResult);
-    } catch (error) {
-      if (error instanceof ToolExecutionError || error instanceof InputValidationError) {
-        throw error;
-      }
-      
-      throw new ToolExecutionError(
-        `Error executing tool '${toolCall.name}': ${error instanceof Error ? error.message : String(error)}`,
-        toolCall.name
-      );
-    }
-  }
-  
-  /**
-   * Parse a tool call from an LLM response
-   * @param response - LLM response to parse
-   * @returns Tool call object or null if no tool call found
-   */
-  private parseToolCall(response: string): { name: string; args: Record<string, any> } | null {
-    // Basic regex pattern for tool calls in the format:
-    // {{tool:toolName({"arg1": "value1", "arg2": "value2"})}}
-    const toolCallPattern = /{{tool:([a-zA-Z0-9_]+)\((.*?)\)}}/;
-    const match = response.match(toolCallPattern);
-    
-    if (!match) {
-      return null;
     }
     
-    const [_, toolName, argsStr] = match;
-    
-    // Parse arguments as JSON
-    try {
-      const args = JSON.parse(argsStr);
-      return { name: toolName, args };
-    } catch (error) {
-      throw new InputValidationError(`Invalid tool arguments: ${argsStr}`);
-    }
-  }
-  
-  /**
-   * Replace tool call in response with the tool execution result
-   * @param response - Original LLM response
-   * @param toolCall - Tool call that was executed
-   * @param result - Result of tool execution
-   * @returns Response with tool call replaced by result
-   */
-  private replaceTooCallWithResult(
-    response: string,
-    toolCall: { name: string; args: Record<string, any> },
-    result: string
-  ): string {
-    // Create replacement pattern
-    const pattern = new RegExp(`{{tool:${toolCall.name}\\(.*?\\)}}`, 'g');
-    
-    // Replace tool call with result
-    return response.replace(pattern, result);
+    return finalResponse;
   }
 }
+
+/**
+ * Basic weather tool example
+ */
+export const weatherTool: Tool = {
+  name: 'weather',
+  description: 'Get current weather information for a location',
+  category: 'information',
+  
+  async execute(params: Record<string, any>): Promise<any> {
+    // This is a mock implementation
+    // In a real tool, you would call a weather API
+    
+    const location = params.location || 'Unknown';
+    
+    // Simulate API call with a delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    return {
+      location,
+      temperature: 72,
+      conditions: 'Sunny',
+      humidity: 45,
+      windSpeed: 5
+    };
+  }
+};
+
+/**
+ * Basic calculator tool example
+ */
+export const calculatorTool: Tool = {
+  name: 'calculator',
+  description: 'Perform mathematical calculations',
+  category: 'utility',
+  
+  async execute(params: Record<string, any>): Promise<any> {
+    const operation = params.operation as string;
+    const a = Number(params.a);
+    const b = Number(params.b);
+    
+    if (!operation) {
+      throw new Error('Operation is required');
+    }
+    
+    if (isNaN(a) || isNaN(b)) {
+      throw new Error('Invalid operands: a and b must be numbers');
+    }
+    
+    switch (operation) {
+      case 'add':
+        return { result: a + b };
+      case 'subtract':
+        return { result: a - b };
+      case 'multiply':
+        return { result: a * b };
+      case 'divide':
+        if (b === 0) {
+          throw new Error('Division by zero is not allowed');
+        }
+        return { result: a / b };
+      default:
+        throw new Error(`Unknown operation: ${operation}`);
+    }
+  }
+};
