@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bolt DIY Reference</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    h1 {
+      color: #0066cc;
+    }
+    .card {
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    pre {
+      background-color: #f1f1f1;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+    button {
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0052a3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Bolt DIY Reference Implementation</h1>
+  
+  <div class="card">
+    <h2>Core Components</h2>
+    <ul>
+      <li><a href="/api/files/core/di-container.ts">DI Container</a></li>
+      <li><a href="/api/files/core/ai/openai-service.ts">OpenAI Service</a></li>
+      <li><a href="/api/files/core/ai/anthropic-service.ts">Anthropic Service</a></li>
+      <li><a href="/api/files/core/ai/gemini-service.ts">Gemini Service</a></li>
+      <li><a href="/api/files/core/ai/base-ai-service.ts">Base AI Service</a></li>
+    </ul>
+  </div>
+  
+  <div class="card">
+    <h2>Demo Execution</h2>
+    <button id="run-demo">Run Demo</button>
+    <pre id="output">Click "Run Demo" to execute the demo script...</pre>
+  </div>
+  
+  <script>
+    document.getElementById('run-demo').addEventListener('click', async () => {
+      const outputEl = document.getElementById('output');
+      outputEl.textContent = 'Running demo...';
+      
+      try {
+        const response = await fetch('/api/run-demo');
+        const data = await response.json();
+        
+        if (data.success) {
+          outputEl.textContent = data.output;
+        } else {
+          outputEl.textContent = 'Error: ' + data.error;
+        }
+      } catch (error) {
+        outputEl.textContent = 'Error: ' + error.message;
+      }
+    });
+  </script>
+</body>
+</html>
