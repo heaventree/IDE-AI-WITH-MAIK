@@ -20,6 +20,7 @@ import {
 /**
  * Service for interacting with OpenAI's API
  */
+@injectable()
 export class OpenAIService extends AbstractAIService {
   private openai: OpenAI;
   private defaultModel = "gpt-4o"; // the newest OpenAI model is "gpt-4o" which was released May 13, 2024
