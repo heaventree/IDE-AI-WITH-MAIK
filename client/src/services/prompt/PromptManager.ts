@@ -238,8 +238,8 @@ export class PromptManager {
     
     // Initialize context if missing fields
     const fullContext: PromptContext = {
-      history: context.history || [],
-      ...context
+      ...context,
+      history: context.history || []
     };
     
     try {

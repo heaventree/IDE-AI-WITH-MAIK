@@ -26,7 +26,7 @@ export interface ProjectState {
 
 // AI types
 export type AIAgent = 'Coder' | 'Debugger' | 'WCAG Auditor';
-export type AIModel = 'GPT-4' | 'Tabby' | 'Claude-3'; 
+export type AIModel = 'GPT-4' | 'GPT-3.5' | 'Tabby' | 'Claude-3'; 
 
 export interface AIMessage {
   id: string;
@@ -50,9 +50,12 @@ export interface AIQueryRequest {
   agent: AIAgent;
   model?: AIModel;
   query: string;
+  history?: AIMessage[];
+  outputFormat?: string;
   context: {
     files: Record<string, FileEntry>;
     selectedFile: string | null;
+    language?: string;
   };
 }
 

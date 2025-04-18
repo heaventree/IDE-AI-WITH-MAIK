@@ -5,6 +5,7 @@ import IDELayout from "./components/layout/IDELayout";
 import Editor from "./components/editor/Editor";
 import Terminal from "./components/terminal/Terminal";
 import EntryPage from "./pages/EntryPage";
+import PromptSystemDemo from "./pages/PromptSystemDemo";
 
 // HomePage component with IDE layout
 const HomePage = () => {
@@ -32,6 +33,9 @@ function App() {
       </Route>
       <Route path="/entry">
         <EntryPage />
+      </Route>
+      <Route path="/prompt-system">
+        <PromptSystemDemo />
       </Route>
       <Route path="*">
         <NotFound />
