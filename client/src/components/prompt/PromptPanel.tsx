@@ -69,29 +69,35 @@ const PromptPanel: React.FC<PromptPanelProps> = ({
       name: 'AI SAAS - PM PROCESS',
       hours: 3,
       color: 'bg-indigo-600/10',
-      iconColor: 'text-indigo-500',
-      icon: <FileCode />
+      iconColor: 'text-indigo-400',
+      icon: <div className="h-5 w-5 flex items-center justify-center">
+        <FileCode size={20} />
+      </div>
     },
     {
       id: 'maik',
       name: 'MAIK AI CODING APP',
       hours: 5,
       color: 'bg-emerald-600/10',
-      iconColor: 'text-emerald-500',
-      icon: <MessageSquare />
+      iconColor: 'text-emerald-400',
+      icon: <div className="h-5 w-5 flex items-center justify-center">
+        <MessageSquare size={20} />
+      </div>
     },
     {
       id: 'accessweb',
       name: 'AccessWeb v9.7',
       hours: 6,
       color: 'bg-rose-600/10',
-      iconColor: 'text-rose-500',
-      icon: <Globe />
+      iconColor: 'text-rose-400',
+      icon: <div className="h-5 w-5 flex items-center justify-center">
+        <Globe size={20} />
+      </div>
     },
   ];
 
   return (
-    <div className="h-full w-full bg-white dark:bg-slate-900 text-slate-900 dark:text-white overflow-auto">
+    <div className="h-full w-full bg-slate-900 text-white overflow-auto">
       <div className="flex-1 flex flex-col items-center justify-center max-w-4xl mx-auto w-full p-8 md:p-12">
         {/* Main heading */}
         <h1 className="text-4xl font-semibold mb-4 text-center">
@@ -100,12 +106,12 @@ const PromptPanel: React.FC<PromptPanelProps> = ({
 
         {/* Prompt input */}
         <form onSubmit={handleSubmit} className="w-full mb-8 mt-6">
-          <div className="relative rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+          <div className="relative rounded-xl shadow-sm border border-slate-700 overflow-hidden">
             <Textarea
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               placeholder="Describe an app or site you want to create..."
-              className="w-full min-h-[160px] resize-none bg-white dark:bg-slate-800 border-0 p-4 text-slate-900 dark:text-white focus-visible:ring-0 text-base outline-none"
+              className="w-full min-h-[160px] resize-none bg-slate-800 border-0 p-4 text-white focus-visible:ring-0 text-base outline-none"
             />
             
             {/* Floating buttons in the textarea */}
@@ -114,48 +120,62 @@ const PromptPanel: React.FC<PromptPanelProps> = ({
                 type="button"
                 size="icon"
                 variant="ghost"
-                className="rounded-full h-8 w-8 text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
+                className="rounded-full h-8 w-8 text-slate-400 hover:text-slate-200"
               >
                 <Link2 className="h-4 w-4" />
               </Button>
               <Button
                 type="submit"
                 size="sm"
-                className="rounded-full bg-indigo-600 hover:bg-indigo-700 text-white px-4"
+                className="rounded-md bg-indigo-600 hover:bg-indigo-700 text-white px-4"
               >
-                <Sparkles className="h-4 w-4 mr-1" />
-                <span>Start building</span>
+                <span className="mr-1">Start building</span>
               </Button>
             </div>
           </div>
         </form>
 
         {/* Templates */}
-        <div className="flex flex-wrap justify-center gap-2 mb-8">
-          {templates.map((template) => (
-            <Button
-              key={template.id}
-              variant="outline"
-              size="sm"
-              className="border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/70"
-              onClick={() => console.log(`Selected template: ${template.name}`)}
-            >
-              <div className="bg-slate-100 dark:bg-slate-700 rounded-full p-1 mr-2">
-                {template.icon}
-              </div>
-              <span>{template.name}</span>
-            </Button>
-          ))}
+        <div className="flex flex-wrap justify-center gap-3 mb-8">
+          <Button
+            variant="outline"
+            size="sm"
+            className="border-slate-700 bg-transparent text-slate-300 hover:bg-slate-800 py-2 px-3"
+            onClick={() => console.log('AI chat clicked')}
+          >
+            <MessageSquare className="h-4 w-4 mr-2" />
+            <span>AI chat</span>
+          </Button>
+          
+          <Button
+            variant="outline"
+            size="sm"
+            className="border-slate-700 bg-transparent text-slate-300 hover:bg-slate-800 py-2 px-3"
+            onClick={() => console.log('Statistical significance calculator clicked')}
+          >
+            <Calculator className="h-4 w-4 mr-2" />
+            <span>Statistical significance calculator</span>
+          </Button>
+          
+          <Button
+            variant="outline"
+            size="sm"
+            className="border-slate-700 bg-transparent text-slate-300 hover:bg-slate-800 py-2 px-3"
+            onClick={() => console.log('Wallet website clicked')}
+          >
+            <CreditCard className="h-4 w-4 mr-2" />
+            <span>Wallet website</span>
+          </Button>
         </div>
 
         {/* Recent apps */}
         <div className="w-full">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-medium text-slate-900 dark:text-white">Your recent Apps</h2>
+            <h2 className="text-xl font-medium text-white">Your recent Apps</h2>
             <Button
               variant="link"
               size="sm"
-              className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 px-0"
+              className="text-indigo-400 hover:text-indigo-300 px-0"
             >
               View All
               <ArrowRight className="ml-1 h-4 w-4" />
@@ -166,7 +186,7 @@ const PromptPanel: React.FC<PromptPanelProps> = ({
             {recentApps.map((app) => (
               <Card 
                 key={app.id} 
-                className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-indigo-300 dark:hover:border-indigo-500 transition-colors cursor-pointer overflow-hidden"
+                className="bg-slate-800 border-slate-700 hover:border-indigo-500 transition-colors cursor-pointer overflow-hidden"
               >
                 <CardContent className="p-4">
                   <div className="flex items-center space-x-4 mb-3">
@@ -176,10 +196,10 @@ const PromptPanel: React.FC<PromptPanelProps> = ({
                       </div>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-sm font-medium text-slate-900 dark:text-white truncate">
+                      <h3 className="text-sm font-medium text-white truncate">
                         {app.name}
                       </h3>
-                      <p className="text-xs text-slate-500 dark:text-slate-400">
+                      <p className="text-xs text-slate-400">
                         {app.hours} hours ago
                       </p>
                     </div>
@@ -187,14 +207,14 @@ const PromptPanel: React.FC<PromptPanelProps> = ({
                   <div className="flex justify-between items-center">
                     <Badge 
                       variant="outline" 
-                      className="text-xs bg-slate-100 dark:bg-slate-700 border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-300"
+                      className="text-xs bg-slate-700 border-slate-600 text-slate-300"
                     >
                       Private
                     </Badge>
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="rounded-full h-7 w-7 p-0 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+                      className="rounded-full h-7 w-7 p-0 text-slate-400 hover:text-slate-200"
                       onClick={(e) => {
                         e.stopPropagation();
                         console.log(`Options for ${app.name} clicked`);
