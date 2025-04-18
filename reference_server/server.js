@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const PORT = 5001;
+const PORT = 5002;
 
 // Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
@@ -181,7 +181,7 @@ app.get('/', (req, res) => {
             fileContentEl.textContent = 'Loading...';
             
             try {
-              const response = await fetch(`/api/files/${filename}`);
+              const response = await fetch('/api/files/' + filename);
               const data = await response.json();
               
               if (data.success) {
