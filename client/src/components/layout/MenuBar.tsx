@@ -2,12 +2,15 @@ import React from 'react';
 import { 
   Menu, Zap, Sun, Moon, Github, Coffee, Save, Play, Pause,
   Settings, HelpCircle, Download, Upload, ChevronLeft, 
-  MoreVertical, Users, Bell, GitBranch, FileDown, Code
+  MoreVertical, Users, Bell, GitBranch, FileDown, Code,
+  MessageSquare, Edit
 } from 'lucide-react';
 
 interface MenuBarProps {
   toggleSidebar: () => void;
   sidebarOpen: boolean;
+  toggleMode?: () => void;
+  currentMode?: 'editor' | 'prompt';
 }
 
 const IconButton = ({ 
@@ -102,7 +105,12 @@ const MenuItem = ({
 
 const MenuDivider = () => <div className="menu-divider"></div>;
 
-const MenuBar: React.FC<MenuBarProps> = ({ toggleSidebar, sidebarOpen }) => {
+const MenuBar: React.FC<MenuBarProps> = ({ 
+  toggleSidebar, 
+  sidebarOpen, 
+  toggleMode,
+  currentMode = 'editor'
+}) => {
   // We'll use a state hook that mimics the color mode for now
   const [isDarkMode, setIsDarkMode] = React.useState(true);
   const [isRunning, setIsRunning] = React.useState(false);
@@ -223,6 +231,17 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleSidebar, sidebarOpen }) => {
             title="You have 2 notifications"
             badge="2"
           />
+          
+          {/* Mode toggle button */}
+          {toggleMode && (
+            <IconButton 
+              icon={currentMode === 'editor' ? <MessageSquare size={18} /> : <Edit size={18} />}
+              onClick={toggleMode}
+              label={currentMode === 'editor' ? "Switch to Prompt" : "Switch to Editor"}
+              title={currentMode === 'editor' ? "Create something new" : "Return to coding"}
+              className={currentMode === 'prompt' ? "active-icon" : ""}
+            />
+          )}
           
           <IconButton 
             icon={<Code size={18} />}
