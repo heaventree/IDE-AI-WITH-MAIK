@@ -15,6 +15,7 @@ import {
   FunctionDeclaration,
   FunctionDeclarationSchema
 } from '@google/generative-ai';
+import { injectable } from 'tsyringe';
 import { LLMAPIError } from '../errors';
 import { 
   AbstractAIService, 
@@ -28,6 +29,7 @@ import {
 /**
  * Service for interacting with Google's Gemini API
  */
+@injectable()
 export class GeminiService extends AbstractAIService {
   private generativeAI: GoogleGenerativeAI;
   private defaultModel = "gemini-1.5-pro"; // Latest Gemini model as of April 2025
@@ -37,7 +39,7 @@ export class GeminiService extends AbstractAIService {
    * Create a new Gemini service
    * @param config - Configuration options
    */
-  constructor(private config: AIServiceConfig) {
+  constructor(@inject('GeminiServiceConfig') private config: AIServiceConfig) {
     super();
     
     if (!config.apiKey && !process.env.GEMINI_API_KEY) {

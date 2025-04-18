@@ -30,7 +30,7 @@ export class OpenAIService extends AbstractAIService {
    * Create a new OpenAI service
    * @param config - Configuration options
    */
-  constructor(private config: AIServiceConfig) {
+  constructor(@inject('AIServiceConfig') private config: AIServiceConfig) {
     super();
     this.openai = new OpenAI({
       apiKey: config.apiKey || process.env.OPENAI_API_KEY,

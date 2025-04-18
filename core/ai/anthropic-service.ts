@@ -6,6 +6,7 @@
  */
 
 import Anthropic from '@anthropic-ai/sdk';
+import { injectable } from 'tsyringe';
 import { LLMAPIError } from '../errors';
 import { 
   AbstractAIService, 
@@ -19,6 +20,7 @@ import {
 /**
  * Service for interacting with Anthropic's Claude API
  */
+@injectable()
 export class AnthropicService extends AbstractAIService {
   private anthropic: Anthropic;
   private defaultModel = "claude-3-7-sonnet-20250219"; // the newest Anthropic model is "claude-3-7-sonnet-20250219" which was released February 24, 2025
@@ -28,7 +30,7 @@ export class AnthropicService extends AbstractAIService {
    * Create a new Anthropic service
    * @param config - Configuration options
    */
-  constructor(private config: AIServiceConfig) {
+  constructor(@inject('AnthropicServiceConfig') private config: AIServiceConfig) {
     super();
     
     if (!config.apiKey && !process.env.ANTHROPIC_API_KEY) {
