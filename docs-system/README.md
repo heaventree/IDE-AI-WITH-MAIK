@@ -13,6 +13,9 @@ This system provides:
 3. **Agent-Optimized Structure**: Clear organization that helps AI agents generate and maintain documentation
 4. **Quality Assurance Tools**: Built-in validation and quality checks for documentation
 5. **Workflows**: Structured processes for document creation, review, and publication
+6. **Variable Management**: Centralized variable system for consistent values across all documentation
+7. **Placeholder Fulfillment**: Tools to identify and fill placeholders with proper values
+8. **Progress Tracking**: Monitor documentation completion and track unfilled placeholders
 
 ## Getting Started
 
@@ -24,6 +27,7 @@ If you're an AI agent working with this system:
 2. Review the [Agent Roles](/agent/roles.md) to understand your responsibilities
 3. Follow the [Commit Format Guidelines](/docs/commit-format.md) for version control
 4. Use the established [Placeholder Syntax](/templates/README.md#placeholder-syntax) for incomplete sections
+5. Utilize the [Documentation Manager](/tools/documentation_manager.js) for variable management
 
 ### For Human Users
 
@@ -32,7 +36,8 @@ If you're a human user of this system:
 1. Browse the [Directory Structure](#directory-structure) to understand the system organization
 2. Check the [Templates](/templates/) for standardized document formats
 3. View the [Documentation Guidelines](/docs/documentation_guidelines.md) for best practices
-4. Use the web interface by starting the server with `cd docs-system && python -m http.server 5000`
+4. Start the Documentation Web Interface with `node docs-system/tools/web_interface.js`
+5. Or use the CLI tool: `node docs-system/tools/doc_cli.js help`
 
 ## Directory Structure
 
