@@ -26,25 +26,33 @@ export class OpenAIService extends AbstractAIService {
   private defaultModel = "gpt-4o"; // the newest OpenAI model is "gpt-4o" which was released May 13, 2024
   private defaultTemperature = 0.7;
   
+  @inject("AIServiceConfig")
+  private config!: AIServiceConfig;
+  
   /**
    * Create a new OpenAI service
-   * @param config - Configuration options
    */
-  constructor(@inject('AIServiceConfig') private config: AIServiceConfig) {
+  constructor() {
     super();
+    // Note: We initialize the client in an initialization method
+    // that will be called after dependency injection is complete
+  }
+
+  // Initialize the OpenAI client with injected configuration
+  public initialize() {
     this.openai = new OpenAI({
-      apiKey: config.apiKey || process.env.OPENAI_API_KEY,
-      baseURL: config.baseUrl,
-      organization: config.organization
+      apiKey: this.config.apiKey || process.env.OPENAI_API_KEY,
+      baseURL: this.config.baseUrl,
+      organization: this.config.organization
     });
     
     // Override defaults with config values if provided
-    if (config.defaultModel) {
-      this.defaultModel = config.defaultModel;
+    if (this.config.defaultModel) {
+      this.defaultModel = this.config.defaultModel;
     }
     
-    if (config.defaultTemperature !== undefined) {
-      this.defaultTemperature = config.defaultTemperature;
+    if (this.config.defaultTemperature !== undefined) {
+      this.defaultTemperature = this.config.defaultTemperature;
     }
   }
   

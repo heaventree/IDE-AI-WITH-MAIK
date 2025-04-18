@@ -30,7 +30,7 @@ export class AnthropicService extends AbstractAIService {
    * Create a new Anthropic service
    * @param config - Configuration options
    */
-  constructor(@inject('AnthropicServiceConfig') private config: AIServiceConfig) {
+  constructor(@inject("AnthropicServiceConfig") config: AIServiceConfig) {
     super();
     
     if (!config.apiKey && !process.env.ANTHROPIC_API_KEY) {

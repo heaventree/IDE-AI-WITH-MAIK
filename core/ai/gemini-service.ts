@@ -39,7 +39,7 @@ export class GeminiService extends AbstractAIService {
    * Create a new Gemini service
    * @param config - Configuration options
    */
-  constructor(@inject('GeminiServiceConfig') private config: AIServiceConfig) {
+  constructor(@inject("GeminiServiceConfig") config: AIServiceConfig) {
     super();
     
     if (!config.apiKey && !process.env.GEMINI_API_KEY) {
