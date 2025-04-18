@@ -9,6 +9,7 @@
 import { IToolExecutor } from '../interfaces';
 import { ToolExecutionError, InputValidationError } from '../errors';
 import { IStateManager } from '../interfaces';
+import { injectable, inject } from 'tsyringe';
 
 /**
  * Tool interface defining the structure of a tool
@@ -30,6 +31,7 @@ export interface Tool {
 /**
  * Implementation of Tool Executor
  */
+@injectable()
 export class ToolExecutor implements IToolExecutor {
   private tools: Map<string, Tool> = new Map();
   private stateManager: IStateManager;
@@ -37,13 +39,9 @@ export class ToolExecutor implements IToolExecutor {
   /**
    * Create a new tool executor
    * @param stateManager - State manager for accessing application state
-   * @param tools - Optional array of tools to register initially
    */
-  constructor(stateManager: IStateManager, tools: Tool[] = []) {
+  constructor(@inject('IStateManager') stateManager: IStateManager) {
     this.stateManager = stateManager;
-    
-    // Register initial tools
-    tools.forEach(tool => this.registerTool(tool));
   }
   
   /**

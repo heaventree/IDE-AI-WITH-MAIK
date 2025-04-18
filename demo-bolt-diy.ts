@@ -28,7 +28,7 @@ import {
 
 // Import AI governance and services
 import { AIGovernance } from './core/ai/governance';
-import { BaseAIService } from './core/ai/base-ai-service';
+import { BaseAIService, AITool } from './core/ai/base-ai-service';
 import { OpenAIService } from './core/ai/openai-service';
 import { AnthropicService } from './core/ai/anthropic-service';
 import { GeminiService } from './core/ai/gemini-service';
@@ -403,7 +403,7 @@ export default DataFetcher;
       console.log('\nDemonstrating Gemini Tool Calling:');
       
       // Define some tools for Gemini to use
-      const tools = [
+      const tools: AITool[] = [
         {
           type: 'function',
           function: {
@@ -425,7 +425,7 @@ export default DataFetcher;
               required: ['location']
             }
           }
-        },
+        } as AITool,
         {
           type: 'function',
           function: {
@@ -451,7 +451,7 @@ export default DataFetcher;
               required: ['location']
             }
           }
-        }
+        } as AITool
       ];
       
       // Generate a response with function calling
