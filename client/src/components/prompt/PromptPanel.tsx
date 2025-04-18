@@ -2,10 +2,21 @@ import React, { useState } from 'react';
 import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 // Icons
-import { ArrowRight, MessageSquare, Calculator, Wallet } from 'lucide-react';
+import { 
+  ArrowRight, 
+  MessageSquare, 
+  Calculator, 
+  Wallet, 
+  Sparkles, 
+  Link2, 
+  Globe,
+  FileCode,
+  CreditCard
+} from 'lucide-react';
 
 interface PromptPanelProps {
   username?: string;
@@ -14,7 +25,7 @@ interface PromptPanelProps {
 }
 
 const PromptPanel: React.FC<PromptPanelProps> = ({
-  username = 'there',
+  username = 'Sean',
   onSubmit,
   onReturn
 }) => {
@@ -38,17 +49,17 @@ const PromptPanel: React.FC<PromptPanelProps> = ({
     { 
       id: 'ai-chat', 
       name: 'AI chat', 
-      icon: <MessageSquare className="h-5 w-5 text-sky-500" /> 
+      icon: <MessageSquare className="h-5 w-5" /> 
     },
     { 
       id: 'calculator', 
       name: 'Statistical significance calculator', 
-      icon: <Calculator className="h-5 w-5 text-emerald-500" /> 
+      icon: <Calculator className="h-5 w-5" /> 
     },
     { 
       id: 'wallet', 
       name: 'Wallet website', 
-      icon: <Wallet className="h-5 w-5 text-violet-500" /> 
+      icon: <CreditCard className="h-5 w-5" /> 
     },
   ];
 
@@ -57,55 +68,63 @@ const PromptPanel: React.FC<PromptPanelProps> = ({
       id: 'saas',
       name: 'AI SAAS - PM PROCESS',
       hours: 3,
-      icon: <div className="bg-sky-900 p-2 rounded">
-        <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6 text-sky-400">
-          <path d="M8 3H5a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h3a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Z" stroke="currentColor" strokeWidth="2" />
-          <path d="M19 3h-3a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h3a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Z" stroke="currentColor" strokeWidth="2" />
-        </svg>
-      </div>
+      color: 'bg-indigo-600/10',
+      iconColor: 'text-indigo-500',
+      icon: <FileCode />
     },
     {
       id: 'maik',
       name: 'MAIK AI CODING APP',
       hours: 5,
-      icon: <div className="bg-emerald-900 p-2 rounded">
-        <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6 text-emerald-400">
-          <path d="m16 18 6-6-6-6M8 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </div>
+      color: 'bg-emerald-600/10',
+      iconColor: 'text-emerald-500',
+      icon: <MessageSquare />
     },
     {
       id: 'accessweb',
       name: 'AccessWeb v9.7',
       hours: 6,
-      icon: <div className="bg-purple-900 p-2 rounded">
-        <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6 text-purple-400">
-          <path d="M12 2 2 7l10 5 10-5-10-5ZM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </div>
+      color: 'bg-rose-600/10',
+      iconColor: 'text-rose-500',
+      icon: <Globe />
     },
   ];
 
   return (
-    <div className="h-full w-full bg-slate-900 text-white p-6 overflow-auto flex flex-col">
-      <div className="flex-1 flex flex-col items-center justify-center max-w-3xl mx-auto w-full">
-        <h1 className="text-3xl font-semibold mb-6 text-center">
+    <div className="h-full w-full bg-white dark:bg-slate-900 text-slate-900 dark:text-white overflow-auto">
+      <div className="flex-1 flex flex-col items-center justify-center max-w-4xl mx-auto w-full p-8 md:p-12">
+        {/* Main heading */}
+        <h1 className="text-4xl font-semibold mb-4 text-center">
           Hi {username}, what do you want to make?
         </h1>
 
         {/* Prompt input */}
-        <form onSubmit={handleSubmit} className="w-full mb-8">
-          <div className="relative">
+        <form onSubmit={handleSubmit} className="w-full mb-8 mt-6">
+          <div className="relative rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
             <Textarea
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               placeholder="Describe an app or site you want to create..."
-              className="w-full h-32 bg-slate-800 border border-slate-700 rounded-lg p-3 text-white resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full min-h-[160px] resize-none bg-white dark:bg-slate-800 border-0 p-4 text-slate-900 dark:text-white focus-visible:ring-0 text-base outline-none"
             />
-            <div className="absolute bottom-3 right-3">
-              <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white rounded">
-                Start building
-                <ArrowRight className="ml-2 h-4 w-4" />
+            
+            {/* Floating buttons in the textarea */}
+            <div className="absolute bottom-3 right-3 flex items-center space-x-2">
+              <Button
+                type="button"
+                size="icon"
+                variant="ghost"
+                className="rounded-full h-8 w-8 text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
+              >
+                <Link2 className="h-4 w-4" />
+              </Button>
+              <Button
+                type="submit"
+                size="sm"
+                className="rounded-full bg-indigo-600 hover:bg-indigo-700 text-white px-4"
+              >
+                <Sparkles className="h-4 w-4 mr-1" />
+                <span>Start building</span>
               </Button>
             </div>
           </div>
@@ -117,11 +136,14 @@ const PromptPanel: React.FC<PromptPanelProps> = ({
             <Button
               key={template.id}
               variant="outline"
-              className="bg-slate-800 border-slate-700 hover:bg-slate-700 text-white"
+              size="sm"
+              className="border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/70"
               onClick={() => console.log(`Selected template: ${template.name}`)}
             >
-              {template.icon}
-              <span className="ml-2">{template.name}</span>
+              <div className="bg-slate-100 dark:bg-slate-700 rounded-full p-1 mr-2">
+                {template.icon}
+              </div>
+              <span>{template.name}</span>
             </Button>
           ))}
         </div>
@@ -129,12 +151,11 @@ const PromptPanel: React.FC<PromptPanelProps> = ({
         {/* Recent apps */}
         <div className="w-full">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-medium">Your recent Apps</h2>
+            <h2 className="text-xl font-medium text-slate-900 dark:text-white">Your recent Apps</h2>
             <Button
-              variant="ghost"
+              variant="link"
               size="sm"
-              className="text-gray-400 hover:text-white"
-              onClick={() => console.log('View all apps clicked')}
+              className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 px-0"
             >
               View All
               <ArrowRight className="ml-1 h-4 w-4" />
@@ -143,32 +164,48 @@ const PromptPanel: React.FC<PromptPanelProps> = ({
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {recentApps.map((app) => (
-              <Card key={app.id} className="bg-slate-800 border-slate-700 p-4 hover:bg-slate-750 cursor-pointer">
-                <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0">
-                    {app.icon}
+              <Card 
+                key={app.id} 
+                className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-indigo-300 dark:hover:border-indigo-500 transition-colors cursor-pointer overflow-hidden"
+              >
+                <CardContent className="p-4">
+                  <div className="flex items-center space-x-4 mb-3">
+                    <div className={`flex-shrink-0 rounded-lg p-2.5 ${app.color}`}>
+                      <div className={`${app.iconColor}`}>
+                        {app.icon}
+                      </div>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-sm font-medium text-slate-900 dark:text-white truncate">
+                        {app.name}
+                      </h3>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">
+                        {app.hours} hours ago
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex flex-col">
-                    <span className="font-medium">{app.name}</span>
-                    <span className="text-gray-400 text-sm">{app.hours} hours ago</span>
+                  <div className="flex justify-between items-center">
+                    <Badge 
+                      variant="outline" 
+                      className="text-xs bg-slate-100 dark:bg-slate-700 border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-300"
+                    >
+                      Private
+                    </Badge>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="rounded-full h-7 w-7 p-0 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        console.log(`Options for ${app.name} clicked`);
+                      }}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                      </svg>
+                    </Button>
                   </div>
-                </div>
-                <div className="mt-3 flex justify-between items-center">
-                  <span className="text-xs text-gray-400">Private</span>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-gray-400 hover:text-white p-1 h-auto"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      console.log(`Options for ${app.name} clicked`);
-                    }}
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                    </svg>
-                  </Button>
-                </div>
+                </CardContent>
               </Card>
             ))}
           </div>

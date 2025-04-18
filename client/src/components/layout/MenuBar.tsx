@@ -143,79 +143,113 @@ const MenuBar: React.FC<MenuBarProps> = ({
           <h1 className="gradient-text menubar-title">MAIK IDE</h1>
         </div>
         
-        {/* Main navigation menu */}
-        <div className="menubar-nav-area">
-          <DropdownMenu
-            label="File"
-            icon={<span className="nav-text">File</span>}
-            className="nav-dropdown"
-          >
-            <MenuItem icon={<Save size={14} />} label="Save" shortcut="Ctrl+S" />
-            <MenuItem icon={<FileDown size={14} />} label="Save As..." shortcut="Ctrl+Shift+S" />
-            <MenuDivider />
-            <MenuItem icon={<Download size={14} />} label="Import Project" />
-            <MenuItem icon={<Upload size={14} />} label="Export Project" />
-          </DropdownMenu>
-          
-          <DropdownMenu
-            label="Edit"
-            icon={<span className="nav-text">Edit</span>}
-            className="nav-dropdown"
-          >
-            <MenuItem label="Undo" shortcut="Ctrl+Z" />
-            <MenuItem label="Redo" shortcut="Ctrl+Y" />
-            <MenuDivider />
-            <MenuItem label="Cut" shortcut="Ctrl+X" />
-            <MenuItem label="Copy" shortcut="Ctrl+C" />
-            <MenuItem label="Paste" shortcut="Ctrl+V" />
-          </DropdownMenu>
-          
-          <DropdownMenu
-            label="View"
-            icon={<span className="nav-text">View</span>}
-            className="nav-dropdown"
-          >
-            <MenuItem label="Toggle Sidebar" shortcut="Ctrl+B" />
-            <MenuItem label="Toggle Terminal" shortcut="Ctrl+`" />
-            <MenuDivider />
-            <MenuItem 
-              label={isDarkMode ? "Light Mode" : "Dark Mode"} 
-              icon={isDarkMode ? <Sun size={14} /> : <Moon size={14} />}
-              onClick={toggleColorMode}
-            />
-          </DropdownMenu>
-        </div>
-        
-        {/* Main action buttons */}
-        <div className="menubar-actions">
-          <button 
-            className={`run-button ${isRunning ? 'running' : ''}`}
-            onClick={toggleRunState}
-            title={isRunning ? "Stop (Shift+F5)" : "Run (F5)"}
-          >
-            {isRunning ? (
-              <>
-                <Pause size={14} />
-                <span>Stop</span>
-              </>
-            ) : (
-              <>
-                <Play size={14} />
-                <span>Run</span>
-              </>
-            )}
-          </button>
-        </div>
+        {/* Main navigation menu - shown conditionally based on mode */}
+        {currentMode === 'editor' ? (
+          <>
+            <div className="menubar-nav-area">
+              <DropdownMenu
+                label="File"
+                icon={<span className="nav-text">File</span>}
+                className="nav-dropdown"
+              >
+                <MenuItem icon={<Save size={14} />} label="Save" shortcut="Ctrl+S" />
+                <MenuItem icon={<FileDown size={14} />} label="Save As..." shortcut="Ctrl+Shift+S" />
+                <MenuDivider />
+                <MenuItem icon={<Download size={14} />} label="Import Project" />
+                <MenuItem icon={<Upload size={14} />} label="Export Project" />
+              </DropdownMenu>
+              
+              <DropdownMenu
+                label="Edit"
+                icon={<span className="nav-text">Edit</span>}
+                className="nav-dropdown"
+              >
+                <MenuItem label="Undo" shortcut="Ctrl+Z" />
+                <MenuItem label="Redo" shortcut="Ctrl+Y" />
+                <MenuDivider />
+                <MenuItem label="Cut" shortcut="Ctrl+X" />
+                <MenuItem label="Copy" shortcut="Ctrl+C" />
+                <MenuItem label="Paste" shortcut="Ctrl+V" />
+              </DropdownMenu>
+              
+              <DropdownMenu
+                label="View"
+                icon={<span className="nav-text">View</span>}
+                className="nav-dropdown"
+              >
+                <MenuItem label="Toggle Sidebar" shortcut="Ctrl+B" />
+                <MenuItem label="Toggle Terminal" shortcut="Ctrl+`" />
+                <MenuDivider />
+                <MenuItem 
+                  label={isDarkMode ? "Light Mode" : "Dark Mode"} 
+                  icon={isDarkMode ? <Sun size={14} /> : <Moon size={14} />}
+                  onClick={toggleColorMode}
+                />
+              </DropdownMenu>
+            </div>
+            
+            {/* Main action buttons for editor mode */}
+            <div className="menubar-actions">
+              <button 
+                className={`run-button ${isRunning ? 'running' : ''}`}
+                onClick={toggleRunState}
+                title={isRunning ? "Stop (Shift+F5)" : "Run (F5)"}
+              >
+                {isRunning ? (
+                  <>
+                    <Pause size={14} />
+                    <span>Stop</span>
+                  </>
+                ) : (
+                  <>
+                    <Play size={14} />
+                    <span>Run</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </>
+        ) : (
+          // Prompt mode has different menus
+          <div className="menubar-nav-area">
+            <DropdownMenu
+              label="File"
+              icon={<span className="nav-text">File</span>}
+              className="nav-dropdown"
+            >
+              <MenuItem icon={<Download size={14} />} label="Import Template" />
+              <MenuItem icon={<Save size={14} />} label="Save Prompt" />
+            </DropdownMenu>
+            
+            <DropdownMenu
+              label="Options"
+              icon={<span className="nav-text">Options</span>}
+              className="nav-dropdown"
+            >
+              <MenuItem label="AI Models" />
+              <MenuItem label="Templates" />
+              <MenuDivider />
+              <MenuItem 
+                label={isDarkMode ? "Light Mode" : "Dark Mode"} 
+                icon={isDarkMode ? <Sun size={14} /> : <Moon size={14} />}
+                onClick={toggleColorMode}
+              />
+            </DropdownMenu>
+          </div>
+        )}
       </div>
       
       {/* Right section - Tools and settings */}
       <div className="menubar-right">
-        <div className="menubar-branch">
-          <div className="branch-indicator">
-            <GitBranch size={14} />
-            <span className="branch-name">main</span>
+        {/* Only show branch info in editor mode */}
+        {currentMode === 'editor' && (
+          <div className="menubar-branch">
+            <div className="branch-indicator">
+              <GitBranch size={14} />
+              <span className="branch-name">main</span>
+            </div>
           </div>
-        </div>
+        )}
         
         <div className="menubar-actions">
           <IconButton 
@@ -243,11 +277,14 @@ const MenuBar: React.FC<MenuBarProps> = ({
             />
           )}
           
-          <IconButton 
-            icon={<Code size={18} />}
-            label="AI Assist"
-            title="AI Coding Assistant"
-          />
+          {/* Only show AI coding assistant in editor mode */}
+          {currentMode === 'editor' && (
+            <IconButton 
+              icon={<Code size={18} />}
+              label="AI Assist"
+              title="AI Coding Assistant"
+            />
+          )}
           
           <IconButton 
             icon={isDarkMode ? <Sun size={18} /> : <Moon size={18} />}

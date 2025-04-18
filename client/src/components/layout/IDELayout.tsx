@@ -88,7 +88,11 @@ const IDELayout: React.FC<IDELayoutProps> = ({ children, initialMode = 'editor' 
       <div className="ide-content">
         {/* We always render the sidebar but control its visibility with CSS classes */}
         <aside className={`ide-sidebar-wrapper ${sidebarOpen ? 'open' : 'closed'}`}>
-          <Sidebar currentMode={mode} onModeChange={setMode} />
+          <Sidebar 
+            currentMode={mode} 
+            onModeChange={setMode}
+            showExplorer={mode === 'editor'} // Only show file explorer in editor mode
+          />
         </aside>
         
         {/* Main editor and terminal stack */}

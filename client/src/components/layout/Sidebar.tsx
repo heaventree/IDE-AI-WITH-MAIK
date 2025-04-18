@@ -12,6 +12,7 @@ import {
 interface SidebarProps {
   currentMode?: 'editor' | 'prompt';
   onModeChange?: (mode: 'editor' | 'prompt') => void;
+  showExplorer?: boolean;
 }
 
 // File or folder item type
@@ -371,9 +372,11 @@ const CollaborationPanel: React.FC = () => (
 
 const Sidebar: React.FC<SidebarProps> = ({ 
   currentMode = 'editor',
-  onModeChange
+  onModeChange,
+  showExplorer = true
 }) => {
-  const [activeSidebarIcon, setActiveSidebarIcon] = useState<string>('files');
+  // If we're not showing explorer, default to extensions tab instead
+  const [activeSidebarIcon, setActiveSidebarIcon] = useState<string>(showExplorer ? 'files' : 'extensions');
   const [location, setLocation] = useLocation();
   
   // Handle mode toggle
@@ -441,14 +444,17 @@ const Sidebar: React.FC<SidebarProps> = ({
     <div className="advanced-sidebar-container">
       <div className="sidebar-activity-bar">
         <div className="activity-bar-top">
-          <button 
-            className={`activity-bar-item ${activeSidebarIcon === 'files' ? 'active' : ''}`}
-            onClick={() => setActiveSidebarIcon('files')}
-            title="Explorer"
-          >
-            <FolderTree size={22} />
-            {activeSidebarIcon === 'files' && <div className="activity-bar-active-indicator" />}
-          </button>
+          {/* Only show files button in editor mode */}
+          {showExplorer && (
+            <button 
+              className={`activity-bar-item ${activeSidebarIcon === 'files' ? 'active' : ''}`}
+              onClick={() => setActiveSidebarIcon('files')}
+              title="Explorer"
+            >
+              <FolderTree size={22} />
+              {activeSidebarIcon === 'files' && <div className="activity-bar-active-indicator" />}
+            </button>
+          )}
           
           <button 
             className={`activity-bar-item ${activeSidebarIcon === 'search' ? 'active' : ''}`}
