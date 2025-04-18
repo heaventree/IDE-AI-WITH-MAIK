@@ -143,7 +143,7 @@ export function setupDependencyInjection() {
     }, { lifecycle: Lifecycle.Singleton });
   }
   
-  // Register both services if both API keys are available, with specific names
+  // Register additional services with specific names if their API keys are available
   if (openaiApiKey && anthropicApiKey) {
     console.log('Both OpenAI and Anthropic services are available');
     
@@ -159,6 +159,25 @@ export function setupDependencyInjection() {
     // Register Anthropic with its own config and name for specific access
     container.register<BaseAIService>('AnthropicService', {
       useClass: AnthropicService
+    }, { lifecycle: Lifecycle.Singleton });
+  }
+  
+  // Register Gemini if its API key is available
+  if (geminiApiKey) {
+    console.log('Google Gemini service is available');
+    
+    // Register Gemini with its own config
+    container.register<AIServiceConfig>('GeminiServiceConfig', {
+      useValue: {
+        apiKey: geminiApiKey,
+        defaultModel: 'gemini-1.5-pro',
+        defaultTemperature: 0.7
+      }
+    });
+    
+    // Register Gemini with its own config and name for specific access
+    container.register<BaseAIService>('GeminiService', {
+      useClass: GeminiService
     }, { lifecycle: Lifecycle.Singleton });
   }
   
