@@ -1,0 +1,104 @@
+<footer class="site-footer {{footerClass}}">
+  <div class="container">
+    {{#if showWidgetArea}}
+    <div class="footer-widgets">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="footer-widget footer-widget-about">
+            <a href="{{homeUrl}}" class="footer-logo">
+              {{#if useLogo}}
+              <img src="{{logoUrl}}" alt="{{logoAlt}}" class="img-fluid">
+              {{else}}
+              <span class="logo-text">{{logoText}}</span>
+              {{/if}}
+            </a>
+            <p class="footer-about-text">{{aboutText}}</p>
+            {{#if showSocialLinks}}
+            <div class="footer-social">
+              {{#each socialLinks}}
+              <a href="{{this.url}}" class="social-link" aria-label="{{this.label}}">
+                <i class="fab fa-{{this.icon}}"></i>
+              </a>
+              {{/each}}
+            </div>
+            {{/if}}
+          </div>
+        </div>
+        
+        <div class="col-lg-2 col-md-4">
+          <div class="footer-widget footer-widget-links">
+            <h3 class="footer-widget-title">{{linkColumn1Title}}</h3>
+            <ul class="footer-links">
+              {{#each linkColumn1Items}}
+              <li><a href="{{this.url}}">{{this.label}}</a></li>
+              {{/each}}
+            </ul>
+          </div>
+        </div>
+        
+        <div class="col-lg-2 col-md-4">
+          <div class="footer-widget footer-widget-links">
+            <h3 class="footer-widget-title">{{linkColumn2Title}}</h3>
+            <ul class="footer-links">
+              {{#each linkColumn2Items}}
+              <li><a href="{{this.url}}">{{this.label}}</a></li>
+              {{/each}}
+            </ul>
+          </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-4">
+          <div class="footer-widget footer-widget-contact">
+            <h3 class="footer-widget-title">{{contactTitle}}</h3>
+            {{#if showContactDetails}}
+            <ul class="footer-contact-info">
+              {{#if showPhone}}
+              <li><i class="fas fa-phone-alt"></i> <a href="tel:{{phone}}">{{phone}}</a></li>
+              {{/if}}
+              {{#if showEmail}}
+              <li><i class="fas fa-envelope"></i> <a href="mailto:{{email}}">{{email}}</a></li>
+              {{/if}}
+              {{#if showAddress}}
+              <li><i class="fas fa-map-marker-alt"></i> <span>{{address}}</span></li>
+              {{/if}}
+            </ul>
+            {{/if}}
+            
+            {{#if showNewsletter}}
+            <div class="footer-newsletter">
+              <h4>{{newsletterTitle}}</h4>
+              <p>{{newsletterText}}</p>
+              <form class="newsletter-form">
+                <div class="input-group">
+                  <input type="email" class="form-control" placeholder="{{newsletterPlaceholder}}" required>
+                  <button class="btn btn-{{newsletterButtonStyle}}" type="submit">{{newsletterButtonText}}</button>
+                </div>
+              </form>
+            </div>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+    
+    <div class="footer-bottom">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <div class="copyright">
+            <p>{{copyrightText}}</p>
+          </div>
+        </div>
+        {{#if showBottomLinks}}
+        <div class="col-md-6">
+          <div class="footer-bottom-links">
+            {{#each bottomLinks}}
+            <a href="{{this.url}}">{{this.label}}</a>
+            {{/each}}
+          </div>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</footer>

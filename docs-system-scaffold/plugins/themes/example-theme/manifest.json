@@ -1,0 +1,65 @@
+{
+  "name": "example-theme",
+  "displayName": "Example Documentation Theme",
+  "version": "1.0.0",
+  "type": "theme",
+  "author": "Documentation System Team",
+  "description": "An example theme demonstrating the plugin architecture",
+  "compatibility": {
+    "coreVersion": {
+      "minimum": "1.0.0",
+      "maximum": "2.0.0"
+    }
+  },
+  "entryPoints": {
+    "styles": ["assets/css/theme.css"],
+    "scripts": ["index.js"],
+    "templates": ["templates/layout.html"]
+  },
+  "config": {
+    "options": [
+      {
+        "id": "primaryColor",
+        "type": "color",
+        "default": "#4e73df",
+        "label": "Primary Color"
+      },
+      {
+        "id": "useSidebarCollapse",
+        "type": "boolean",
+        "default": true,
+        "label": "Enable Collapsible Sidebar"
+      },
+      {
+        "id": "fontFamily",
+        "type": "select",
+        "default": "system-ui",
+        "label": "Font Family",
+        "options": [
+          {"value": "system-ui", "label": "System Default"},
+          {"value": "Roboto, sans-serif", "label": "Roboto"},
+          {"value": "Poppins, sans-serif", "label": "Poppins"},
+          {"value": "Inter, sans-serif", "label": "Inter"}
+        ]
+      }
+    ]
+  },
+  "hooks": [
+    {
+      "id": "header",
+      "type": "template",
+      "target": "system:header"
+    },
+    {
+      "id": "sidebarMenu",
+      "type": "component",
+      "target": "system:navigation"
+    },
+    {
+      "id": "footer",
+      "type": "template",
+      "target": "system:footer"
+    }
+  ],
+  "dependencies": []
+}

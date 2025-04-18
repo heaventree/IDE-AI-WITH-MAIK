@@ -1,0 +1,82 @@
+<section id="testimonials-{{id|default:'1'}}" class="testimonials-section division">
+  <div class="container">
+    {{#if includeHeading}}
+    <!-- SECTION TITLE -->
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="section-title text-center mb-70">
+          {{#if subtitle}}
+          <span class="section-subtitle {{subtitleClass|default:'purple-color'}}">{{subtitle}}</span>
+          {{/if}}
+          <h2 class="h2-md">{{title}}</h2>
+          {{#if description}}
+          <p class="p-xl">{{description}}</p>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    {{/if}}
+    
+    <!-- TESTIMONIALS CAROUSEL -->
+    <div class="row">
+      <div class="col">
+        <div class="owl-carousel owl-theme testimonial-carousel">
+          {{#each testimonials}}
+          <!-- TESTIMONIAL -->
+          <div class="review-{{style|default:'1'}} bg-{{style === '2' ? 'primary-color white-color' : ''}}">
+            {{#if this.rating}}
+            <!-- Rating Stars -->
+            <div class="review-rating">
+              {{#for 1 this.rating}}
+              <i class="fas fa-star {{../style === '2' ? 'rose-color' : 'yellow-color'}}"></i>
+              {{/for}}
+              {{#for this.rating 5}}
+              <i class="fas fa-star {{../style === '2' ? 'white-color' : 'gray-color'}}"></i>
+              {{/for}}
+            </div>
+            {{/if}}
+            
+            <!-- Testimonial Text -->
+            <div class="review-content">
+              <p class="review-txt">{{this.content}}</p>
+            </div>
+            
+            <!-- Author -->
+            <div class="review-author d-flex align-items-center">
+              {{#if this.avatar}}
+              <!-- Author Avatar -->
+              <div class="author-avatar">
+                <img class="img-fluid" src="{{this.avatar}}" alt="{{this.name}}-avatar">
+              </div>
+              {{/if}}
+              
+              <!-- Author Info -->
+              <div class="author-info">
+                <h6 class="h6-lg">{{this.name}}</h6>
+                {{#if this.role}}
+                <p class="p-sm">{{this.role}}{{#if this.company}}, {{this.company}}{{/if}}</p>
+                {{/if}}
+              </div>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+    
+    {{#if includeLogos}}
+    <!-- CLIENTS LOGOS -->
+    <div class="row clients-row">
+      {{#each clientLogos}}
+      <div class="col-{{12 / ../logoColumns|default:'6'}} col-sm-{{12 / ../logoColumns|default:'6'}} col-md">
+        <div class="client-logo">
+          <a href="{{this.url|default:'#'}}">
+            <img class="img-fluid" src="{{this.src}}" alt="{{this.alt|default:'client-logo'}}">
+          </a>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    {{/if}}
+  </div>
+</section>

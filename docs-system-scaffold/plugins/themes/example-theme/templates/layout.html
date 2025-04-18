@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{PAGE_TITLE}} | Documentation System</title>
+  
+  <!-- Theme CSS -->
+  <link rel="stylesheet" href="{{THEME_PATH}}/assets/css/theme.css">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Additional CSS -->
+  {{ADDITIONAL_CSS}}
+</head>
+<body>
+  <!-- Hook: system:header -->
+  <div id="header-container">
+    {{SYSTEM_HEADER}}
+  </div>
+  
+  <div class="wrapper">
+    <!-- Hook: system:navigation -->
+    <div id="navigation-container">
+      {{SYSTEM_NAVIGATION}}
+    </div>
+    
+    <!-- Main Content Area -->
+    <div class="content" id="main-content">
+      <!-- Page Content -->
+      <div class="container">
+        {{PAGE_CONTENT}}
+      </div>
+    </div>
+  </div>
+  
+  <!-- Hook: system:footer -->
+  <div id="footer-container">
+    {{SYSTEM_FOOTER}}
+  </div>
+  
+  <!-- Theme JavaScript -->
+  <script src="{{THEME_PATH}}/index.js"></script>
+  
+  <!-- Initialize Theme -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const themeConfig = {{THEME_CONFIG}};
+      const pluginAPI = window.pluginSystem.getPluginAPI('example-theme');
+      
+      if (typeof ExampleTheme !== 'undefined' && ExampleTheme.initialize) {
+        ExampleTheme.initialize(themeConfig, pluginAPI);
+      }
+    });
+  </script>
+  
+  <!-- Additional JavaScript -->
+  {{ADDITIONAL_SCRIPTS}}
+</body>
+</html>

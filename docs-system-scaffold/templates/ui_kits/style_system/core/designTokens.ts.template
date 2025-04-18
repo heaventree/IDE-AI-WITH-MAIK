@@ -1,0 +1,338 @@
+/**
+ * {{PROJECT_NAME}} Design Tokens
+ * 
+ * This file defines the design tokens that serve as the single source of truth
+ * for all styling in the application. These tokens are used by various styling
+ * approaches (CSS variables, Tailwind, Theme UI, etc.) to ensure consistency.
+ *
+ * IMPORTANT: All styling should reference these tokens rather than using
+ * hard-coded values. This prevents styling inconsistencies and makes
+ * global changes easier.
+ */
+
+// Color tokens
+export const colors = {
+  // Primary palette
+  primary: '{{PRIMARY_COLOR_1_HEX}}',
+  primaryHover: '{{PRIMARY_COLOR_1_HOVER_HEX}}',
+  primaryLight: '{{PRIMARY_COLOR_1_LIGHT_HEX}}',
+  primaryDark: '{{PRIMARY_COLOR_1_DARK_HEX}}',
+  
+  // Secondary palette
+  secondary: '{{SECONDARY_COLOR_1_HEX}}',
+  secondaryHover: '{{SECONDARY_COLOR_1_HOVER_HEX}}',
+  secondaryLight: '{{SECONDARY_COLOR_1_LIGHT_HEX}}',
+  secondaryDark: '{{SECONDARY_COLOR_1_DARK_HEX}}',
+  
+  // Neutral colors
+  background: '{{NEUTRAL_COLOR_1_HEX}}',
+  backgroundAlt: '{{NEUTRAL_COLOR_2_HEX}}',
+  foreground: '{{NEUTRAL_COLOR_3_HEX}}',
+  border: '{{NEUTRAL_COLOR_4_HEX}}',
+  muted: '{{NEUTRAL_COLOR_5_HEX}}',
+  mutedForeground: '{{NEUTRAL_COLOR_6_HEX}}',
+  
+  // Semantic colors
+  success: '{{SUCCESS_COLOR_HEX}}',
+  warning: '{{WARNING_COLOR_HEX}}',
+  error: '{{ERROR_COLOR_HEX}}',
+  info: '{{INFO_COLOR_HEX}}',
+  
+  // Dark mode overrides
+  darkBackground: '{{DARK_BACKGROUND_HEX}}',
+  darkBackgroundAlt: '{{DARK_BACKGROUND_ALT_HEX}}',
+  darkForeground: '{{DARK_FOREGROUND_HEX}}',
+  darkBorder: '{{DARK_BORDER_HEX}}',
+};
+
+// Spacing tokens
+export const spacing = {
+  0: '0',
+  1: '0.25rem',
+  2: '0.5rem',
+  3: '0.75rem',
+  4: '1rem',
+  5: '1.25rem',
+  6: '1.5rem',
+  8: '2rem',
+  10: '2.5rem',
+  12: '3rem',
+  16: '4rem',
+  20: '5rem',
+  24: '6rem',
+  32: '8rem',
+  40: '10rem',
+  48: '12rem',
+  56: '14rem',
+  64: '16rem',
+};
+
+// Typography tokens
+export const typography = {
+  fontFamily: {
+    base: '{{PRIMARY_FONT}}',
+    heading: '{{HEADING_FONT}}',
+    mono: '{{CODE_FONT}}',
+  },
+  fontSize: {
+    xs: '0.75rem',
+    sm: '0.875rem',
+    base: '1rem',
+    lg: '1.125rem',
+    xl: '1.25rem',
+    '2xl': '1.5rem',
+    '3xl': '1.875rem',
+    '4xl': '2.25rem',
+    '5xl': '3rem',
+    '6xl': '3.75rem',
+    '7xl': '4.5rem',
+    '8xl': '6rem',
+    '9xl': '8rem',
+  },
+  fontWeight: {
+    thin: '100',
+    extralight: '200',
+    light: '300',
+    normal: '400',
+    medium: '500',
+    semibold: '600',
+    bold: '700',
+    extrabold: '800',
+    black: '900',
+  },
+  lineHeight: {
+    none: '1',
+    tight: '1.25',
+    snug: '1.375',
+    normal: '1.5',
+    relaxed: '1.625',
+    loose: '2',
+  },
+  letterSpacing: {
+    tighter: '-0.05em',
+    tight: '-0.025em',
+    normal: '0',
+    wide: '0.025em',
+    wider: '0.05em',
+    widest: '0.1em',
+  },
+};
+
+// Border radius tokens
+export const borderRadius = {
+  none: '0',
+  sm: '0.125rem',
+  md: '0.25rem',
+  lg: '0.5rem',
+  xl: '0.75rem',
+  '2xl': '1rem',
+  '3xl': '1.5rem',
+  full: '9999px',
+};
+
+// Shadow tokens
+export const shadows = {
+  sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+  md: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+  lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+  xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+  '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+  inner: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
+  none: 'none',
+};
+
+// Animation tokens
+export const animation = {
+  easing: {
+    easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
+    easeOut: 'cubic-bezier(0, 0, 0.2, 1)',
+    easeIn: 'cubic-bezier(0.4, 0, 1, 1)',
+    linear: 'linear',
+  },
+  duration: {
+    fast: '150ms',
+    normal: '300ms',
+    slow: '500ms',
+    slower: '700ms',
+    slowest: '1000ms',
+  },
+};
+
+/**
+ * Generate CSS Variables from design tokens
+ * 
+ * This creates all CSS variables that will be used throughout the app.
+ * The variables follow a standardized naming convention:
+ * --{category}-{name} (e.g., --color-primary, --spacing-4)
+ */
+export function generateCssVariables(): string {
+  return `
+    :root {
+      /* Colors */
+      --color-primary: ${colors.primary};
+      --color-primary-hover: ${colors.primaryHover};
+      --color-primary-light: ${colors.primaryLight};
+      --color-primary-dark: ${colors.primaryDark};
+      
+      --color-secondary: ${colors.secondary};
+      --color-secondary-hover: ${colors.secondaryHover};
+      --color-secondary-light: ${colors.secondaryLight};
+      --color-secondary-dark: ${colors.secondaryDark};
+      
+      --color-background: ${colors.background};
+      --color-background-alt: ${colors.backgroundAlt};
+      --color-foreground: ${colors.foreground};
+      --color-border: ${colors.border};
+      --color-muted: ${colors.muted};
+      --color-muted-foreground: ${colors.mutedForeground};
+      
+      --color-success: ${colors.success};
+      --color-warning: ${colors.warning};
+      --color-error: ${colors.error};
+      --color-info: ${colors.info};
+      
+      /* Spacing */
+      --spacing-0: ${spacing[0]};
+      --spacing-1: ${spacing[1]};
+      --spacing-2: ${spacing[2]};
+      --spacing-3: ${spacing[3]};
+      --spacing-4: ${spacing[4]};
+      --spacing-5: ${spacing[5]};
+      --spacing-6: ${spacing[6]};
+      --spacing-8: ${spacing[8]};
+      --spacing-10: ${spacing[10]};
+      --spacing-12: ${spacing[12]};
+      --spacing-16: ${spacing[16]};
+      --spacing-20: ${spacing[20]};
+      --spacing-24: ${spacing[24]};
+      --spacing-32: ${spacing[32]};
+      --spacing-40: ${spacing[40]};
+      --spacing-48: ${spacing[48]};
+      --spacing-56: ${spacing[56]};
+      --spacing-64: ${spacing[64]};
+      
+      /* Typography */
+      --font-family-base: ${typography.fontFamily.base};
+      --font-family-heading: ${typography.fontFamily.heading};
+      --font-family-mono: ${typography.fontFamily.mono};
+      
+      --font-size-xs: ${typography.fontSize.xs};
+      --font-size-sm: ${typography.fontSize.sm};
+      --font-size-base: ${typography.fontSize.base};
+      --font-size-lg: ${typography.fontSize.lg};
+      --font-size-xl: ${typography.fontSize.xl};
+      --font-size-2xl: ${typography.fontSize['2xl']};
+      --font-size-3xl: ${typography.fontSize['3xl']};
+      --font-size-4xl: ${typography.fontSize['4xl']};
+      --font-size-5xl: ${typography.fontSize['5xl']};
+      --font-size-6xl: ${typography.fontSize['6xl']};
+      --font-size-7xl: ${typography.fontSize['7xl']};
+      --font-size-8xl: ${typography.fontSize['8xl']};
+      --font-size-9xl: ${typography.fontSize['9xl']};
+      
+      --font-weight-thin: ${typography.fontWeight.thin};
+      --font-weight-extralight: ${typography.fontWeight.extralight};
+      --font-weight-light: ${typography.fontWeight.light};
+      --font-weight-normal: ${typography.fontWeight.normal};
+      --font-weight-medium: ${typography.fontWeight.medium};
+      --font-weight-semibold: ${typography.fontWeight.semibold};
+      --font-weight-bold: ${typography.fontWeight.bold};
+      --font-weight-extrabold: ${typography.fontWeight.extrabold};
+      --font-weight-black: ${typography.fontWeight.black};
+      
+      --line-height-none: ${typography.lineHeight.none};
+      --line-height-tight: ${typography.lineHeight.tight};
+      --line-height-snug: ${typography.lineHeight.snug};
+      --line-height-normal: ${typography.lineHeight.normal};
+      --line-height-relaxed: ${typography.lineHeight.relaxed};
+      --line-height-loose: ${typography.lineHeight.loose};
+      
+      --letter-spacing-tighter: ${typography.letterSpacing.tighter};
+      --letter-spacing-tight: ${typography.letterSpacing.tight};
+      --letter-spacing-normal: ${typography.letterSpacing.normal};
+      --letter-spacing-wide: ${typography.letterSpacing.wide};
+      --letter-spacing-wider: ${typography.letterSpacing.wider};
+      --letter-spacing-widest: ${typography.letterSpacing.widest};
+      
+      /* Border Radius */
+      --radius-none: ${borderRadius.none};
+      --radius-sm: ${borderRadius.sm};
+      --radius-md: ${borderRadius.md};
+      --radius-lg: ${borderRadius.lg};
+      --radius-xl: ${borderRadius.xl};
+      --radius-2xl: ${borderRadius['2xl']};
+      --radius-3xl: ${borderRadius['3xl']};
+      --radius-full: ${borderRadius.full};
+      
+      /* Shadows */
+      --shadow-sm: ${shadows.sm};
+      --shadow-md: ${shadows.md};
+      --shadow-lg: ${shadows.lg};
+      --shadow-xl: ${shadows.xl};
+      --shadow-2xl: ${shadows['2xl']};
+      --shadow-inner: ${shadows.inner};
+      --shadow-none: ${shadows.none};
+      
+      /* Animations */
+      --easing-ease-in-out: ${animation.easing.easeInOut};
+      --easing-ease-out: ${animation.easing.easeOut};
+      --easing-ease-in: ${animation.easing.easeIn};
+      --easing-linear: ${animation.easing.linear};
+      
+      --duration-fast: ${animation.duration.fast};
+      --duration-normal: ${animation.duration.normal};
+      --duration-slow: ${animation.duration.slow};
+      --duration-slower: ${animation.duration.slower};
+      --duration-slowest: ${animation.duration.slowest};
+    }
+    
+    /* Dark Mode Overrides */
+    .dark {
+      --color-background: ${colors.darkBackground};
+      --color-background-alt: ${colors.darkBackgroundAlt};
+      --color-foreground: ${colors.darkForeground};
+      --color-border: ${colors.darkBorder};
+    }
+  `;
+}
+
+/**
+ * themeConfig is exported for theme.json or tailwind.config.js integration
+ * This allows Tailwind, Chakra UI, MUI, or other systems to use the same tokens
+ */
+export const themeConfig = {
+  colors: {
+    primary: colors.primary,
+    secondary: colors.secondary,
+    // Map all colors to their respective keys for framework configuration
+  },
+  fonts: {
+    base: typography.fontFamily.base,
+    heading: typography.fontFamily.heading,
+    mono: typography.fontFamily.mono,
+  },
+  fontSizes: {
+    // Convert to framework-specific format
+  },
+  space: {
+    // Convert spacing to framework-specific format
+  },
+  radii: {
+    // Convert border radii to framework-specific format
+  },
+  shadows: {
+    // Convert shadows to framework-specific format
+  },
+};
+
+// Export everything for use throughout the application
+export default {
+  colors,
+  spacing,
+  typography,
+  borderRadius,
+  shadows,
+  animation,
+  generateCssVariables,
+  themeConfig,
+};

@@ -1,0 +1,36 @@
+<div class="toast-container position-{{position}}">
+  <div id="{{toastId}}" class="toast {{toastClass}}" role="alert" aria-live="assertive" aria-atomic="true" {{#if autoHide}}data-bs-delay="{{delay}}" data-bs-autohide="true"{{/if}}>
+    {{#if showHeader}}
+    <div class="toast-header {{headerClass}}">
+      {{#if showIcon}}
+      <i data-feather="{{icon}}" class="me-2"></i>
+      {{/if}}
+      <strong class="me-auto">{{title}}</strong>
+      {{#if showTime}}
+      <small>{{time}}</small>
+      {{/if}}
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    {{/if}}
+    <div class="toast-body {{bodyClass}}">
+      {{content}}
+      {{#if showActions}}
+      <div class="mt-2 pt-2 border-top">
+        <button type="button" class="btn btn-sm btn-{{primaryBtnClass}}">{{primaryBtnText}}</button>
+        <button type="button" class="btn btn-sm btn-{{secondaryBtnClass}}" data-bs-dismiss="toast">{{secondaryBtnText}}</button>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</div>
+
+{{#if showInitScript}}
+<script>
+  // Initialize toast
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const toastElement = document.getElementById('{{toastId}}');
+    const toast = new bootstrap.Toast(toastElement);
+    toast.show();
+  });
+</script>
+{{/if}}

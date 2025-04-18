@@ -1,0 +1,39 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-04-17",
+  "themes": [
+    {
+      "id": "default",
+      "name": "Default Theme",
+      "version": "1.0.0",
+      "description": "The default theme for the Documentation System",
+      "path": "example-theme",
+      "author": "Documentation System Team",
+      "preview": "example-theme/assets/preview.png",
+      "tags": ["default", "clean", "minimal"],
+      "category": "documentation"
+    },
+    {
+      "id": "nobleui-admin",
+      "name": "NobleUI Admin",
+      "version": "1.0.0",
+      "description": "A premium Bootstrap 5 admin dashboard template with extensive UI components",
+      "path": "nobleui-admin",
+      "author": "Original: NobleUI, Adapter: Documentation System Team",
+      "preview": "nobleui-admin/assets/preview.png",
+      "tags": ["admin", "dashboard", "bootstrap", "premium"],
+      "category": "admin"
+    },
+    {
+      "id": "martex-frontend",
+      "name": "Martex Frontend",
+      "version": "1.0.0",
+      "description": "A modern SaaS and startup theme with extensive homepage variations and inner page designs",
+      "path": "martex-frontend",
+      "author": "Original: Martex, Adapter: Documentation System Team",
+      "preview": "martex-frontend/assets/preview.png",
+      "tags": ["frontend", "saas", "startup", "marketing", "modern"],
+      "category": "frontend"
+    }
+  ]
+}

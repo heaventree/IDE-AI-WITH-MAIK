@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{{PAGE_TITLE}} | Documentation System</title>
+  
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="{{THEME_PATH}}/assets/images/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="{{THEME_PATH}}/assets/images/favicon.ico" type="image/x-icon">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+  
+  <!-- CSS Core -->
+  <link rel="stylesheet" href="{{THEME_PATH}}/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{THEME_PATH}}/assets/css/flaticon.css">
+  <link rel="stylesheet" href="{{THEME_PATH}}/assets/css/menu.css">
+  <link rel="stylesheet" href="{{THEME_PATH}}/assets/css/dropdown-effects/fade-down.css">
+  <link rel="stylesheet" href="{{THEME_PATH}}/assets/css/magnific-popup.css">
+  <link rel="stylesheet" href="{{THEME_PATH}}/assets/css/animate.css">
+  <link rel="stylesheet" href="{{THEME_PATH}}/assets/css/style.css">
+  
+  <!-- Additional CSS -->
+  {{ADDITIONAL_CSS}}
+  
+  <!-- Custom Theme Color Variables -->
+  <style>
+    :root {
+      --theme-primary-color: {{primaryColor|#4582ff}};
+      --theme-secondary-color: {{secondaryColor|#3e7846}};
+    }
+  </style>
+</head>
+
+<body class="martex-theme">
+  <!-- PAGE PRELOADER -->
+  <div id="loading" class="skyblue-loading">
+    <div id="loading-center">
+      <div id="loading-center-absolute">
+        <div class="spinner-grow" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- HEADER -->
+  <header id="header" class="header {{headerStyle}}-header" data-system-hook="system:header">
+    <div class="wsmobileheader clearfix">
+      <a id="wsnavtoggle" class="wsanimated-arrow"><span></span></a>
+      <span class="smllogo"><img src="{{THEME_PATH}}/assets/images/logo.png" width="180" height="40" alt="mobile-logo"></span>
+    </div>
+    
+    <div class="wsmainfull menu clearfix">
+      <div class="wsmainwp clearfix">
+        <!-- LOGO -->
+        <div class="desktoplogo">
+          <a href="/" class="logo">
+            <img src="{{THEME_PATH}}/assets/images/logo.png" width="180" height="40" alt="header-logo">
+          </a>
+        </div>
+        
+        <!-- MAIN NAVIGATION -->
+        <nav class="wsmenu clearfix" data-system-hook="system:navigation">
+          {{SYSTEM_NAVIGATION}}
+        </nav>
+      </div>
+    </div>
+    
+    <!-- System Header -->
+    {{SYSTEM_HEADER}}
+  </header>
+  
+  <!-- HERO SECTION (if enabled) -->
+  <section id="hero" class="{{heroStyle}}-hero hero-section bg-scroll" data-system-hook="system:hero">
+    {{SYSTEM_HERO}}
+  </section>
+  
+  <!-- MAIN CONTENT -->
+  <div id="page" class="page">
+    <div class="martex-content-wrapper">
+      {{PAGE_CONTENT}}
+    </div>
+  </div>
+  
+  <!-- FOOTER -->
+  <footer id="footer-1" class="footer {{footerStyle}}-footer" data-system-hook="system:footer">
+    <div class="footer-widget">
+      <div class="container">
+        <div class="footer-content">
+          {{SYSTEM_FOOTER}}
+        </div>
+      </div>
+    </div>
+    
+    <!-- FOOTER COPYRIGHT -->
+    <div class="footer-copyright">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <div class="footer-copyright-text">
+              <p>&copy; <span id="currentYear"></span> Documentation System. All Rights Reserved</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="footer-social-links">
+              <ul class="foo-socials text-end clearfix">
+                <li><a href="#" class="ico-facebook"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="#" class="ico-twitter"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="#" class="ico-linkedin"><i class="fab fa-linkedin-in"></i></a></li>
+                <li><a href="#" class="ico-instagram"><i class="fab fa-instagram"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- BACK TO TOP BUTTON -->
+  <a href="#" class="back-to-top"><i class="fas fa-angle-up"></i></a>
+  
+  <!-- EXTERNAL SCRIPTS -->
+  <script src="{{THEME_PATH}}/assets/js/jquery-3.6.0.min.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/bootstrap.min.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/modernizr.custom.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/jquery.easing.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/jquery.appear.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/menu.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/isotope.pkgd.min.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/imagesloaded.pkgd.min.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/jquery.flexslider.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/owl.carousel.min.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/jquery.magnific-popup.min.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/jquery.validate.min.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/jquery.ajaxchimp.min.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/wow.js"></script>
+  
+  <!-- Theme Custom JS -->
+  <script src="{{THEME_PATH}}/assets/js/custom.js"></script>
+  
+  <!-- Plugin entry point -->
+  <script src="{{THEME_PATH}}/index.js"></script>
+  
+  <!-- Theme Initialization -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set current year in footer copyright
+      document.getElementById('currentYear').textContent = new Date().getFullYear();
+      
+      // Remove preloader once page is loaded
+      setTimeout(function() {
+        document.getElementById('loading').style.display = 'none';
+      }, 800);
+      
+      // Initialize Martex theme if available
+      if (typeof window.MartexTheme !== 'undefined') {
+        const themeConfig = {{THEME_CONFIG}};
+        window.MartexTheme.initialize(themeConfig, window.pluginSystem?.getPluginAPI('martex-frontend'));
+      }
+    });
+  </script>
+  
+  <!-- Additional Scripts -->
+  {{ADDITIONAL_SCRIPTS}}
+</body>
+</html>

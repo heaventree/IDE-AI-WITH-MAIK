@@ -1,0 +1,122 @@
+# {{PROJECT_NAME}} - First Development Steps
+
+## CRITICAL: UI STYLING SYSTEM SETUP
+
+> ⚠️ **MANDATORY FIRST TASK**: Implement the centralized styling system BEFORE creating any UI components or pages.
+
+The design system must be implemented as the very first development task to prevent CSS styling conflicts, ensure consistency, and allow for easy theme changes.
+
+## Step 1: Initialize Design Tokens (Est. Time: 30 mins)
+
+- [ ] Create `src/lib/designTokens.ts` file using the provided template
+- [ ] Customize color palette, spacing, and typography values to match project requirements
+- [ ] Generate CSS variables function is implemented
+- [ ] Add dark mode token overrides
+
+```bash
+# Copy the design tokens template
+cp node_modules/@project/templates/designTokens.ts src/lib/designTokens.ts
+
+# Customize the tokens according to the design requirements
+```
+
+## Step 2: Implement Design System Bridge (Est. Time: 30 mins)
+
+- [ ] Create `src/lib/designSystem.ts` file using the provided template
+- [ ] Ensure component styles and utility classes are defined
+- [ ] Test CSS variable generation
+
+```bash
+# Copy the design system bridge template
+cp node_modules/@project/templates/designSystem.ts src/lib/designSystem.ts
+```
+
+## Step 3: Create Style Provider (Est. Time: 1 hour)
+
+- [ ] Create `src/providers/StyleProvider.tsx` component
+- [ ] Implement theme context for light/dark mode
+- [ ] Ensure CSS variables are properly injected
+- [ ] Add the provider to the root of your application
+
+```bash
+# Copy the style provider template
+cp node_modules/@project/templates/StyleProvider.tsx src/providers/StyleProvider.tsx
+
+# Modify App.tsx to include the StyleProvider
+```
+
+## Step 4: Update Application Entry Point (Est. Time: 15 mins)
+
+- [ ] Wrap your application with the StyleProvider
+- [ ] Initialize the design system
+- [ ] Test theme switching functionality
+
+```tsx
+// App.tsx
+import React from 'react';
+import StyleProvider from './providers/StyleProvider';
+
+function App() {
+  return (
+    <StyleProvider initialMode="system">
+      {/* Your application components */}
+    </StyleProvider>
+  );
+}
+
+export default App;
+```
+
+## Step 5: Verify Styling System (Est. Time: 15 mins)
+
+- [ ] Create a simple test component using the design system
+- [ ] Verify CSS variables are applied correctly
+- [ ] Test dark/light mode switching
+- [ ] Confirm all styling references design tokens, not hard-coded values
+
+```tsx
+// TestComponent.tsx
+import React from 'react';
+import { useTheme } from '../providers/StyleProvider';
+import { componentStyles } from '../lib/designSystem';
+
+function TestComponent() {
+  const { resolvedMode } = useTheme();
+  
+  return (
+    <div style={{ padding: 'var(--spacing-4)' }}>
+      <h1>Design System Test</h1>
+      <p>Current theme: {resolvedMode}</p>
+      <button style={componentStyles.button.primary}>
+        Primary Button
+      </button>
+    </div>
+  );
+}
+```
+
+## IMPORTANT GUIDELINES
+
+1. **NO DIRECT STYLING**: Never use hard-coded color values, spacing, or other design properties. Always reference design tokens.
+
+2. **SINGLE SOURCE OF TRUTH**: All styling must derive from the design tokens defined in `designTokens.ts`.
+
+3. **CENTRAL PROVIDER**: Only use the single StyleProvider at the root level. Never create competing providers.
+
+4. **CONSISTENT APPROACH**: Use the recommended styling approach for all components - either CSS variables, CSS-in-JS, or utility classes, but be consistent.
+
+5. **THEME AWARENESS**: All components must respect the current theme (light/dark mode).
+
+---
+
+> "A robust styling system established early prevents countless styling conflicts later in the project."
+
+By completing this mandatory first task, you establish a foundation that prevents CSS breakage during feature development and ensures a consistent user experience throughout the application.
+
+## Next Steps After UI System Implementation
+
+Only after completing the styling system setup should you proceed to:
+
+1. Creating layouts and navigation
+2. Building core UI components
+3. Implementing feature-specific pages

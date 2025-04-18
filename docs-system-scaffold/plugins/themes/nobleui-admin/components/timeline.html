@@ -1,0 +1,70 @@
+<div class="card">
+  <div class="card-body">
+    <h6 class="card-title">{{title|default:'Timeline'}}</h6>
+    
+    {{#if includeDescription}}
+    <p class="text-muted">{{description}}</p>
+    {{/if}}
+    
+    <div class="timeline-vertical {{timelineStyle|default:''}}">
+      {{#each timelineItems}}
+      <div class="timeline-item">
+        <div class="timeline-badge {{this.badgeClass|default:'bg-primary'}}">
+          {{#if this.icon}}
+          <i data-feather="{{this.icon}}"></i>
+          {{else}}
+          <span>{{this.badgeContent|default:''}}</span>
+          {{/if}}
+        </div>
+        
+        <div class="timeline-content">
+          <div class="timeline-header d-flex align-items-center">
+            <h6 class="mb-0 me-auto">{{this.title}}</h6>
+            <small class="text-muted">{{this.time}}</small>
+          </div>
+          
+          {{#if this.description}}
+          <div class="timeline-body">
+            <p>{{this.description}}</p>
+          </div>
+          {{/if}}
+          
+          {{#if this.media}}
+          <div class="timeline-media mt-2">
+            {{#if this.media.type === 'image'}}
+            <img src="{{this.media.url}}" class="img-fluid rounded" alt="Timeline media">
+            {{else if this.media.type === 'link'}}
+            <a href="{{this.media.url}}" class="btn btn-outline-primary btn-sm" target="_blank">
+              {{this.media.label|default:'View Link'}}
+            </a>
+            {{/if}}
+          </div>
+          {{/if}}
+          
+          {{#if this.tags}}
+          <div class="timeline-tags mt-2">
+            {{#each this.tags}}
+            <span class="badge bg-{{this.class|default:'light text-dark'}} me-1">{{this.text}}</span>
+            {{/each}}
+          </div>
+          {{/if}}
+          
+          {{#if this.actions}}
+          <div class="timeline-actions mt-2">
+            {{#each this.actions}}
+            <button class="btn btn-sm {{this.class|default:'btn-outline-primary'}} me-1">{{this.text}}</button>
+            {{/each}}
+          </div>
+          {{/if}}
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    
+    {{#if showLoadMore}}
+    <div class="text-center mt-4">
+      <button class="btn btn-primary btn-sm">{{loadMoreText|default:'Load More'}}</button>
+    </div>
+    {{/if}}
+  </div>
+</div>

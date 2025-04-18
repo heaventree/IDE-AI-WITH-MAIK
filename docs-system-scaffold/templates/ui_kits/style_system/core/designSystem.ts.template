@@ -1,0 +1,276 @@
+/**
+ * {{PROJECT_NAME}} Design System Bridge
+ * 
+ * This file bridges between design tokens and component styles.
+ * It provides utilities that work with different styling approaches:
+ * 1. CSS Variables approach
+ * 2. CSS-in-JS approach (Theme UI, Emotion, Styled Components)
+ * 3. Utility class approach (Tailwind CSS)
+ * 
+ * IMPORTANT: All styles should be created using this bridge rather than
+ * hard-coding values directly. This ensures styling consistency.
+ */
+
+import designTokens from './designTokens';
+
+/**
+ * Component Styles for CSS-in-JS systems
+ * 
+ * These are pre-defined styles for common components that can be used with
+ * systems like Theme UI, Emotion, or Styled Components.
+ * 
+ * Example usage with Theme UI:
+ * <Button sx={componentStyles.button.primary}>Primary Button</Button>
+ */
+export const componentStyles = {
+  // Button styles
+  button: {
+    // Primary button style
+    primary: {
+      backgroundColor: 'primary',
+      color: 'white',
+      borderRadius: 'md',
+      padding: '2 4',
+      fontWeight: 'medium',
+      transition: 'all var(--duration-fast) var(--easing-ease-in-out)',
+      '&:hover': {
+        backgroundColor: 'primaryHover',
+      },
+      '&:focus': {
+        outline: 'none',
+        boxShadow: '0 0 0 3px rgba(var(--color-primary-rgb), 0.4)',
+      },
+    },
+    // Secondary button style
+    secondary: {
+      backgroundColor: 'transparent',
+      color: 'primary',
+      borderRadius: 'md',
+      padding: '2 4',
+      border: '1px solid',
+      borderColor: 'primary',
+      fontWeight: 'medium',
+      transition: 'all var(--duration-fast) var(--easing-ease-in-out)',
+      '&:hover': {
+        backgroundColor: 'backgroundAlt',
+      },
+      '&:focus': {
+        outline: 'none',
+        boxShadow: '0 0 0 3px rgba(var(--color-primary-rgb), 0.4)',
+      },
+    },
+    // Tertiary/ghost button style
+    tertiary: {
+      backgroundColor: 'transparent',
+      color: 'foreground',
+      borderRadius: 'md',
+      padding: '2 4',
+      fontWeight: 'medium',
+      transition: 'all var(--duration-fast) var(--easing-ease-in-out)',
+      '&:hover': {
+        backgroundColor: 'muted',
+      },
+      '&:focus': {
+        outline: 'none',
+        boxShadow: '0 0 0 3px rgba(var(--color-muted-rgb), 0.4)',
+      },
+    },
+  },
+  
+  // Card styles
+  card: {
+    // Base card style
+    base: {
+      backgroundColor: 'backgroundAlt',
+      borderRadius: 'lg',
+      padding: 4,
+      boxShadow: 'md',
+      border: '1px solid',
+      borderColor: 'border',
+    },
+    // Interactive card (hoverable)
+    interactive: {
+      backgroundColor: 'backgroundAlt',
+      borderRadius: 'lg',
+      padding: 4,
+      boxShadow: 'md',
+      border: '1px solid',
+      borderColor: 'border',
+      transition: 'all var(--duration-fast) var(--easing-ease-in-out)',
+      '&:hover': {
+        transform: 'translateY(-2px)',
+        boxShadow: 'lg',
+      },
+    },
+  },
+  
+  // Input styles
+  input: {
+    // Base input style
+    base: {
+      backgroundColor: 'backgroundAlt',
+      color: 'foreground',
+      borderRadius: 'md',
+      border: '1px solid',
+      borderColor: 'border',
+      padding: 2,
+      width: '100%',
+      fontFamily: 'base',
+      fontSize: 'base',
+      transition: 'all var(--duration-fast) var(--easing-ease-in-out)',
+      '&:focus': {
+        borderColor: 'primary',
+        boxShadow: '0 0 0 3px rgba(var(--color-primary-rgb), 0.1)',
+        outline: 'none',
+      },
+      '&:disabled': {
+        opacity: 0.6,
+        cursor: 'not-allowed',
+      },
+    },
+  },
+  
+  // Badge/tag styles
+  badge: {
+    // Base badge style
+    base: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      padding: '0 2',
+      borderRadius: 'full',
+      fontSize: 'xs',
+      fontWeight: 'medium',
+      lineHeight: 'tight',
+      color: 'white',
+      backgroundColor: 'primary',
+    },
+    // Outlined badge style
+    outlined: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      padding: '0 2',
+      borderRadius: 'full',
+      fontSize: 'xs',
+      fontWeight: 'medium',
+      lineHeight: 'tight',
+      color: 'primary',
+      backgroundColor: 'transparent',
+      border: '1px solid',
+      borderColor: 'primary',
+    },
+  },
+  
+  // Add more component styles as needed...
+};
+
+/**
+ * Tailwind Class Generator
+ * 
+ * Predefined Tailwind CSS classes for common components.
+ * These follow a consistent naming convention and use the same design tokens.
+ * 
+ * Example usage:
+ * <button className={twClasses.button.primary}>Primary Button</button>
+ */
+export const twClasses = {
+  // Button classes
+  button: {
+    primary: 'bg-primary text-white rounded-md px-4 py-2 font-medium hover:bg-primary-hover transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50',
+    secondary: 'bg-transparent text-primary rounded-md px-4 py-2 border border-primary font-medium hover:bg-background-alt transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50',
+    tertiary: 'bg-transparent text-foreground rounded-md px-4 py-2 font-medium hover:bg-muted transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-muted focus:ring-opacity-50',
+  },
+  
+  // Card classes
+  card: {
+    base: 'bg-background-alt rounded-lg p-4 shadow-md border border-border',
+    interactive: 'bg-background-alt rounded-lg p-4 shadow-md border border-border transition-all duration-150 hover:transform hover:-translate-y-1 hover:shadow-lg',
+  },
+  
+  // Input classes
+  input: {
+    base: 'bg-background-alt text-foreground rounded-md border border-border p-2 w-full font-base text-base transition-all duration-150 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-10 focus:outline-none disabled:opacity-60 disabled:cursor-not-allowed',
+  },
+  
+  // Badge/tag classes
+  badge: {
+    base: 'inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-primary text-white',
+    outlined: 'inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-transparent text-primary border border-primary',
+  },
+  
+  // Add more component classes as needed...
+};
+
+/**
+ * CSS Variable Helper
+ * 
+ * Returns a CSS variable reference string for the given token path.
+ * This is useful when writing CSS or inline styles.
+ * 
+ * Example usage:
+ * <div style={{ color: cssVar('color.primary') }}>Text</div>
+ */
+export function cssVar(tokenPath: string): string {
+  const parts = tokenPath.split('.');
+  if (parts.length < 2) {
+    console.warn(`Invalid token path: ${tokenPath}. Format should be "category.name"`);
+    return '';
+  }
+  
+  const category = parts[0];
+  const name = parts.slice(1).join('-');
+  
+  return `var(--${category}-${name})`;
+}
+
+/**
+ * Theme UI Helper
+ * 
+ * Creates consistent sx props based on design tokens.
+ * This is useful when using Theme UI or other CSS-in-JS libraries.
+ * 
+ * Example usage:
+ * <Box sx={sx({ bg: 'backgroundAlt', p: 4, borderRadius: 'lg' })}>Content</Box>
+ */
+export function sx(styles: Record<string, any>): Record<string, any> {
+  // This simply returns the styles for now
+  // In a real implementation, this might transform values to match the theme
+  return styles;
+}
+
+/**
+ * Update theme.json or tailwind.config.js from design tokens
+ * This ensures consistency between styling systems
+ */
+export function syncThemeConfig(): void {
+  // This would be implemented in a real application
+  // It would write the themeConfig to the appropriate config files
+  console.log('Syncing theme configuration');
+}
+
+/**
+ * Initialize the design system
+ * This sets up the CSS variables and ensures the design system is ready to use
+ */
+export function initializeDesignSystem(): void {
+  // In a browser environment, this would inject the CSS variables
+  if (typeof document !== 'undefined') {
+    const cssVariables = designTokens.generateCssVariables();
+    const styleElement = document.createElement('style');
+    styleElement.id = 'design-system-variables';
+    styleElement.innerHTML = cssVariables;
+    document.head.appendChild(styleElement);
+    console.log('Design system initialized');
+  } else {
+    console.log('Design system initialization skipped (not in browser environment)');
+  }
+}
+
+// Export everything for use throughout the application
+export default {
+  componentStyles,
+  twClasses,
+  cssVar,
+  sx,
+  syncThemeConfig,
+  initializeDesignSystem,
+};

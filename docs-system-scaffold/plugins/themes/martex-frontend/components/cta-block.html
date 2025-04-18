@@ -1,0 +1,37 @@
+<section class="cta-section {{sectionClass}}" style="background-color: {{backgroundColor}}; color: {{textColor}};">
+  <div class="container">
+    <div class="row align-items-center {{alignment}}">
+      <div class="col-lg-8">
+        <div class="cta-content">
+          {{#if overline}}
+          <span class="overline">{{overline}}</span>
+          {{/if}}
+          <h2 class="cta-title {{titleClass}}">{{title}}</h2>
+          <p class="cta-description {{descriptionClass}}">{{description}}</p>
+          {{#if showStatistics}}
+          <div class="cta-statistics">
+            <div class="row">
+              {{#each statistics}}
+              <div class="col-md-4">
+                <div class="statistic-item">
+                  <span class="statistic-value">{{this.value}}</span>
+                  <span class="statistic-label">{{this.label}}</span>
+                </div>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+          {{/if}}
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="cta-action {{actionClass}}">
+          <a href="{{primaryButtonUrl}}" class="btn btn-primary btn-lg {{primaryButtonClass}}">{{primaryButtonText}}</a>
+          {{#if showSecondaryButton}}
+          <a href="{{secondaryButtonUrl}}" class="btn btn-outline-{{secondaryButtonStyle}} btn-lg {{secondaryButtonClass}}">{{secondaryButtonText}}</a>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

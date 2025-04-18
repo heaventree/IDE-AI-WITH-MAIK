@@ -1,0 +1,97 @@
+<nav class="navbar">
+  <a href="#" class="sidebar-toggler">
+    <i data-feather="menu"></i>
+  </a>
+  <div class="navbar-content">
+    <form class="search-form">
+      <div class="input-group">
+        <div class="input-group-text">
+          <i data-feather="search"></i>
+        </div>
+        <input type="text" class="form-control" id="navbarSearch" placeholder="{{searchPlaceholder|default:'Search...'}}">
+      </div>
+    </form>
+    <ul class="navbar-nav">
+      {{#if includeLanguageDropdown}}
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="flag-icon flag-icon-{{currentLanguage|default:'us'}} mt-1" title="{{currentLanguageName|default:'english'}}"></i>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="languageDropdown">
+          {{#each languages}}
+          <a class="dropdown-item py-2" href="#"><i class="flag-icon flag-icon-{{this.code}} me-2"></i> {{this.name}}</a>
+          {{/each}}
+        </div>
+      </li>
+      {{/if}}
+      
+      {{#if includeNotifications}}
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i data-feather="bell"></i>
+          <div class="indicator">
+            <div class="circle"></div>
+          </div>
+        </a>
+        <div class="dropdown-menu p-0" aria-labelledby="notificationDropdown">
+          <div class="px-3 py-2 d-flex align-items-center justify-content-between border-bottom">
+            <p>{{notificationTitle|default:'Notifications'}}</p>
+            <a href="#" class="text-muted">{{clearNotificationsText|default:'Clear all'}}</a>
+          </div>
+          <div class="p-1">
+            {{#each notifications}}
+            <a href="#" class="dropdown-item py-2">
+              <div class="d-flex align-items-center">
+                <div class="notification-icon {{this.iconClass}} me-3">
+                  <i data-feather="{{this.icon}}"></i>
+                </div>
+                <div class="notification-details flex-grow-1">
+                  <p class="notification-title mb-1">{{this.title}}</p>
+                  <p class="text-muted fs-13 mb-0">{{this.time}}</p>
+                </div>
+              </div>
+            </a>
+            {{/each}}
+          </div>
+          <div class="px-3 py-2 d-flex align-items-center justify-content-center border-top">
+            <a href="#">{{viewAllNotificationsText|default:'View all notifications'}}</a>
+          </div>
+        </div>
+      </li>
+      {{/if}}
+      
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <img class="wd-30 ht-30 rounded-circle" src="{{userAvatar|default:'https://via.placeholder.com/30x30'}}" alt="profile">
+        </a>
+        <div class="dropdown-menu p-0" aria-labelledby="profileDropdown">
+          <div class="d-flex flex-column align-items-center border-bottom px-5 py-3">
+            <div class="mb-3">
+              <img class="wd-80 ht-80 rounded-circle" src="{{userAvatar|default:'https://via.placeholder.com/80x80'}}" alt="profile">
+            </div>
+            <div class="text-center">
+              <p class="tx-16 fw-bolder">{{userName}}</p>
+              <p class="tx-12 text-muted">{{userEmail}}</p>
+            </div>
+          </div>
+          <ul class="list-unstyled p-1">
+            {{#each profileMenuItems}}
+            <li class="dropdown-item py-2">
+              <a href="{{this.url}}" class="text-body ms-0">
+                <i class="me-2 icon-{{@index}}" data-feather="{{this.icon}}"></i>
+                <span>{{this.label}}</span>
+              </a>
+            </li>
+            {{/each}}
+            <li class="dropdown-item py-2">
+              <a href="{{signOutUrl|default:'#'}}" class="text-body ms-0">
+                <i class="me-2 icon-logout" data-feather="log-out"></i>
+                <span>{{signOutText|default:'Log Out'}}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>

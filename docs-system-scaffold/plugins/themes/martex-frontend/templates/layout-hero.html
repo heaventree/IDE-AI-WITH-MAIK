@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{{PAGE_TITLE}} | Documentation System</title>
+  
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="{{THEME_PATH}}/assets/images/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="{{THEME_PATH}}/assets/images/favicon.ico" type="image/x-icon">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+  
+  <!-- CSS Core -->
+  <link rel="stylesheet" href="{{THEME_PATH}}/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{THEME_PATH}}/assets/css/flaticon.css">
+  <link rel="stylesheet" href="{{THEME_PATH}}/assets/css/menu.css">
+  <link rel="stylesheet" href="{{THEME_PATH}}/assets/css/dropdown-effects/fade-down.css">
+  <link rel="stylesheet" href="{{THEME_PATH}}/assets/css/magnific-popup.css">
+  <link rel="stylesheet" href="{{THEME_PATH}}/assets/css/animate.css">
+  <link rel="stylesheet" href="{{THEME_PATH}}/assets/css/style.css">
+  
+  <!-- Additional CSS -->
+  {{ADDITIONAL_CSS}}
+  
+  <!-- Custom Theme Color Variables -->
+  <style>
+    :root {
+      --theme-primary-color: {{primaryColor|#4582ff}};
+      --theme-secondary-color: {{secondaryColor|#3e7846}};
+    }
+  </style>
+</head>
+
+<body class="martex-theme">
+  <!-- PAGE PRELOADER -->
+  <div id="loading" class="skyblue-loading">
+    <div id="loading-center">
+      <div id="loading-center-absolute">
+        <div class="spinner-grow" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- HEADER - TRANSPARENT VERSION -->
+  <header id="header" class="header tra-menu navbar-dark" data-system-hook="system:header">
+    <div class="wsmobileheader clearfix">
+      <a id="wsnavtoggle" class="wsanimated-arrow"><span></span></a>
+      <span class="smllogo"><img src="{{THEME_PATH}}/assets/images/logo-white.png" width="180" height="40" alt="mobile-logo"></span>
+    </div>
+    
+    <div class="wsmainfull menu clearfix">
+      <div class="wsmainwp clearfix">
+        <!-- LOGO -->
+        <div class="desktoplogo">
+          <a href="/" class="logo">
+            <img src="{{THEME_PATH}}/assets/images/logo-white.png" width="180" height="40" alt="header-logo">
+          </a>
+        </div>
+        
+        <!-- MAIN NAVIGATION -->
+        <nav class="wsmenu clearfix" data-system-hook="system:navigation">
+          {{SYSTEM_NAVIGATION}}
+        </nav>
+      </div>
+    </div>
+    
+    <!-- System Header -->
+    {{SYSTEM_HEADER}}
+  </header>
+  
+  <!-- HERO SECTION -->
+  <section id="hero-10" class="bg-scroll hero-section division">
+    <div class="container">
+      <div class="row d-flex align-items-center">
+        <div class="col-md-6">
+          <div class="hero-txt">
+            <!-- Hero Title -->
+            <h2 class="h2-md wow fadeInUp">{{heroTitle|Welcome to the Documentation System}}</h2>
+            
+            <!-- Hero Paragraph -->
+            <p class="p-xl wow fadeInUp" data-wow-delay="0.4s">
+              {{heroDescription|A modern system for documentation management with an extensive UI component library}}
+            </p>
+            
+            <!-- Buttons Group -->
+            <div class="btns-group mb-30 wow fadeInUp" data-wow-delay="0.6s">
+              <a href="{{primaryButtonLink|#}}" class="btn btn-md btn-primary tra-black-hover mr-15">
+                {{primaryButtonText|Get Started}}
+              </a>
+              <a href="{{secondaryButtonLink|#}}" class="btn btn-md btn-tra-grey black-hover">
+                {{secondaryButtonText|Learn More}}
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="hero-10-img wow fadeInUp">
+            <img class="img-fluid" src="{{heroImage|{{THEME_PATH}}/assets/images/hero-image.jpg}}" alt="hero-image">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    {{SYSTEM_HERO}}
+  </section>
+  
+  <!-- MAIN CONTENT -->
+  <div id="page" class="page">
+    <div class="martex-content-wrapper">
+      {{PAGE_CONTENT}}
+    </div>
+  </div>
+  
+  <!-- FOOTER -->
+  <footer id="footer-1" class="footer {{footerStyle}}-footer division" data-system-hook="system:footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="footer-info mb-40">
+            <img class="footer-logo" src="{{THEME_PATH}}/assets/images/logo.png" alt="footer-logo">
+            <p class="mt-25">
+              Aliquam orci a nullam tempor sapien gravida donec enim ipsum porta justo velna a auctor undo congue magna laoreet and augue sapien
+            </p>
+          </div>
+        </div>
+        
+        <div class="col-sm-6 col-md-3 col-lg-2">
+          <div class="footer-links mb-40">
+            <h6 class="h6-lg">About</h6>
+            <ul class="foo-links clearfix">
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Press & Media</a></li>
+              <li><a href="#">Contact Us</a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="col-sm-6 col-md-3 col-lg-2">
+          <div class="footer-links mb-40">
+            <h6 class="h6-lg">Discover</h6>
+            <ul class="foo-links clearfix">
+              <li><a href="#">Our Blog</a></li>
+              <li><a href="#">Advertising</a></li>
+              <li><a href="#">Plans & Pricing</a></li>
+              <li><a href="#">Testimonials</a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="col-sm-6 col-md-3 col-lg-2">
+          <div class="footer-links mb-40">
+            <h6 class="h6-lg">Support</h6>
+            <ul class="foo-links clearfix">
+              <li><a href="#">FAQs</a></li>
+              <li><a href="#">Editor Help</a></li>
+              <li><a href="#">Community</a></li>
+              <li><a href="#">Live Chatting</a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="col-sm-6 col-md-3 col-lg-2">
+          <div class="footer-links mb-40">
+            <h6 class="h6-lg">Legal</h6>
+            <ul class="foo-links clearfix">
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Cookies</a></li>
+              <li><a href="#">Site Map</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      {{SYSTEM_FOOTER}}
+      
+      <!-- FOOTER COPYRIGHT -->
+      <div class="bottom-footer">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="footer-copyright">
+              <p>&copy; <span id="currentYear"></span> Documentation System. All Rights Reserved</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- BACK TO TOP BUTTON -->
+  <a href="#" class="back-to-top"><i class="fas fa-angle-up"></i></a>
+  
+  <!-- EXTERNAL SCRIPTS -->
+  <script src="{{THEME_PATH}}/assets/js/jquery-3.6.0.min.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/bootstrap.min.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/modernizr.custom.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/jquery.easing.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/jquery.appear.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/menu.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/isotope.pkgd.min.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/imagesloaded.pkgd.min.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/jquery.flexslider.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/owl.carousel.min.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/jquery.magnific-popup.min.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/jquery.validate.min.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/jquery.ajaxchimp.min.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/wow.js"></script>
+  
+  <!-- Theme Custom JS -->
+  <script src="{{THEME_PATH}}/assets/js/custom.js"></script>
+  
+  <!-- Plugin entry point -->
+  <script src="{{THEME_PATH}}/index.js"></script>
+  
+  <!-- Theme Initialization -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set current year in footer copyright
+      document.getElementById('currentYear').textContent = new Date().getFullYear();
+      
+      // Remove preloader once page is loaded
+      setTimeout(function() {
+        document.getElementById('loading').style.display = 'none';
+      }, 800);
+      
+      // Initialize Martex theme if available
+      if (typeof window.MartexTheme !== 'undefined') {
+        const themeConfig = {{THEME_CONFIG}};
+        window.MartexTheme.initialize(themeConfig, window.pluginSystem?.getPluginAPI('martex-frontend'));
+      }
+    });
+  </script>
+  
+  <!-- Additional Scripts -->
+  {{ADDITIONAL_SCRIPTS}}
+</body>
+</html>

@@ -1,0 +1,26 @@
+<div class="feature-card {{cardClass}}">
+  <div class="feature-card-inner">
+    {{#if showIcon}}
+    <div class="feature-icon {{iconWrapperClass}}">
+      <i class="{{iconClass}} fa-{{icon}}"></i>
+    </div>
+    {{/if}}
+    {{#if showImage}}
+    <div class="feature-image {{imageWrapperClass}}">
+      <img src="{{imageUrl}}" alt="{{imageAlt}}" class="img-fluid {{imageClass}}">
+    </div>
+    {{/if}}
+    <div class="feature-content">
+      {{#if showNumber}}
+      <div class="feature-number">{{number}}</div>
+      {{/if}}
+      <h3 class="feature-title {{titleClass}}">{{title}}</h3>
+      <p class="feature-description {{descriptionClass}}">{{description}}</p>
+      {{#if showLink}}
+      <a href="{{linkUrl}}" class="feature-link {{linkClass}}">
+        {{linkText}} {{#if showLinkIcon}}<i class="fas fa-arrow-right"></i>{{/if}}
+      </a>
+      {{/if}}
+    </div>
+  </div>
+</div>

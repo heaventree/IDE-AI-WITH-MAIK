@@ -1,0 +1,63 @@
+<div class="card">
+  <div class="card-header">
+    <div class="d-flex justify-content-between align-items-center flex-wrap">
+      <div>
+        <h5 class="mb-0">{{title}}</h5>
+        <p class="text-muted mb-0">{{subtitle}}</p>
+      </div>
+      {{#if showFilters}}
+      <div class="chart-filters">
+        <select class="form-select form-select-sm">
+          <option value="daily">Daily</option>
+          <option value="weekly" selected>Weekly</option>
+          <option value="monthly">Monthly</option>
+          <option value="yearly">Yearly</option>
+        </select>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="chart-container" style="position: relative; height: 300px;">
+      <!-- Chart will be rendered here by the chart.js library -->
+      <canvas id="{{chartId}}"></canvas>
+    </div>
+    
+    {{#if showStats}}
+    <div class="row mt-4">
+      <div class="col-md-4">
+        <div class="text-center">
+          <h6 class="text-muted">{{stat1Label}}</h6>
+          <h4>{{stat1Value}}</h4>
+          <div class="text-success">
+            <small><i data-feather="arrow-up"></i> {{stat1Change}}%</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="text-center">
+          <h6 class="text-muted">{{stat2Label}}</h6>
+          <h4>{{stat2Value}}</h4>
+          <div class="text-danger">
+            <small><i data-feather="arrow-down"></i> {{stat2Change}}%</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="text-center">
+          <h6 class="text-muted">{{stat3Label}}</h6>
+          <h4>{{stat3Value}}</h4>
+          <div class="text-success">
+            <small><i data-feather="arrow-up"></i> {{stat3Change}}%</small>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+  </div>
+  {{#if showFooter}}
+  <div class="card-footer text-center">
+    <a href="{{footerLinkUrl}}" class="text-primary">{{footerLinkText}} <i data-feather="arrow-right"></i></a>
+  </div>
+  {{/if}}
+</div>

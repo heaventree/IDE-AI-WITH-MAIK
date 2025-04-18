@@ -1,0 +1,12 @@
+<div class="alert alert-{{type}} {{#if isDismissible}}alert-dismissible fade show{{/if}}" role="alert">
+  {{#if showIcon}}
+  <i data-feather="{{icon}}" class="me-2 align-middle"></i>
+  {{/if}}
+  {{#if title}}
+  <strong>{{title}}</strong> 
+  {{/if}}
+  {{content}}
+  {{#if isDismissible}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  {{/if}}
+</div>

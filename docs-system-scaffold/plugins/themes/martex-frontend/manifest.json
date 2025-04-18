@@ -1,0 +1,180 @@
+{
+  "name": "martex-frontend",
+  "displayName": "Martex Frontend Theme",
+  "version": "1.0.0",
+  "type": "theme",
+  "author": "Original: Martex, Adapter: Documentation System Team",
+  "description": "A modern SaaS and startup theme with 15+ homepage variations and extensive inner page designs",
+  "compatibility": {
+    "coreVersion": {
+      "minimum": "1.0.0",
+      "maximum": "2.0.0"
+    }
+  },
+  "entryPoints": {
+    "styles": [
+      "assets/css/bootstrap.min.css",
+      "assets/css/flaticon.css",
+      "assets/css/menu.css",
+      "assets/css/dropdown-effects/fade-down.css",
+      "assets/css/magnific-popup.css",
+      "assets/css/animate.css",
+      "assets/css/style.css"
+    ],
+    "scripts": [
+      "index.js",
+      "assets/js/jquery-3.6.0.min.js",
+      "assets/js/bootstrap.min.js",
+      "assets/js/modernizr.custom.js",
+      "assets/js/jquery.easing.js",
+      "assets/js/jquery.appear.js",
+      "assets/js/menu.js",
+      "assets/js/isotope.pkgd.min.js",
+      "assets/js/imagesloaded.pkgd.min.js",
+      "assets/js/jquery.flexslider.js",
+      "assets/js/owl.carousel.min.js",
+      "assets/js/jquery.magnific-popup.min.js",
+      "assets/js/jquery.validate.min.js",
+      "assets/js/jquery.ajaxchimp.min.js",
+      "assets/js/wow.js",
+      "assets/js/custom.js"
+    ],
+    "templates": [
+      "templates/layout-standard.html",
+      "templates/layout-hero.html",
+      "templates/layout-landing.html"
+    ]
+  },
+  "config": {
+    "options": [
+      {
+        "id": "headerStyle",
+        "type": "select",
+        "default": "default",
+        "label": "Header Style",
+        "options": [
+          {"value": "default", "label": "Default Light"},
+          {"value": "dark", "label": "Dark"},
+          {"value": "transparent", "label": "Transparent"}
+        ]
+      },
+      {
+        "id": "primaryColor",
+        "type": "color",
+        "default": "#4582ff",
+        "label": "Primary Color"
+      },
+      {
+        "id": "secondaryColor",
+        "type": "color",
+        "default": "#3e7846",
+        "label": "Secondary Color"
+      },
+      {
+        "id": "heroStyle",
+        "type": "select",
+        "default": "standard",
+        "label": "Hero Section Style",
+        "options": [
+          {"value": "standard", "label": "Standard Hero"},
+          {"value": "fullscreen", "label": "Fullscreen Hero"},
+          {"value": "video", "label": "Video Background"},
+          {"value": "none", "label": "No Hero Section"}
+        ]
+      },
+      {
+        "id": "footerStyle",
+        "type": "select",
+        "default": "standard",
+        "label": "Footer Style",
+        "options": [
+          {"value": "standard", "label": "Standard Footer"},
+          {"value": "simple", "label": "Simple Footer"},
+          {"value": "newsletter", "label": "Newsletter Footer"}
+        ]
+      }
+    ]
+  },
+  "hooks": [
+    {
+      "id": "header",
+      "type": "template",
+      "target": "system:header"
+    },
+    {
+      "id": "navigation",
+      "type": "component",
+      "target": "system:navigation"
+    },
+    {
+      "id": "footer",
+      "type": "template",
+      "target": "system:footer"
+    },
+    {
+      "id": "hero",
+      "type": "template",
+      "target": "system:hero"
+    }
+  ],
+  "dependencies": [],
+  "components": {
+    "categories": [
+      {
+        "id": "headers",
+        "name": "Header Components",
+        "components": [
+          "header-standard", 
+          "header-transparent", 
+          "header-sticky"
+        ]
+      },
+      {
+        "id": "hero",
+        "name": "Hero Sections",
+        "components": [
+          "hero-standard", 
+          "hero-content", 
+          "hero-image", 
+          "hero-video"
+        ]
+      },
+      {
+        "id": "content",
+        "name": "Content Sections",
+        "components": [
+          "content-block", 
+          "features-grid", 
+          "features-list", 
+          "content-image", 
+          "testimonials", 
+          "pricing-table", 
+          "faq-section", 
+          "cta-section", 
+          "team-section", 
+          "portfolio-grid", 
+          "blog-grid"
+        ]
+      },
+      {
+        "id": "forms",
+        "name": "Form Components",
+        "components": [
+          "contact-form", 
+          "newsletter-form", 
+          "signup-form", 
+          "request-form"
+        ]
+      },
+      {
+        "id": "footers",
+        "name": "Footer Components",
+        "components": [
+          "footer-standard", 
+          "footer-simple", 
+          "footer-newsletter"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+<section class="pricing-section py-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold">{{title}}</h2>
+      <p class="lead text-muted mx-auto" style="max-width: 700px;">{{subtitle}}</p>
+      
+      {{#if showToggle}}
+      <div class="pricing-toggle mt-4">
+        <div class="d-inline-flex align-items-center bg-light p-1 rounded">
+          <button class="btn px-4 py-2 active" id="monthly-pricing">Monthly</button>
+          <button class="btn px-4 py-2" id="annual-pricing">Annual</button>
+        </div>
+        {{#if showDiscount}}
+        <div class="discount-badge ms-3 d-inline-block bg-success text-white px-3 py-1 rounded-pill">
+          {{discountText}}
+        </div>
+        {{/if}}
+      </div>
+      {{/if}}
+    </div>
+    
+    <div class="row g-4">
+      {{#each plans}}
+      <div class="col-md-6 col-lg-4">
+        <div class="pricing-card h-100 bg-white rounded shadow {{#if this.featured}}border border-primary position-relative{{else}}border{{/if}}">
+          {{#if this.featured}}
+          <div class="featured-badge position-absolute top-0 end-0 bg-primary text-white px-3 py-1 m-3 rounded-pill">
+            {{this.featuredText}}
+          </div>
+          {{/if}}
+          
+          <div class="p-4 text-center">
+            <h4 class="pricing-title mb-3">{{this.name}}</h4>
+            
+            <div class="pricing-amount mb-3">
+              <span class="currency">{{this.currency}}</span>
+              <span class="amount display-4 fw-bold">{{this.price}}</span>
+              <span class="period text-muted">/{{this.period}}</span>
+            </div>
+            
+            <p class="text-muted mb-4">{{this.description}}</p>
+            
+            <a href="{{this.buttonUrl}}" class="btn btn-lg w-100 {{#if this.featured}}btn-primary{{else}}btn-outline-primary{{/if}} mb-4">
+              {{this.buttonText}}
+            </a>
+          </div>
+          
+          <div class="px-4 pb-4">
+            <div class="mb-2 fw-bold">{{this.featuresTitle}}</div>
+            <ul class="list-unstyled mb-0">
+              {{#each this.features}}
+              <li class="d-flex align-items-center mb-3">
+                <i class="{{#if this.included}}text-success{{else}}text-muted{{/if}} me-2 fas fa-{{#if this.included}}check-circle{{else}}times-circle{{/if}}"></i>
+                <span class="{{#if this.included}}{{else}}text-muted{{/if}}">{{this.text}}</span>
+              </li>
+              {{/each}}
+            </ul>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    
+    {{#if showFooter}}
+    <div class="text-center mt-5">
+      <p class="text-muted">{{footerText}}</p>
+      <a href="{{footerLinkUrl}}" class="btn btn-link">{{footerLinkText}}</a>
+    </div>
+    {{/if}}
+  </div>
+</section>

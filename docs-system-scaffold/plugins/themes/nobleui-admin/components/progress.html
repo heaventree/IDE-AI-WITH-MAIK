@@ -1,0 +1,23 @@
+<div class="{{containerClass}}">
+  {{#if label}}
+  <div class="d-flex justify-content-between mb-1">
+    <span>{{label}}</span>
+    <span>{{value}}%</span>
+  </div>
+  {{/if}}
+  <div class="progress" style="height: {{height}}px;">
+    <div class="progress-bar {{progressClass}} {{#if isStriped}}progress-bar-striped{{/if}} {{#if isAnimated}}progress-bar-animated{{/if}}" 
+         role="progressbar" 
+         style="width: {{value}}%" 
+         aria-valuenow="{{value}}" 
+         aria-valuemin="0" 
+         aria-valuemax="100">
+      {{#if showValueInBar}}{{value}}%{{/if}}
+    </div>
+  </div>
+  {{#if description}}
+  <div class="mt-1">
+    <small class="text-muted">{{description}}</small>
+  </div>
+  {{/if}}
+</div>

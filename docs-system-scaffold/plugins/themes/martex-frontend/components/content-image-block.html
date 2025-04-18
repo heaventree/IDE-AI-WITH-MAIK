@@ -1,0 +1,72 @@
+<section id="content-{{id|default:'1'}}" class="content-section division">
+  <div class="container">
+    <div class="row d-flex align-items-center">
+      <!-- IMAGE BLOCK -->
+      <div class="col-md-6 {{imagePosition === 'right' ? 'order-last' : ''}}">
+        <div class="img-block {{imageStyle|default:'left-column-img'}} wow fadeInUp">
+          <img class="img-fluid" src="{{imageSrc}}" alt="{{imageAlt|default:'content-image'}}">
+          
+          {{#if overlayContent}}
+          <!-- Overlay Content -->
+          <div class="content-overlay">
+            {{overlayContent}}
+          </div>
+          {{/if}}
+          
+          {{#if imageCaption}}
+          <!-- Image Caption -->
+          <div class="img-caption">
+            {{imageCaption}}
+          </div>
+          {{/if}}
+        </div>
+      </div>
+      
+      <!-- TEXT BLOCK -->
+      <div class="col-md-6">
+        <div class="txt-block {{textStyle|default:'right-column-txt'}} wow fadeInUp">
+          {{#if sectionBadge}}
+          <!-- Section Badge -->
+          <span class="section-badge {{badgeStyle|default:'purple-badge'}}">
+            {{sectionBadge}}
+          </span>
+          {{/if}}
+          
+          <!-- Title -->
+          <h2 class="h2-md">{{title}}</h2>
+          
+          {{#if subtitle}}
+          <!-- Subtitle -->
+          <h5 class="h5-lg">{{subtitle}}</h5>
+          {{/if}}
+          
+          {{#if paragraphs}}
+          <!-- Text -->
+          {{#each paragraphs}}
+          <p class="p-lg">{{this}}</p>
+          {{/each}}
+          {{/if}}
+          
+          {{#if includeList}}
+          <!-- List -->
+          <ul class="check-list {{listStyle|default:''}}">
+            {{#each listItems}}
+            <li class="list-item">
+              <i class="{{../listIconClass|default:'fas fa-check'}}"></i>
+              <p class="p-lg">{{this}}</p>
+            </li>
+            {{/each}}
+          </ul>
+          {{/if}}
+          
+          {{#if includeButton}}
+          <!-- Button -->
+          <a href="{{buttonLink|default:'#'}}" class="btn btn-{{buttonStyle|default:'primary'}} {{buttonClass|default:''}}">
+            {{buttonText|default:'Learn More'}}
+          </a>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

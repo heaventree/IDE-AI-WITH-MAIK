@@ -1,0 +1,75 @@
+<div class="card">
+  <div class="card-header">
+    <h5 class="mb-0">{{title}}</h5>
+    <p class="text-muted">{{description}}</p>
+  </div>
+  <div class="card-body">
+    <form>
+      <div class="mb-3">
+        <label for="text-input" class="form-label">Text Input</label>
+        <input type="text" class="form-control" id="text-input" placeholder="{{textPlaceholder}}">
+        <div class="form-text">{{textHelp}}</div>
+      </div>
+      
+      <div class="mb-3">
+        <label for="email-input" class="form-label">Email Input</label>
+        <input type="email" class="form-control" id="email-input" placeholder="{{emailPlaceholder}}">
+      </div>
+      
+      <div class="mb-3">
+        <label for="password-input" class="form-label">Password Input</label>
+        <input type="password" class="form-control" id="password-input">
+      </div>
+      
+      <div class="mb-3">
+        <label for="textarea-input" class="form-label">Textarea</label>
+        <textarea class="form-control" id="textarea-input" rows="3"></textarea>
+      </div>
+      
+      <div class="mb-3">
+        <label for="select-input" class="form-label">Select</label>
+        <select class="form-select" id="select-input">
+          <option selected disabled>{{selectPlaceholder}}</option>
+          {{#each selectOptions}}
+          <option value="{{this.value}}">{{this.label}}</option>
+          {{/each}}
+        </select>
+      </div>
+      
+      <div class="mb-3">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="checkbox-input">
+          <label class="form-check-label" for="checkbox-input">
+            {{checkboxLabel}}
+          </label>
+        </div>
+      </div>
+      
+      <div class="mb-3">
+        {{#each radioOptions}}
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="radio-group" id="radio-{{this.value}}">
+          <label class="form-check-label" for="radio-{{this.value}}">
+            {{this.label}}
+          </label>
+        </div>
+        {{/each}}
+      </div>
+      
+      <div class="mb-3">
+        <label for="range-input" class="form-label">Range</label>
+        <input type="range" class="form-range" id="range-input">
+      </div>
+      
+      <div class="mb-3">
+        <label for="file-input" class="form-label">File Upload</label>
+        <input class="form-control" type="file" id="file-input">
+      </div>
+      
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button type="button" class="btn btn-secondary">{{cancelButtonText}}</button>
+        <button type="submit" class="btn btn-primary">{{submitButtonText}}</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{{PAGE_TITLE}} | Documentation System</title>
+  
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="{{THEME_PATH}}/assets/vendors/core/core.css">
+  
+  <!-- Plugin CSS -->
+  <link rel="stylesheet" href="{{THEME_PATH}}/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
+  <link rel="stylesheet" href="{{THEME_PATH}}/assets/vendors/select2/select2.min.css">
+  <link rel="stylesheet" href="{{THEME_PATH}}/assets/vendors/jquery-tags-input/jquery.tagsinput.min.css">
+  <link rel="stylesheet" href="{{THEME_PATH}}/assets/vendors/dropify/dist/dropify.min.css">
+  <link rel="stylesheet" href="{{THEME_PATH}}/assets/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css">
+  
+  <!-- Fonts -->
+  <link rel="stylesheet" href="{{THEME_PATH}}/assets/fonts/feather-font/css/iconfont.css">
+  <link rel="stylesheet" href="{{THEME_PATH}}/assets/vendors/flag-icon-css/css/flag-icon.min.css">
+  
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="{{THEME_PATH}}/assets/css/demo_1/style.css">
+  
+  <!-- Additional CSS -->
+  {{ADDITIONAL_CSS}}
+  
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="{{THEME_PATH}}/assets/images/favicon.png">
+</head>
+<body class="nobleui-theme sidebar-dark">
+  <div class="main-wrapper">
+    <!-- Sidebar -->
+    <nav class="sidebar" data-system-hook="system:navigation">
+      <div class="sidebar-header">
+        <a href="/" class="sidebar-brand">
+          Noble<span>UI</span>
+        </a>
+        <div class="sidebar-toggler not-active">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <div class="sidebar-body">
+        <!-- System navigation will be injected here -->
+        {{SYSTEM_NAVIGATION}}
+      </div>
+    </nav>
+    <!-- End Sidebar -->
+    
+    <div class="page-wrapper">
+      <!-- Header -->
+      <nav class="navbar" data-system-hook="system:header">
+        <a href="#" class="sidebar-toggler">
+          <i data-feather="menu"></i>
+        </a>
+        <div class="navbar-content">
+          <!-- System header will be injected here -->
+          {{SYSTEM_HEADER}}
+        </div>
+      </nav>
+      <!-- End Header -->
+      
+      <!-- Main Content -->
+      <div class="page-content">
+        <div class="nobleui-content-wrapper">
+          <!-- System content will be injected here -->
+          {{PAGE_CONTENT}}
+        </div>
+      </div>
+      <!-- End Main Content -->
+      
+      <!-- Footer -->
+      <footer class="footer d-flex flex-column flex-md-row align-items-center justify-content-between" data-system-hook="system:footer">
+        <!-- System footer will be injected here -->
+        {{SYSTEM_FOOTER}}
+      </footer>
+      <!-- End Footer -->
+    </div>
+  </div>
+  
+  <!-- Core JS -->
+  <script src="{{THEME_PATH}}/assets/vendors/core/core.js"></script>
+  
+  <!-- Plugin JS -->
+  <script src="{{THEME_PATH}}/assets/vendors/chartjs/Chart.min.js"></script>
+  <script src="{{THEME_PATH}}/assets/vendors/jquery.flot/jquery.flot.js"></script>
+  <script src="{{THEME_PATH}}/assets/vendors/jquery.flot/jquery.flot.resize.js"></script>
+  <script src="{{THEME_PATH}}/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+  <script src="{{THEME_PATH}}/assets/vendors/apexcharts/apexcharts.min.js"></script>
+  <script src="{{THEME_PATH}}/assets/vendors/progressbar.js/progressbar.min.js"></script>
+  <script src="{{THEME_PATH}}/assets/vendors/feather-icons/feather.min.js"></script>
+  <script src="{{THEME_PATH}}/assets/vendors/moment/moment.min.js"></script>
+  <script src="{{THEME_PATH}}/assets/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.js"></script>
+  
+  <!-- Theme JS -->
+  <script src="{{THEME_PATH}}/assets/js/template.js"></script>
+  <script src="{{THEME_PATH}}/assets/js/dashboard.js"></script>
+  
+  <!-- Plugin entry point -->
+  <script src="{{THEME_PATH}}/index.js"></script>
+  
+  <!-- Theme Initialization -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof window.NobleUITheme !== 'undefined') {
+        const themeConfig = {{THEME_CONFIG}};
+        const pluginAPI = window.pluginSystem?.getPluginAPI('nobleui-admin');
+        window.NobleUITheme.initialize(themeConfig, pluginAPI);
+      }
+    });
+  </script>
+  
+  <!-- Additional Scripts -->
+  {{ADDITIONAL_SCRIPTS}}
+</body>
+</html>

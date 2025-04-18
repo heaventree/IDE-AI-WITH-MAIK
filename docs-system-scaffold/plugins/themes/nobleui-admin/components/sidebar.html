@@ -1,0 +1,48 @@
+<nav class="sidebar">
+  <div class="sidebar-header">
+    <a href="{{homeUrl|default:'#'}}" class="sidebar-brand">
+      {{#if logoText}}
+      <span>{{logoText}}</span>
+      {{else}}
+      <img src="{{logoSrc}}" alt="{{logoAlt|default:'Logo'}}" class="sidebar-logo">
+      {{/if}}
+    </a>
+    <div class="sidebar-toggler not-active">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <div class="sidebar-body">
+    <ul class="nav">
+      {{#if includeMainCategory}}
+      <li class="nav-item nav-category">{{mainCategoryLabel|default:'Main'}}</li>
+      {{/if}}
+      
+      {{#each menuItems}}
+      {{#if this.category}}
+      <li class="nav-item nav-category">{{this.label}}</li>
+      {{else}}
+      <li class="nav-item {{#if this.active}}active{{/if}}">
+        <a href="{{this.url}}" class="nav-link {{#if this.children}}has-dropdown{{/if}}">
+          <i class="link-icon" data-feather="{{this.icon}}"></i>
+          <span class="link-title">{{this.label}}</span>
+          {{#if this.badge}}
+          <span class="badge {{this.badgeClass|default:'badge-primary'}}">{{this.badge}}</span>
+          {{/if}}
+        </a>
+        {{#if this.children}}
+        <ul class="sub-menu">
+          {{#each this.children}}
+          <li class="nav-item {{#if this.active}}active{{/if}}">
+            <a href="{{this.url}}" class="nav-link">{{this.label}}</a>
+          </li>
+          {{/each}}
+        </ul>
+        {{/if}}
+      </li>
+      {{/if}}
+      {{/each}}
+    </ul>
+  </div>
+</nav>

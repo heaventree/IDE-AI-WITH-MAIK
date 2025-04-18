@@ -1,0 +1,53 @@
+<div class="card">
+  <div class="card-body">
+    <h6 class="card-title">{{title|default:'Notifications'}}</h6>
+    
+    {{#if includeDescription}}
+    <p class="text-muted">{{description}}</p>
+    {{/if}}
+    
+    <div class="notification-list">
+      {{#each notifications}}
+      <div class="notification-item {{this.read ? 'read' : 'unread'}} d-flex align-items-center py-3 {{this.borderClass|default:'border-bottom'}}">
+        <div class="notification-avatar me-3">
+          {{#if this.avatar}}
+          <img src="{{this.avatar}}" class="rounded-circle" alt="{{this.user}} avatar">
+          {{else}}
+          <div class="avatar {{this.avatarBgClass|default:'bg-primary'}} text-white">
+            {{this.initials|default:'NA'}}
+          </div>
+          {{/if}}
+        </div>
+        
+        <div class="notification-content flex-grow-1">
+          <div class="d-flex align-items-center mb-1">
+            <h6 class="mb-0 me-auto">{{this.title}}</h6>
+            <small class="notification-time text-muted">{{this.time}}</small>
+          </div>
+          <span class="notification-text text-muted">{{this.message}}</span>
+          
+          {{#if this.actions}}
+          <div class="notification-actions mt-2">
+            {{#each this.actions}}
+            <button class="btn btn-sm {{this.class|default:'btn-outline-primary'}} me-1">{{this.text}}</button>
+            {{/each}}
+          </div>
+          {{/if}}
+        </div>
+        
+        {{#if this.allowMarkRead}}
+        <div class="notification-actions">
+          <i data-feather="{{this.read ? 'check-circle' : 'circle'}}" class="text-{{this.read ? 'success' : 'muted'}} ms-3 notification-status"></i>
+        </div>
+        {{/if}}
+      </div>
+      {{/each}}
+    </div>
+    
+    {{#if showLoadMore}}
+    <div class="text-center mt-4">
+      <button class="btn btn-primary btn-sm">{{loadMoreText|default:'Load More'}}</button>
+    </div>
+    {{/if}}
+  </div>
+</div>

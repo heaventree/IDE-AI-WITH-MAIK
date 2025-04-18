@@ -1,0 +1,44 @@
+<section id="hero-{{id}}" class="hero-section fullscreen-hero division">
+  <div class="hero-overlay bg-{{overlayColor|default:'dark'}} {{overlayOpacity|default:'opacity-60'}}"></div>
+  <div class="bg-image" style="background-image: url('{{heroBackground}}');"></div>
+  
+  <div class="container">
+    <div class="row d-flex align-items-center">
+      <div class="col-md-10 col-lg-8 offset-md-1 offset-lg-2">
+        <div class="hero-content text-center white-color">
+          
+          <!-- Title -->
+          <h2 class="h2-lg wow fadeInUp" data-wow-delay="0.3s">
+            {{heroTitle}}
+          </h2>
+          
+          <!-- Text -->
+          <p class="p-xl wow fadeInUp" data-wow-delay="0.5s">
+            {{heroDescription}}
+          </p>
+          
+          <!-- Buttons Group -->
+          <div class="btns-group wow fadeInUp" data-wow-delay="0.7s">
+            <a href="{{primaryButtonLink}}" class="btn btn-primary tra-white-hover mr-15">
+              {{primaryButtonText}}
+            </a>
+            <a href="{{secondaryButtonLink}}" class="btn btn-tra-white white-hover">
+              {{secondaryButtonText}}
+            </a>
+          </div>
+          
+          {{#if includeScrollDown}}
+          <!-- Scroll Down Button -->
+          <div class="scroll-down wow fadeInUp" data-wow-delay="1s">
+            <a href="#{{scrollTarget}}" class="smooth-scroll">
+              <div class="mouse"></div>
+            </a>
+            <span>{{scrollText|default:'Scroll Down'}}</span>
+          </div>
+          {{/if}}
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

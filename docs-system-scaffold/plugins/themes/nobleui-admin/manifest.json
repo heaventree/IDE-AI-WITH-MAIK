@@ -1,0 +1,175 @@
+{
+  "name": "nobleui-admin",
+  "displayName": "NobleUI Admin Theme",
+  "version": "1.0.0",
+  "type": "theme",
+  "author": "Original: NobleUI, Adapter: Documentation System Team",
+  "description": "A premium Bootstrap 5 admin dashboard template with extensive UI components and features",
+  "compatibility": {
+    "coreVersion": {
+      "minimum": "1.0.0",
+      "maximum": "2.0.0"
+    }
+  },
+  "entryPoints": {
+    "styles": [
+      "assets/vendors/core/core.css",
+      "assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css",
+      "assets/vendors/select2/select2.min.css",
+      "assets/vendors/jquery-tags-input/jquery.tagsinput.min.css",
+      "assets/vendors/dropzone/dropzone.min.css",
+      "assets/vendors/dropify/dist/dropify.min.css",
+      "assets/vendors/bootstrap-colorpicker/bootstrap-colorpicker.min.css",
+      "assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css",
+      "assets/vendors/font-awesome/css/font-awesome.min.css",
+      "assets/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css",
+      "assets/fonts/feather-font/css/iconfont.css",
+      "assets/vendors/flag-icon-css/css/flag-icon.min.css",
+      "assets/css/demo_1/style.css",
+      "assets/css/demo_2/style.css"
+    ],
+    "scripts": [
+      "index.js",
+      "assets/vendors/core/core.js",
+      "assets/vendors/chartjs/Chart.min.js",
+      "assets/vendors/jquery.flot/jquery.flot.js",
+      "assets/vendors/jquery.flot/jquery.flot.resize.js",
+      "assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js",
+      "assets/vendors/apexcharts/apexcharts.min.js",
+      "assets/vendors/progressbar.js/progressbar.min.js",
+      "assets/vendors/feather-icons/feather.min.js",
+      "assets/vendors/jquery-tags-input/jquery.tagsinput.min.js",
+      "assets/vendors/moment/moment.min.js",
+      "assets/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.js",
+      "assets/js/template.js",
+      "assets/js/dashboard.js"
+    ],
+    "templates": [
+      "templates/layout-vertical.html",
+      "templates/layout-horizontal.html"
+    ]
+  },
+  "config": {
+    "options": [
+      {
+        "id": "layoutMode",
+        "type": "select",
+        "default": "vertical",
+        "label": "Layout Mode",
+        "options": [
+          {"value": "vertical", "label": "Vertical Menu"},
+          {"value": "horizontal", "label": "Horizontal Menu"}
+        ]
+      },
+      {
+        "id": "navbarColor",
+        "type": "select",
+        "default": "navbar-light",
+        "label": "Navbar Color",
+        "options": [
+          {"value": "navbar-light", "label": "Light"},
+          {"value": "navbar-dark", "label": "Dark"}
+        ]
+      },
+      {
+        "id": "sidebarColor",
+        "type": "select",
+        "default": "sidebar-light",
+        "label": "Sidebar Color",
+        "options": [
+          {"value": "sidebar-light", "label": "Light"},
+          {"value": "sidebar-dark", "label": "Dark"}
+        ]
+      },
+      {
+        "id": "sidebarCollapsed",
+        "type": "boolean",
+        "default": false,
+        "label": "Sidebar Collapsed by Default"
+      },
+      {
+        "id": "rtlEnabled",
+        "type": "boolean",
+        "default": false,
+        "label": "Enable RTL Mode"
+      }
+    ]
+  },
+  "hooks": [
+    {
+      "id": "header",
+      "type": "template",
+      "target": "system:header"
+    },
+    {
+      "id": "sidebarMenu",
+      "type": "component",
+      "target": "system:navigation"
+    },
+    {
+      "id": "footer",
+      "type": "template",
+      "target": "system:footer"
+    }
+  ],
+  "dependencies": [],
+  "components": {
+    "categories": [
+      {
+        "id": "dashboard",
+        "name": "Dashboard Components",
+        "components": [
+          "revenue-chart", 
+          "sales-chart", 
+          "monthly-sales", 
+          "stat-card"
+        ]
+      },
+      {
+        "id": "ui",
+        "name": "UI Components",
+        "components": [
+          "accordion", 
+          "alerts", 
+          "badges", 
+          "breadcrumbs", 
+          "buttons", 
+          "cards", 
+          "carousel", 
+          "collapse", 
+          "dropdowns", 
+          "list-group", 
+          "media-object", 
+          "modal", 
+          "navs", 
+          "navbar", 
+          "pagination", 
+          "popovers", 
+          "progress", 
+          "spinners", 
+          "tabs", 
+          "tooltips"
+        ]
+      },
+      {
+        "id": "forms",
+        "name": "Form Components",
+        "components": [
+          "basic-elements", 
+          "advanced-elements", 
+          "editors", 
+          "wizard", 
+          "validation"
+        ]
+      },
+      {
+        "id": "tables",
+        "name": "Table Components",
+        "components": [
+          "basic-tables", 
+          "data-tables"
+        ]
+      }
+    ]
+  }
+}

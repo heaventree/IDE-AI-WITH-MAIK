@@ -1,0 +1,57 @@
+<div class="blog-card {{cardClass}}">
+  {{#if showImage}}
+  <div class="blog-card-image">
+    <a href="{{postUrl}}">
+      <img src="{{imageUrl}}" alt="{{imageAlt}}" class="img-fluid">
+    </a>
+    {{#if showCategory}}
+    <div class="blog-category">
+      <a href="{{categoryUrl}}" class="category-link {{categoryClass}}">{{category}}</a>
+    </div>
+    {{/if}}
+  </div>
+  {{/if}}
+  
+  <div class="blog-card-content">
+    {{#if showMeta}}
+    <div class="blog-meta">
+      {{#if showAuthor}}
+      <div class="blog-author">
+        {{#if showAuthorImage}}
+        <img src="{{authorImageUrl}}" alt="{{authorName}}" class="author-image">
+        {{/if}}
+        <span class="author-name">By <a href="{{authorUrl}}">{{authorName}}</a></span>
+      </div>
+      {{/if}}
+      
+      {{#if showDate}}
+      <div class="blog-date">
+        <i class="far fa-calendar-alt"></i> {{date}}
+      </div>
+      {{/if}}
+      
+      {{#if showReadTime}}
+      <div class="blog-read-time">
+        <i class="far fa-clock"></i> {{readTime}} min read
+      </div>
+      {{/if}}
+    </div>
+    {{/if}}
+    
+    <h3 class="blog-title {{titleClass}}">
+      <a href="{{postUrl}}">{{title}}</a>
+    </h3>
+    
+    {{#if showExcerpt}}
+    <p class="blog-excerpt {{excerptClass}}">{{excerpt}}</p>
+    {{/if}}
+    
+    {{#if showButton}}
+    <div class="blog-action">
+      <a href="{{postUrl}}" class="blog-read-more {{buttonClass}}">
+        {{buttonText}} {{#if showButtonIcon}}<i class="fas fa-arrow-right"></i>{{/if}}
+      </a>
+    </div>
+    {{/if}}
+  </div>
+</div>

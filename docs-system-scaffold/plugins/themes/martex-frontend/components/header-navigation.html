@@ -1,0 +1,54 @@
+<header class="site-header {{headerClass}}">
+  <div class="container">
+    <nav class="navbar navbar-expand-lg {{navbarClass}}">
+      <a class="navbar-brand" href="{{homeUrl}}">
+        {{#if useLogo}}
+        <img src="{{logoUrl}}" alt="{{logoAlt}}" class="logo {{logoClass}}">
+        {{else}}
+        <span class="logo-text {{logoTextClass}}">{{logoText}}</span>
+        {{/if}}
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarMain">
+        <ul class="navbar-nav {{menuClass}}">
+          {{#each menuItems}}
+          <li class="nav-item {{#if this.active}}active{{/if}} {{#if this.hasDropdown}}dropdown{{/if}}">
+            {{#if this.hasDropdown}}
+            <a class="nav-link dropdown-toggle" href="{{this.url}}" id="dropdown-{{this.id}}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{this.label}}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown-{{this.id}}">
+              {{#each this.children}}
+              <li><a class="dropdown-item {{#if this.active}}active{{/if}}" href="{{this.url}}">{{this.label}}</a></li>
+              {{/each}}
+            </ul>
+            {{else}}
+            <a class="nav-link" href="{{this.url}}">{{this.label}}</a>
+            {{/if}}
+          </li>
+          {{/each}}
+        </ul>
+        
+        {{#if showSearch}}
+        <form class="search-form {{searchFormClass}}">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="{{searchPlaceholder}}" aria-label="Search">
+            <button class="btn btn-{{searchButtonStyle}}" type="button"><i class="fas fa-search"></i></button>
+          </div>
+        </form>
+        {{/if}}
+        
+        {{#if showCta}}
+        <div class="cta-buttons ms-auto">
+          {{#if showLoginButton}}
+          <a href="{{loginUrl}}" class="btn btn-outline-{{loginButtonStyle}} {{loginButtonClass}}">{{loginButtonText}}</a>
+          {{/if}}
+          <a href="{{ctaUrl}}" class="btn btn-{{ctaButtonStyle}} {{ctaButtonClass}}">{{ctaButtonText}}</a>
+        </div>
+        {{/if}}
+      </div>
+    </nav>
+  </div>
+</header>
