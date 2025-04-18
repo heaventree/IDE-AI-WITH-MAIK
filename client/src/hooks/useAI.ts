@@ -2,7 +2,26 @@ import { useState, useCallback } from 'react';
 import { AIMessage, AIAgent, AIModel } from '../types';
 import { nanoid } from 'nanoid';
 import { AIOrchestrator } from '../services/AIOrchestrator';
-import { useProject } from '../contexts/ProjectContext';
+// Mock project context for standalone usage
+const mockProjectState = {
+  files: {},
+  openFiles: [],
+  activeFile: null,
+  unsavedChanges: new Set(),
+  containerStatus: 'idle' as const,
+  backupStatus: {
+    lastBackup: null,
+    syncStatus: 'synced' as const,
+    targets: [],
+  },
+};
+
+// Create a mock useProject hook
+const useProject = () => {
+  return {
+    projectState: mockProjectState,
+  };
+};
 
 export const useAI = () => {
   const [messages, setMessages] = useState<AIMessage[]>([]);

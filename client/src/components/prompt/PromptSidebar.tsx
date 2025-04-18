@@ -56,34 +56,34 @@ const PromptSidebar: React.FC<PromptSidebarProps> = ({
           )}
           <nav className="space-y-1">
             <Link href="/prompt-intro">
-              <a className={`flex items-center rounded-md px-3 py-2 transition-colors ${
+              <div className={`flex items-center rounded-md px-3 py-2 transition-colors cursor-pointer ${
                 isActive('/prompt-intro') 
                   ? 'bg-indigo-600 text-white' 
                   : 'text-slate-300 hover:bg-slate-800'
               }`}>
                 <Zap size={collapsed ? 20 : 16} className={collapsed ? 'mx-auto' : 'mr-3'} />
                 {!collapsed && <span>Overview</span>}
-              </a>
+              </div>
             </Link>
             <Link href="/prompt-system">
-              <a className={`flex items-center rounded-md px-3 py-2 transition-colors ${
+              <div className={`flex items-center rounded-md px-3 py-2 transition-colors cursor-pointer ${
                 isActive('/prompt-system') 
                   ? 'bg-indigo-600 text-white' 
                   : 'text-slate-300 hover:bg-slate-800'
               }`}>
                 <MessageSquare size={collapsed ? 20 : 16} className={collapsed ? 'mx-auto' : 'mr-3'} />
                 {!collapsed && <span>Interactive Demo</span>}
-              </a>
+              </div>
             </Link>
             <Link href="/prompt-system-standalone">
-              <a className={`flex items-center rounded-md px-3 py-2 transition-colors ${
+              <div className={`flex items-center rounded-md px-3 py-2 transition-colors cursor-pointer ${
                 isActive('/prompt-system-standalone') 
                   ? 'bg-indigo-600 text-white' 
                   : 'text-slate-300 hover:bg-slate-800'
               }`}>
                 <Sparkles size={collapsed ? 20 : 16} className={collapsed ? 'mx-auto' : 'mr-3'} />
                 {!collapsed && <span>Templates</span>}
-              </a>
+              </div>
             </Link>
           </nav>
         </div>

@@ -8,7 +8,34 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { useAI } from '@/hooks/useAI';
-import { useProject } from '@/contexts/ProjectContext';
+// Mock project context for standalone usage
+const mockProjectState = {
+  files: {},
+  openFiles: [],
+  activeFile: null,
+  unsavedChanges: new Set(),
+  containerStatus: 'idle' as const,
+  backupStatus: {
+    lastBackup: null,
+    syncStatus: 'synced' as const,
+    targets: [],
+  },
+};
+
+// Create a mock useProject hook
+const useProject = () => {
+  return {
+    projectState: mockProjectState,
+    dispatch: () => {},
+    openFile: () => {},
+    closeFile: () => {},
+    saveFile: () => {},
+    createFile: () => Promise.resolve(''),
+    createDirectory: () => Promise.resolve(''),
+    deleteFileOrDirectory: () => Promise.resolve(),
+    renameFileOrDirectory: () => Promise.resolve(),
+  };
+};
 import { usePromptManager } from '@/hooks/usePromptManager';
 
 // Icons
