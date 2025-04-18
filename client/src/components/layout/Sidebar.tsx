@@ -5,7 +5,8 @@ import {
   Search, Users, GitBranch, Code, Database, Settings,
   ChevronDown, ChevronRight, FilePlus, FolderPlus, 
   AlertCircle, Coffee, Globe, Package, PlusCircle, 
-  ServerCrash, Zap, Diamond, Home, Layout, MessageSquare
+  ServerCrash, Zap, Diamond, Home, Layout, MessageSquare,
+  Sparkles
 } from 'lucide-react';
 
 // Vertical sidebar component in FlutterFlow style
@@ -495,6 +496,16 @@ const Sidebar: React.FC<SidebarProps> = ({
         </div>
         
         <div className="activity-bar-bottom">
+          {/* Link to Prompt System Intro */}
+          <Link href="/prompt-intro">
+            <button 
+              className="activity-bar-item"
+              title="Prompt Management System"
+            >
+              <Zap size={22} />
+            </button>
+          </Link>
+          
           {/* Toggle between Editor and Prompt mode */}
           <button 
             className={`activity-bar-item ${currentMode === 'prompt' ? 'active' : ''}`}
