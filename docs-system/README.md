@@ -33,11 +33,13 @@ If you're an AI agent working with this system:
 
 If you're a human user of this system:
 
-1. Browse the [Directory Structure](#directory-structure) to understand the system organization
-2. Check the [Templates](/templates/) for standardized document formats
-3. View the [Documentation Guidelines](/docs/documentation_guidelines.md) for best practices
-4. Start the Documentation Web Interface with `node docs-system/tools/web_interface.js`
-5. Or use the CLI tool: `node docs-system/tools/doc_cli.js help`
+1. Run the setup script: `node docs-system/tools/setup.js`
+2. Browse the [Directory Structure](#directory-structure) to understand the system organization
+3. Check the [Templates](/templates/) for standardized document formats
+4. View the [Documentation Guidelines](/docs/documentation_guidelines.md) for best practices
+5. Read the [Variable Management Guide](/docs/variable_management_guide.md) to understand how to use variables
+6. Start the Documentation Web Interface with `node docs-system/tools/web_interface.js`
+7. Or use the CLI tool: `node docs-system/tools/doc_cli.js help`
 
 ## Directory Structure
 
@@ -46,6 +48,8 @@ docs-system/
 ├── agent/                  # AI agent configuration and guidance
 │   ├── agent_init.md       # Getting started guide for agents
 │   └── roles.md            # Agent roles and responsibilities
+├── api/                    # API endpoints and handlers
+│   └── documentation_api.js # Documentation API endpoints
 ├── architecture/           # Clean architecture implementation
 │   ├── application/        # Application services and use cases
 │   ├── core/               # Core domain models and business logic
@@ -59,6 +63,12 @@ docs-system/
 │   ├── project_overview.md # Template for project overviews
 │   ├── technical_spec.md   # Template for technical specifications
 │   └── user_guide.md       # Template for user guides
+├── tools/                  # Tools for documentation management
+│   ├── documentation_manager.js # Central variable and placeholder management
+│   ├── doc_cli.js          # Command-line interface for documentation tasks
+│   └── web_interface.js    # Web interface for documentation management
+├── variables.json          # Central variable storage
+├── maik_ai_coding_app_variables.json # Project-specific variables
 └── index.html              # Web interface entry point
 ```
 
@@ -70,6 +80,11 @@ docs-system/
 - **Event-Driven Architecture**: Loose coupling through domain events
 - **Validation**: Comprehensive validation at all layers
 - **Error Handling**: Robust error handling across the system
+- **Variable Management**: Centralized storage and management of documentation variables
+- **Placeholder Detection**: Automatically detect and track unfilled placeholders
+- **Web Interface**: Browser-based interface for managing documentation
+- **Command-Line Tools**: Scriptable CLI for automation of documentation tasks
+- **Theme Support**: Plugins and themes for consistent documentation styling
 
 ## Architecture
 
