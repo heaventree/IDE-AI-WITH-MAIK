@@ -31,6 +31,7 @@ import { AIGovernance } from './core/ai/governance';
 import { BaseAIService } from './core/ai/base-ai-service';
 import { OpenAIService } from './core/ai/openai-service';
 import { AnthropicService } from './core/ai/anthropic-service';
+import { GeminiService } from './core/ai/gemini-service';
 
 // Set up the dependency injection container
 setupDependencyInjection();
@@ -48,6 +49,7 @@ const governance = container.resolve(AIGovernance);
 const primaryAiService = container.resolve<BaseAIService>('BaseAIService');
 let openAiService: OpenAIService | null = null;
 let anthropicService: AnthropicService | null = null;
+let geminiService: GeminiService | null = null;
 
 // Try to resolve specific services if available
 try {
@@ -66,6 +68,15 @@ try {
   }
 } catch (e) {
   console.log('Anthropic service is not available');
+}
+
+try {
+  if (process.env.GEMINI_API_KEY) {
+    geminiService = container.resolve<GeminiService>('GeminiService');
+    console.log('Google Gemini service is available');
+  }
+} catch (e) {
+  console.log('Google Gemini service is not available');
 }
 
 // Register a custom AI model (in addition to default model)
@@ -294,6 +305,105 @@ function fibonacci(n) {
 }
 
 /**
+ * Demonstrate Gemini AI capabilities
+ */
+async function demonstrateGemini() {
+  console.log('\n--- Google Gemini Capabilities ---\n');
+  
+  // Only run this demo if Gemini service is available
+  if (!geminiService) {
+    console.log('This demo requires the Google Gemini service to be available');
+    console.log('Ensure you have set the GEMINI_API_KEY environment variable.');
+    return;
+  }
+  
+  try {
+    // Check available models
+    console.log('Available Gemini Models:');
+    const geminiModels = await geminiService.getAvailableModels?.();
+    if (geminiModels && geminiModels.length > 0) {
+      console.table(geminiModels.map(model => ({
+        ID: model.id,
+        Provider: model.provider,
+        Name: model.name,
+        Context: `${model.contextWindow} tokens`,
+        SupportsFunctions: model.supportsFunctions ? '✓' : '✗',
+        SupportsImages: model.supportsImages ? '✓' : '✗',
+      })));
+    } else {
+      console.log('No Gemini models available');
+    }
+    
+    // Simple text completion
+    const prompt = 'Explain three differences between generative and discriminative machine learning models.';
+    console.log(`\nGemini Generation Prompt: "${prompt}"`);
+    
+    const completion = await geminiService.generateCompletion(prompt, {
+      temperature: 0.5,
+      systemPrompt: 'You are an AI expert giving concise technical explanations.'
+    });
+    
+    console.log('\nGenerated Completion from Gemini:');
+    console.log(completion);
+    
+    // Code analysis
+    const codeToAnalyze = `
+import React, { useState, useEffect } from 'react';
+
+function DataFetcher({ url }) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setLoading(true);
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(\`HTTP error \${response.status}\`);
+        }
+        const result = await response.json();
+        setData(result);
+        setError(null);
+      } catch (err) {
+        setError(err.message);
+        setData(null);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, [url]);
+
+  return { data, loading, error };
+}
+
+export default DataFetcher;
+    `;
+    
+    console.log('\nGemini Code Analysis:');
+    const analysis = await geminiService.analyzeCode(codeToAnalyze, 'javascript');
+    console.log(JSON.stringify(analysis, null, 2));
+    
+    // Function calling capabilities check
+    console.log('\nGemini Service Capabilities:');
+    const supportsFn = geminiService.supportsCapability;
+    if (supportsFn) {
+      console.log(`Image Generation: ${supportsFn.call(geminiService, 'image_generation') ? '✓' : '✗'}`);
+      console.log(`Function Calling: ${supportsFn.call(geminiService, 'function_calling') ? '✓' : '✗'}`);
+      console.log(`JSON Mode: ${supportsFn.call(geminiService, 'json_mode') ? '✓' : '✗'}`);
+    } else {
+      console.log('Capability checking not available on the Gemini service');
+    }
+    
+  } catch (error) {
+    console.error('Error demonstrating Gemini Service:', error);
+  }
+}
+
+/**
  * Demonstrate multi-provider capability with OpenAI and Anthropic
  */
 async function demonstrateMultiProvider() {
@@ -397,6 +507,11 @@ async function runDemos() {
       await demonstrateAIService();
     }
     
+    // Run Gemini demo if API key is available
+    if (process.env.GEMINI_API_KEY) {
+      await demonstrateGemini();
+    }
+    
     // Display governance data
     console.log('\n--- Governance Data Summary ---\n');
     console.log('Model Metadata:', JSON.stringify(governance.getModelMetadata(modelId), null, 2));
@@ -415,8 +530,8 @@ async function runDemos() {
     // List the available AI services
     console.log('\n--- Available AI Services ---\n');
     console.log('- OpenAI Service: Complete set of AI capabilities powered by GPT-4o');
-    console.log('- Future: Anthropic Claude Service (coming soon)');
-    console.log('- Future: Google AI / Gemini Service (coming soon)');
+    console.log('- Anthropic Claude Service: Advanced AI capabilities powered by Claude 3');
+    console.log('- Google AI / Gemini Service: Advanced AI capabilities powered by Gemini');
     console.log('- Future: DeepSeek Service (coming soon)');
     console.log('- Future: OpenRouter Service (coming soon)');
   } catch (error) {
