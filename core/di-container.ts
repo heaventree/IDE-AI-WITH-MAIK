@@ -229,8 +229,17 @@ export function setupDependencyInjection() {
   
   // ===== MAIN AGENT =====
   
-  // Register the main agent with all dependencies injected automatically
-  container.registerSingleton('Agent', Agent);
+  // Create an Agent instance manually with all dependencies
+  const agent = new Agent(
+    stateManager,
+    container.resolve<IMemoryManager>('IMemoryManager'),
+    container.resolve<IPromptManager>('IPromptManager'),
+    toolExecutor,
+    container.resolve<ErrorHandler>(ErrorHandler)
+  );
+  
+  // Register the Agent instance
+  container.registerInstance('Agent', agent);
   
   return container;
 }

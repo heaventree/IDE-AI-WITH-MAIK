@@ -30,11 +30,11 @@ export class Agent {
    * @param errorHandler - For consistent error handling
    */
   constructor(
-    @inject('IStateManager') private stateManager: IStateManager,
-    @inject('IMemoryManager') private memoryManager: IMemoryManager,
-    @inject('IPromptManager') private promptManager: IPromptManager,
-    @inject('IToolExecutor') private toolExecutor: IToolExecutor,
-    @inject(ErrorHandler) private errorHandler: ErrorHandler
+    private stateManager: IStateManager,
+    private memoryManager: IMemoryManager,
+    private promptManager: IPromptManager,
+    private toolExecutor: IToolExecutor,
+    private errorHandler: ErrorHandler
   ) {}
 
   /**
