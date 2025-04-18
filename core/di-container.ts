@@ -22,6 +22,7 @@ import { PromptManager } from './prompt/prompt-manager';
 import { ToolExecutor, Tool } from './tools/tool-executor';
 import { AIGovernance } from './ai/governance';
 import { OpenAIService } from './ai/openai-service';
+import { AnthropicService } from './ai/anthropic-service';
 import { AIServiceConfig, BaseAIService } from './ai/base-ai-service';
 
 // Interfaces
@@ -72,19 +73,92 @@ export function setupDependencyInjection() {
   container.registerSingleton(AIGovernance);
   initializeAIGovernance(container);
   
-  // Register AI Service Configuration
-  container.register<AIServiceConfig>('AIServiceConfig', {
-    useValue: {
-      apiKey: process.env.OPENAI_API_KEY,
-      defaultModel: 'gpt-4o',
-      defaultTemperature: 0.7
-    }
-  });
+  // Register AI services based on available API keys
+  const openaiApiKey = process.env.OPENAI_API_KEY;
+  const anthropicApiKey = process.env.ANTHROPIC_API_KEY;
   
-  // Register OpenAI service as the default AI service
-  container.register<BaseAIService>('BaseAIService', {
-    useClass: OpenAIService
-  }, { lifecycle: Lifecycle.Singleton });
+  // Default to OpenAI if the API key is available
+  if (openaiApiKey) {
+    console.log('Registering OpenAI service as the primary AI service');
+    
+    // Register OpenAI configuration
+    container.register<AIServiceConfig>('AIServiceConfig', {
+      useValue: {
+        apiKey: openaiApiKey,
+        defaultModel: 'gpt-4o',
+        defaultTemperature: 0.7
+      }
+    });
+    
+    // Register OpenAI service as the default AI service
+    container.register<BaseAIService>('BaseAIService', {
+      useClass: OpenAIService
+    }, { lifecycle: Lifecycle.Singleton });
+    
+    // Also register it with a specific name for direct access
+    container.register<BaseAIService>('OpenAIService', {
+      useClass: OpenAIService
+    }, { lifecycle: Lifecycle.Singleton });
+  } 
+  // Fall back to Anthropic if only that API key is available
+  else if (anthropicApiKey) {
+    console.log('Registering Anthropic service as the primary AI service');
+    
+    // Register Anthropic configuration
+    container.register<AIServiceConfig>('AIServiceConfig', {
+      useValue: {
+        apiKey: anthropicApiKey,
+        defaultModel: 'claude-3-7-sonnet-20250219',
+        defaultTemperature: 0.7
+      }
+    });
+    
+    // Register Anthropic service as the default AI service
+    container.register<BaseAIService>('BaseAIService', {
+      useClass: AnthropicService
+    }, { lifecycle: Lifecycle.Singleton });
+    
+    // Also register it with a specific name for direct access
+    container.register<BaseAIService>('AnthropicService', {
+      useClass: AnthropicService
+    }, { lifecycle: Lifecycle.Singleton });
+  }
+  // If no API keys are available, use a warning
+  else {
+    console.warn('No AI service API keys found. Some features will be limited.');
+    
+    // Register a basic config anyway
+    container.register<AIServiceConfig>('AIServiceConfig', {
+      useValue: {
+        defaultModel: 'gpt-4o',
+        defaultTemperature: 0.7
+      }
+    });
+    
+    // Default to OpenAI but it will throw appropriate errors when used
+    container.register<BaseAIService>('BaseAIService', {
+      useClass: OpenAIService
+    }, { lifecycle: Lifecycle.Singleton });
+  }
+  
+  // Register both services if both API keys are available, with specific names
+  if (openaiApiKey && anthropicApiKey) {
+    console.log('Both OpenAI and Anthropic services are available');
+    
+    // Register Anthropic with its own config
+    container.register<AIServiceConfig>('AnthropicServiceConfig', {
+      useValue: {
+        apiKey: anthropicApiKey,
+        defaultModel: 'claude-3-7-sonnet-20250219',
+        defaultTemperature: 0.7
+      }
+    });
+    
+    // Register Anthropic with its own config and name for specific access
+    container.register<BaseAIService>('AnthropicService', {
+      useClass: AnthropicService
+    }, { lifecycle: Lifecycle.Singleton });
+  }
   
   // ===== STATE MANAGEMENT =====
   

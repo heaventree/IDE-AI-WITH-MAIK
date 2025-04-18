@@ -211,15 +211,24 @@ async function demonstrateAIService() {
   try {
     // Get available models
     console.log('Available AI Models:');
-    const models = await aiService.getAvailableModels();
-    console.table(models.map(model => ({
-      ID: model.id,
-      Provider: model.provider,
-      Name: model.name,
-      Context: `${model.contextWindow} tokens`,
-      SupportsFunctions: model.supportsFunctions ? '✓' : '✗',
-      SupportsImages: model.supportsImages ? '✓' : '✗',
-    })));
+    const getModels = aiService.getAvailableModels;
+    if (getModels) {
+      const models = await getModels.call(aiService);
+      if (models && models.length > 0) {
+        console.table(models.map(model => ({
+          ID: model.id,
+          Provider: model.provider,
+          Name: model.name,
+          Context: `${model.contextWindow} tokens`,
+          SupportsFunctions: model.supportsFunctions ? '✓' : '✗',
+          SupportsImages: model.supportsImages ? '✓' : '✗',
+        })));
+      } else {
+        console.log('No models available or returned from service');
+      }
+    } else {
+      console.log('getAvailableModels method not available on the AI service');
+    }
     
     // Simple text completion
     const prompt = 'Explain the benefits of abstraction in software architecture in 3 bullet points.';
@@ -247,9 +256,14 @@ function fibonacci(n) {
     
     // Function calling capabilities check
     console.log('\nAI Service Capabilities:');
-    console.log(`Image Generation: ${aiService.supportsCapability('image_generation') ? '✓' : '✗'}`);
-    console.log(`Function Calling: ${aiService.supportsCapability('function_calling') ? '✓' : '✗'}`);
-    console.log(`JSON Mode: ${aiService.supportsCapability('json_mode') ? '✓' : '✗'}`);
+    const supportsFn = aiService.supportsCapability;
+    if (supportsFn) {
+      console.log(`Image Generation: ${supportsFn.call(aiService, 'image_generation') ? '✓' : '✗'}`);
+      console.log(`Function Calling: ${supportsFn.call(aiService, 'function_calling') ? '✓' : '✗'}`);
+      console.log(`JSON Mode: ${supportsFn.call(aiService, 'json_mode') ? '✓' : '✗'}`);
+    } else {
+      console.log('Capability checking not available on the AI service');
+    }
     
   } catch (error) {
     console.error('Error demonstrating AI Service:', error);
@@ -261,10 +275,22 @@ function fibonacci(n) {
  */
 async function runDemos() {
   try {
+    // Check if we have the necessary API keys
+    const openaiApiKey = process.env.OPENAI_API_KEY;
+    if (!openaiApiKey) {
+      console.log('\n⚠️ OpenAI API key not found! Some demos will be skipped.');
+      console.log('Please set the OPENAI_API_KEY environment variable to run the AI service demos.');
+    }
+    
     await demonstrateBasicInteraction();
     await demonstrateErrorHandling();
     await demonstrateBiasDetection();
     await demonstrateConversation();
+    
+    // Only run AI service demos if we have an API key
+    if (openaiApiKey) {
+      await demonstrateAIService();
+    }
     
     // Display governance data
     console.log('\n--- Governance Data Summary ---\n');
@@ -280,6 +306,14 @@ async function runDemos() {
       { name: 'getWeather', description: 'Get weather information for a location' }
     ];
     console.table(tools);
+    
+    // List the available AI services
+    console.log('\n--- Available AI Services ---\n');
+    console.log('- OpenAI Service: Complete set of AI capabilities powered by GPT-4o');
+    console.log('- Future: Anthropic Claude Service (coming soon)');
+    console.log('- Future: Google AI / Gemini Service (coming soon)');
+    console.log('- Future: DeepSeek Service (coming soon)');
+    console.log('- Future: OpenRouter Service (coming soon)');
   } catch (error) {
     console.error('Error running demos:', error);
   }
