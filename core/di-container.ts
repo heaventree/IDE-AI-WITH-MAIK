@@ -21,6 +21,8 @@ import { AdvancedMemoryManager } from './memory/memory-manager';
 import { PromptManager } from './prompt/prompt-manager';
 import { ToolExecutor, Tool } from './tools/tool-executor';
 import { AIGovernance } from './ai/governance';
+import { OpenAIService } from './ai/openai-service';
+import { AIServiceConfig, BaseAIService } from './ai/base-ai-service';
 
 // Interfaces
 import { 
@@ -69,6 +71,20 @@ export function setupDependencyInjection() {
   // Register AI Governance singleton for consistent governance policies
   container.registerSingleton(AIGovernance);
   initializeAIGovernance(container);
+  
+  // Register AI Service Configuration
+  container.register<AIServiceConfig>('AIServiceConfig', {
+    useValue: {
+      apiKey: process.env.OPENAI_API_KEY,
+      defaultModel: 'gpt-4o',
+      defaultTemperature: 0.7
+    }
+  });
+  
+  // Register OpenAI service as the default AI service
+  container.register<BaseAIService>('BaseAIService', {
+    useClass: OpenAIService
+  }, { lifecycle: Lifecycle.Singleton });
   
   // ===== STATE MANAGEMENT =====
   

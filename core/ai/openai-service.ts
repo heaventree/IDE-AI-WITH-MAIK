@@ -59,19 +59,24 @@ export class OpenAIService extends AbstractAIService {
       const temperature = options.temperature ?? this.defaultTemperature;
       const maxTokens = options.maxTokens ?? 2048;
       
-      const messages = [
-        options.systemPrompt 
-          ? { role: "system", content: options.systemPrompt as string }
-          : { role: "system", content: "You are an expert programmer helping with code." },
-        { role: "user", content: prompt }
+      // Type the messages array properly for OpenAI
+      const messages: Array<{role: 'system' | 'user' | 'assistant', content: string}> = [
+        {
+          role: "system",
+          content: options.systemPrompt || "You are an expert programmer helping with code."
+        },
+        {
+          role: "user",
+          content: prompt
+        }
       ];
       
-      const requestOptions: any = {
+      const requestOptions = {
         model,
         messages,
         temperature,
         max_tokens: maxTokens,
-      };
+      } as any;
       
       // Add response format option for JSON if specified
       if (options.responseFormat === 'json') {
@@ -102,11 +107,16 @@ export class OpenAIService extends AbstractAIService {
       const temperature = options.temperature ?? this.defaultTemperature;
       const maxTokens = options.maxTokens ?? 2048;
       
-      const messages = [
-        options.systemPrompt 
-          ? { role: "system", content: options.systemPrompt as string }
-          : { role: "system", content: "You are an expert programmer helping with code." },
-        { role: "user", content: prompt }
+      // Type the messages array properly for OpenAI
+      const messages: Array<{role: 'system' | 'user' | 'assistant', content: string}> = [
+        {
+          role: "system",
+          content: options.systemPrompt || "You are an expert programmer helping with code."
+        },
+        {
+          role: "user",
+          content: prompt
+        }
       ];
       
       console.log(`Calling OpenAI with tools, model: ${model}`);
@@ -117,7 +127,7 @@ export class OpenAIService extends AbstractAIService {
         max_tokens: maxTokens,
         tools,
         tool_choice: "auto",
-      });
+      } as any);
       
       return response.choices[0];
     } catch (error) {

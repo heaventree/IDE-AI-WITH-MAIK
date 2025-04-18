@@ -26,8 +26,9 @@ import {
   IToolExecutor
 } from './core';
 
-// Import AI governance
+// Import AI governance and services
 import { AIGovernance } from './core/ai/governance';
+import { BaseAIService } from './core/ai/base-ai-service';
 
 // Set up the dependency injection container
 setupDependencyInjection();
@@ -40,6 +41,9 @@ const agent = getAgent();
 
 // Get AI governance instance via DI container
 const governance = container.resolve(AIGovernance);
+
+// Get AI service instance
+const aiService = container.resolve<BaseAIService>('BaseAIService');
 
 // Register a custom AI model (in addition to default model)
 const modelId = 'gpt-4';
@@ -195,6 +199,60 @@ async function demonstrateConversation() {
     } catch (error) {
       console.error('Error during conversation:', error);
     }
+  }
+}
+
+/**
+ * Demonstrate the AI service abstraction
+ */
+async function demonstrateAIService() {
+  console.log('\n--- AI Service Abstraction ---\n');
+  
+  try {
+    // Get available models
+    console.log('Available AI Models:');
+    const models = await aiService.getAvailableModels();
+    console.table(models.map(model => ({
+      ID: model.id,
+      Provider: model.provider,
+      Name: model.name,
+      Context: `${model.contextWindow} tokens`,
+      SupportsFunctions: model.supportsFunctions ? '✓' : '✗',
+      SupportsImages: model.supportsImages ? '✓' : '✗',
+    })));
+    
+    // Simple text completion
+    const prompt = 'Explain the benefits of abstraction in software architecture in 3 bullet points.';
+    console.log(`\nGeneration Prompt: "${prompt}"`);
+    
+    const completion = await aiService.generateCompletion(prompt, {
+      temperature: 0.5,
+      systemPrompt: 'You are a software architecture expert. Keep your explanations concise and focused.'
+    });
+    
+    console.log('\nGenerated Completion:');
+    console.log(completion);
+    
+    // Code analysis
+    const codeToAnalyze = `
+function fibonacci(n) {
+  if (n <= 1) return n;
+  return fibonacci(n-1) + fibonacci(n-2);
+}
+    `;
+    
+    console.log('\nCode Analysis:');
+    const analysis = await aiService.analyzeCode(codeToAnalyze, 'javascript');
+    console.log(JSON.stringify(analysis, null, 2));
+    
+    // Function calling capabilities check
+    console.log('\nAI Service Capabilities:');
+    console.log(`Image Generation: ${aiService.supportsCapability('image_generation') ? '✓' : '✗'}`);
+    console.log(`Function Calling: ${aiService.supportsCapability('function_calling') ? '✓' : '✗'}`);
+    console.log(`JSON Mode: ${aiService.supportsCapability('json_mode') ? '✓' : '✗'}`);
+    
+  } catch (error) {
+    console.error('Error demonstrating AI Service:', error);
   }
 }
 
