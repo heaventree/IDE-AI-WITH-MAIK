@@ -5,12 +5,13 @@ import {
   Search, Users, GitBranch, Code, Database, Settings,
   ChevronDown, ChevronRight, FilePlus, FolderPlus, 
   AlertCircle, Coffee, Globe, Package, PlusCircle, 
-  ServerCrash, Zap, Diamond, Home, Layout
+  ServerCrash, Zap, Diamond, Home, Layout, MessageSquare
 } from 'lucide-react';
 
 // Vertical sidebar component in FlutterFlow style
 interface SidebarProps {
-  // Add props as needed
+  currentMode?: 'editor' | 'prompt';
+  onModeChange?: (mode: 'editor' | 'prompt') => void;
 }
 
 // File or folder item type
@@ -368,9 +369,19 @@ const CollaborationPanel: React.FC = () => (
   </div>
 );
 
-const Sidebar: React.FC<SidebarProps> = () => {
+const Sidebar: React.FC<SidebarProps> = ({ 
+  currentMode = 'editor',
+  onModeChange
+}) => {
   const [activeSidebarIcon, setActiveSidebarIcon] = useState<string>('files');
   const [location, setLocation] = useLocation();
+  
+  // Handle mode toggle
+  const handleModeToggle = () => {
+    if (onModeChange) {
+      onModeChange(currentMode === 'editor' ? 'prompt' : 'editor');
+    }
+  };
   
   // Render appropriate content based on active sidebar icon
   const renderSidebarContent = () => {
@@ -478,18 +489,15 @@ const Sidebar: React.FC<SidebarProps> = () => {
         </div>
         
         <div className="activity-bar-bottom">
-          {/* Toggle between IDE and Entry page */}
-          <Link href={location === "/" ? "/entry" : "/"}>
-            <button 
-              className="activity-bar-item"
-              title={location === "/" ? "Go to Entry Page" : "Go to IDE"}
-            >
-              {location === "/" ? 
-                <Home size={22} /> : 
-                <Layout size={22} />
-              }
-            </button>
-          </Link>
+          {/* Toggle between Editor and Prompt mode */}
+          <button 
+            className={`activity-bar-item ${currentMode === 'prompt' ? 'active' : ''}`}
+            onClick={handleModeToggle}
+            title={currentMode === 'editor' ? "Switch to Prompt Mode" : "Switch to Editor Mode"}
+          >
+            <MessageSquare size={22} />
+            {currentMode === 'prompt' && <div className="activity-bar-active-indicator" />}
+          </button>
 
           <button 
             className={`activity-bar-item ${activeSidebarIcon === 'settings' ? 'active' : ''}`}

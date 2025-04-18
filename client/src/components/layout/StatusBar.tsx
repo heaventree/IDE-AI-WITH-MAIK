@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { 
   Zap, Clock, GitBranch, Circle, 
   FileCode, Bell, Wifi, Cpu, 
-  CheckCircle, Terminal
+  CheckCircle, Terminal, MessageSquare, Edit
 } from 'lucide-react';
 import { useWebSocket } from '../../contexts/WebSocketContext';
 
 interface StatusBarProps {
-  // Add props as needed
+  currentMode?: 'editor' | 'prompt';
 }
 
 interface StatusItemProps {
@@ -24,7 +24,7 @@ const StatusItem: React.FC<StatusItemProps> = ({ icon, text, title, className = 
   </div>
 );
 
-const StatusBar: React.FC<StatusBarProps> = () => {
+const StatusBar: React.FC<StatusBarProps> = ({ currentMode = 'editor' }) => {
   const { connected } = useWebSocket();
   const [time, setTime] = useState(new Date().toLocaleTimeString());
   
@@ -48,8 +48,9 @@ const StatusBar: React.FC<StatusBarProps> = () => {
         />
         
         <StatusItem 
-          icon={<Zap size={12} />}
-          text="Ready"
+          icon={currentMode === 'editor' ? <Edit size={12} /> : <MessageSquare size={12} />}
+          text={currentMode === 'editor' ? "Editor Mode" : "Prompt Mode"}
+          className={currentMode === 'prompt' ? 'info' : ''}
         />
         
         <StatusItem 
