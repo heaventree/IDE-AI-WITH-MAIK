@@ -79,106 +79,110 @@ export function setupDependencyInjection() {
   const anthropicApiKey = process.env.ANTHROPIC_API_KEY;
   const geminiApiKey = process.env.GEMINI_API_KEY;
   
+  // Register all AI services and their configuration
+  console.log('Registering AI services...');
+  
+  // Register OpenAI service
+  container.registerSingleton(OpenAIService);
+  
+  // Register Anthropic service
+  container.registerSingleton(AnthropicService);
+  
+  // Register Gemini service
+  container.registerSingleton(GeminiService);
+  
   // Default to OpenAI if the API key is available
   if (openaiApiKey) {
-    console.log('Registering OpenAI service as the primary AI service');
+    console.log('OpenAI API key detected. Configuring OpenAI as primary service.');
     
     // Register OpenAI configuration
-    container.register<AIServiceConfig>('AIServiceConfig', {
-      useValue: {
-        apiKey: openaiApiKey,
-        defaultModel: 'gpt-4o',
-        defaultTemperature: 0.7
-      }
-    });
+    const openaiConfig: AIServiceConfig = {
+      apiKey: openaiApiKey,
+      defaultModel: 'gpt-4o',
+      defaultTemperature: 0.7
+    };
     
-    // Register OpenAI service as the default AI service
+    // Get the OpenAI service instance and configure it
+    const openaiService = container.resolve(OpenAIService);
+    openaiService.configure(openaiConfig);
+    
+    // Register as the default AI service
     container.register<BaseAIService>('BaseAIService', {
-      useClass: OpenAIService
-    }, { lifecycle: Lifecycle.Singleton });
-    
-    // Also register it with a specific name for direct access
-    container.register<BaseAIService>('OpenAIService', {
-      useClass: OpenAIService
-    }, { lifecycle: Lifecycle.Singleton });
+      useValue: openaiService
+    });
   } 
   // Fall back to Anthropic if only that API key is available
   else if (anthropicApiKey) {
-    console.log('Registering Anthropic service as the primary AI service');
+    console.log('Anthropic API key detected. Configuring Anthropic as primary service.');
     
     // Register Anthropic configuration
-    container.register<AIServiceConfig>('AIServiceConfig', {
-      useValue: {
-        apiKey: anthropicApiKey,
-        defaultModel: 'claude-3-7-sonnet-20250219',
-        defaultTemperature: 0.7
-      }
-    });
+    const anthropicConfig: AIServiceConfig = {
+      apiKey: anthropicApiKey,
+      defaultModel: 'claude-3-7-sonnet-20250219',
+      defaultTemperature: 0.7
+    };
     
-    // Register Anthropic service as the default AI service
+    // Get the Anthropic service instance and configure it
+    const anthropicService = container.resolve(AnthropicService);
+    anthropicService.configure(anthropicConfig);
+    
+    // Register as the default AI service
     container.register<BaseAIService>('BaseAIService', {
-      useClass: AnthropicService
-    }, { lifecycle: Lifecycle.Singleton });
-    
-    // Also register it with a specific name for direct access
-    container.register<BaseAIService>('AnthropicService', {
-      useClass: AnthropicService
-    }, { lifecycle: Lifecycle.Singleton });
+      useValue: anthropicService
+    });
   }
   // If no API keys are available, use a warning
   else {
     console.warn('No AI service API keys found. Some features will be limited.');
     
-    // Register a basic config anyway
-    container.register<AIServiceConfig>('AIServiceConfig', {
-      useValue: {
-        defaultModel: 'gpt-4o',
-        defaultTemperature: 0.7
-      }
-    });
+    // Create a basic config anyway
+    const fallbackConfig: AIServiceConfig = {
+      defaultModel: 'gpt-4o',
+      defaultTemperature: 0.7
+    };
     
-    // Default to OpenAI but it will throw appropriate errors when used
+    // Configure OpenAI service as the default, even though it won't work
+    const openaiService = container.resolve(OpenAIService);
+    openaiService.configure(fallbackConfig);
+    
+    // Register as the default AI service
     container.register<BaseAIService>('BaseAIService', {
-      useClass: OpenAIService
-    }, { lifecycle: Lifecycle.Singleton });
+      useValue: openaiService
+    });
   }
   
-  // Register additional services with specific names if their API keys are available
+  // Configure additional services if their API keys are available
   if (openaiApiKey && anthropicApiKey) {
     console.log('Both OpenAI and Anthropic services are available');
     
-    // Register Anthropic with its own config
-    container.register<AIServiceConfig>('AnthropicServiceConfig', {
-      useValue: {
+    // Configure Anthropic service if not already configured
+    if (container.resolve<BaseAIService>('BaseAIService') !== container.resolve(AnthropicService)) {
+      const anthropicConfig: AIServiceConfig = {
         apiKey: anthropicApiKey,
         defaultModel: 'claude-3-7-sonnet-20250219',
         defaultTemperature: 0.7
-      }
-    });
-    
-    // Register Anthropic with its own config and name for specific access
-    container.register<BaseAIService>('AnthropicService', {
-      useClass: AnthropicService
-    }, { lifecycle: Lifecycle.Singleton });
+      };
+      
+      // Get the Anthropic service instance and configure it
+      const anthropicService = container.resolve(AnthropicService);
+      anthropicService.configure(anthropicConfig);
+    }
   }
   
-  // Register Gemini if its API key is available
+  // Configure Gemini if its API key is available
   if (geminiApiKey) {
     console.log('Google Gemini service is available');
     
-    // Register Gemini with its own config
-    container.register<AIServiceConfig>('GeminiServiceConfig', {
-      useValue: {
-        apiKey: geminiApiKey,
-        defaultModel: 'gemini-1.5-pro',
-        defaultTemperature: 0.7
-      }
-    });
+    // Configure Gemini service
+    const geminiConfig: AIServiceConfig = {
+      apiKey: geminiApiKey,
+      defaultModel: 'gemini-1.5-pro',
+      defaultTemperature: 0.7
+    };
     
-    // Register Gemini with its own config and name for specific access
-    container.register<BaseAIService>('GeminiService', {
-      useClass: GeminiService
-    }, { lifecycle: Lifecycle.Singleton });
+    // Get the Gemini service instance and configure it
+    const geminiService = container.resolve(GeminiService);
+    geminiService.configure(geminiConfig);
   }
   
   // ===== STATE MANAGEMENT =====

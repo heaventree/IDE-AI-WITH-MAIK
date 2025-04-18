@@ -22,16 +22,25 @@ import {
  */
 @injectable()
 export class AnthropicService extends AbstractAIService {
-  private anthropic: Anthropic;
+  private anthropic!: Anthropic;
   private defaultModel = "claude-3-7-sonnet-20250219"; // the newest Anthropic model is "claude-3-7-sonnet-20250219" which was released February 24, 2025
   private defaultTemperature = 0.7;
+  private config: AIServiceConfig = {};
   
   /**
    * Create a new Anthropic service
-   * @param config - Configuration options
    */
-  constructor(@inject("AnthropicServiceConfig") config: AIServiceConfig) {
+  constructor() {
     super();
+  }
+  
+  /**
+   * Configure the service with the provided configuration
+   * This method is called by the dependency container after
+   * instantiation with the registered configuration
+   */
+  public configure(config: AIServiceConfig) {
+    this.config = config;
     
     if (!config.apiKey && !process.env.ANTHROPIC_API_KEY) {
       console.warn('No Anthropic API key provided. Please set ANTHROPIC_API_KEY environment variable.');

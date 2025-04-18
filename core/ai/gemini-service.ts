@@ -31,16 +31,25 @@ import {
  */
 @injectable()
 export class GeminiService extends AbstractAIService {
-  private generativeAI: GoogleGenerativeAI;
+  private generativeAI!: GoogleGenerativeAI;
   private defaultModel = "gemini-1.5-pro"; // Latest Gemini model as of April 2025
   private defaultTemperature = 0.7;
+  private config: AIServiceConfig = {};
   
   /**
    * Create a new Gemini service
-   * @param config - Configuration options
    */
-  constructor(@inject("GeminiServiceConfig") config: AIServiceConfig) {
+  constructor() {
     super();
+  }
+  
+  /**
+   * Configure the service with the provided configuration
+   * This method is called by the dependency container after
+   * instantiation with the registered configuration
+   */
+  public configure(config: AIServiceConfig) {
+    this.config = config;
     
     if (!config.apiKey && !process.env.GEMINI_API_KEY) {
       console.warn('No Gemini API key provided. Please set GEMINI_API_KEY environment variable.');
