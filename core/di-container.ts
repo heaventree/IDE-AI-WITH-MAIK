@@ -215,14 +215,14 @@ export function setupDependencyInjection() {
   
   // ===== TOOL EXECUTION =====
   
-  // Register tool executor
-  container.register<IToolExecutor>('IToolExecutor', {
-    useClass: ToolExecutor
-  }, { lifecycle: Lifecycle.Singleton });
-  
-  // Configure the tool executor after registration
-  const toolExecutor = container.resolve<ToolExecutor>('IToolExecutor');
+  // Get the state manager instance
   const stateManager = container.resolve<IStateManager>('IStateManager');
+  
+  // Create a new tool executor instance manually
+  const toolExecutor = new ToolExecutor(stateManager);
+  
+  // Register it as a singleton value
+  container.registerInstance<IToolExecutor>('IToolExecutor', toolExecutor);
   
   // Initialize the tool executor with default tools
   defaultTools.forEach(tool => toolExecutor.registerTool(tool));
