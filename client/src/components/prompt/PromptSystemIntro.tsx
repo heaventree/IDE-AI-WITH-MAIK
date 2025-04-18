@@ -3,13 +3,14 @@ import { Link, useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { ArrowRight, MessageSquare, Lightbulb, FileCode, Brain, Zap } from 'lucide-react';
+import PromptSystemLayout from './PromptSystemLayout';
 
 const PromptSystemIntro: React.FC = () => {
   const [, navigate] = useLocation();
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white p-4 md:p-8">
-      <div className="max-w-6xl mx-auto">
+    <PromptSystemLayout>
+      <div className="max-w-6xl mx-auto p-4 md:p-8">
         <header className="mb-12 text-center">
           <h1 className="text-5xl font-bold mb-4">Prompt Management System</h1>
           <p className="text-xl text-slate-400 max-w-3xl mx-auto">
@@ -170,7 +171,7 @@ const PromptSystemIntro: React.FC = () => {
           </Link>
         </div>
       </div>
-    </div>
+    </PromptSystemLayout>
   );
 };
 
