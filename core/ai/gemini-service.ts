@@ -5,7 +5,16 @@
  * including text generation, code analysis, and tool usage.
  */
 
-import { GoogleGenerativeAI, GenerativeModel, HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
+import { 
+  GoogleGenerativeAI, 
+  GenerativeModel, 
+  HarmCategory, 
+  HarmBlockThreshold,
+  SchemaType,
+  Tool as GeminiTool,
+  FunctionDeclaration,
+  FunctionDeclarationSchema
+} from '@google/generative-ai';
 import { LLMAPIError } from '../errors';
 import { 
   AbstractAIService, 
@@ -164,15 +173,18 @@ export class GeminiService extends AbstractAIService {
           topP: 0.95,
           topK: 40,
         },
-        tools: tools.map(tool => ({
-          functionDeclarations: [
-            {
-              name: tool.function.name,
-              description: tool.function.description,
-              parameters: tool.function.parameters
+        // Format tools according to GoogleGenerativeAI library requirements
+        tools: [{
+          functionDeclarations: tools.map(tool => ({
+            name: tool.function.name,
+            description: tool.function.description,
+            parameters: {
+              type: SchemaType.OBJECT,
+              properties: tool.function.parameters.properties || {},
+              required: tool.function.parameters.required || []
             }
-          ]
-        }))
+          }))
+        }]
       });
       
       // Create the prompt parts
