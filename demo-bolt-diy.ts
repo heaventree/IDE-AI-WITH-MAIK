@@ -29,6 +29,8 @@ import {
 // Import AI governance and services
 import { AIGovernance } from './core/ai/governance';
 import { BaseAIService } from './core/ai/base-ai-service';
+import { OpenAIService } from './core/ai/openai-service';
+import { AnthropicService } from './core/ai/anthropic-service';
 
 // Set up the dependency injection container
 setupDependencyInjection();
@@ -42,8 +44,29 @@ const agent = getAgent();
 // Get AI governance instance via DI container
 const governance = container.resolve(AIGovernance);
 
-// Get AI service instance
-const aiService = container.resolve<BaseAIService>('BaseAIService');
+// Get AI service instances
+const primaryAiService = container.resolve<BaseAIService>('BaseAIService');
+let openAiService: OpenAIService | null = null;
+let anthropicService: AnthropicService | null = null;
+
+// Try to resolve specific services if available
+try {
+  if (process.env.OPENAI_API_KEY) {
+    openAiService = container.resolve<OpenAIService>('OpenAIService');
+    console.log('OpenAI service is available');
+  }
+} catch (e) {
+  console.log('OpenAI service is not available');
+}
+
+try {
+  if (process.env.ANTHROPIC_API_KEY) {
+    anthropicService = container.resolve<AnthropicService>('AnthropicService');
+    console.log('Anthropic service is available');
+  }
+} catch (e) {
+  console.log('Anthropic service is not available');
+}
 
 // Register a custom AI model (in addition to default model)
 const modelId = 'gpt-4';
@@ -203,17 +226,17 @@ async function demonstrateConversation() {
 }
 
 /**
- * Demonstrate the AI service abstraction
+ * Demonstrate the primary AI service abstraction
  */
 async function demonstrateAIService() {
-  console.log('\n--- AI Service Abstraction ---\n');
+  console.log('\n--- Primary AI Service ---\n');
   
   try {
     // Get available models
     console.log('Available AI Models:');
-    const getModels = aiService.getAvailableModels;
+    const getModels = primaryAiService.getAvailableModels;
     if (getModels) {
-      const models = await getModels.call(aiService);
+      const models = await getModels.call(primaryAiService);
       if (models && models.length > 0) {
         console.table(models.map(model => ({
           ID: model.id,
@@ -234,7 +257,7 @@ async function demonstrateAIService() {
     const prompt = 'Explain the benefits of abstraction in software architecture in 3 bullet points.';
     console.log(`\nGeneration Prompt: "${prompt}"`);
     
-    const completion = await aiService.generateCompletion(prompt, {
+    const completion = await primaryAiService.generateCompletion(prompt, {
       temperature: 0.5,
       systemPrompt: 'You are a software architecture expert. Keep your explanations concise and focused.'
     });
@@ -251,22 +274,104 @@ function fibonacci(n) {
     `;
     
     console.log('\nCode Analysis:');
-    const analysis = await aiService.analyzeCode(codeToAnalyze, 'javascript');
+    const analysis = await primaryAiService.analyzeCode(codeToAnalyze, 'javascript');
     console.log(JSON.stringify(analysis, null, 2));
     
     // Function calling capabilities check
     console.log('\nAI Service Capabilities:');
-    const supportsFn = aiService.supportsCapability;
+    const supportsFn = primaryAiService.supportsCapability;
     if (supportsFn) {
-      console.log(`Image Generation: ${supportsFn.call(aiService, 'image_generation') ? '✓' : '✗'}`);
-      console.log(`Function Calling: ${supportsFn.call(aiService, 'function_calling') ? '✓' : '✗'}`);
-      console.log(`JSON Mode: ${supportsFn.call(aiService, 'json_mode') ? '✓' : '✗'}`);
+      console.log(`Image Generation: ${supportsFn.call(primaryAiService, 'image_generation') ? '✓' : '✗'}`);
+      console.log(`Function Calling: ${supportsFn.call(primaryAiService, 'function_calling') ? '✓' : '✗'}`);
+      console.log(`JSON Mode: ${supportsFn.call(primaryAiService, 'json_mode') ? '✓' : '✗'}`);
     } else {
       console.log('Capability checking not available on the AI service');
     }
     
   } catch (error) {
     console.error('Error demonstrating AI Service:', error);
+  }
+}
+
+/**
+ * Demonstrate multi-provider capability with OpenAI and Anthropic
+ */
+async function demonstrateMultiProvider() {
+  console.log('\n--- Multi-Provider Capability ---\n');
+  
+  // Only run this demo if both services are available
+  if (!openAiService || !anthropicService) {
+    console.log('This demo requires both OpenAI and Anthropic services to be available');
+    
+    if (!openAiService) console.log('Missing OpenAI service');
+    if (!anthropicService) console.log('Missing Anthropic service');
+    
+    return;
+  }
+  
+  try {
+    // Define a prompt for comparison
+    const prompt = 'What are three major differences between transformer and RNN architectures?';
+    console.log(`Comparing responses to: "${prompt}"\n`);
+    
+    // Get responses from both models
+    console.log('Generating responses from both models...');
+    const [openaiResponse, anthropicResponse] = await Promise.all([
+      openAiService.generateCompletion(prompt, {
+        systemPrompt: 'You are an AI expert giving concise technical explanations.',
+        temperature: 0.3
+      }),
+      anthropicService.generateCompletion(prompt, {
+        systemPrompt: 'You are an AI expert giving concise technical explanations.',
+        temperature: 0.3
+      })
+    ]);
+    
+    // Display the responses
+    console.log('\n--- OpenAI Response ---');
+    console.log(openaiResponse);
+    
+    console.log('\n--- Anthropic Response ---');
+    console.log(anthropicResponse);
+    
+    // Code analysis comparison
+    const codeToAnalyze = `
+async function fetchData(url) {
+  try {
+    const response = await fetch(url);
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return null;
+  }
+}
+    `;
+    
+    console.log('\nComparing code analysis capabilities...');
+    
+    const [openaiAnalysis, anthropicAnalysis] = await Promise.all([
+      openAiService.analyzeCode(codeToAnalyze, 'javascript'),
+      anthropicService.analyzeCode(codeToAnalyze, 'javascript').catch(e => {
+        return { error: e.message, summary: "Error in analysis" };
+      })
+    ]);
+    
+    console.log('\n--- OpenAI Code Analysis ---');
+    console.log(JSON.stringify(openaiAnalysis, null, 2));
+    
+    console.log('\n--- Anthropic Code Analysis ---');
+    console.log(JSON.stringify(anthropicAnalysis, null, 2));
+    
+    // Compare models available
+    const openaiModels = await openAiService.getAvailableModels?.();
+    const anthropicModels = await anthropicService.getAvailableModels?.();
+    
+    console.log('\n--- Available Models Comparison ---');
+    console.log('OpenAI offers', openaiModels?.length || 0, 'models');
+    console.log('Anthropic offers', anthropicModels?.length || 0, 'models');
+    
+  } catch (error) {
+    console.error('Error during multi-provider demo:', error);
   }
 }
 

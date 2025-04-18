@@ -23,6 +23,7 @@ import { ToolExecutor, Tool } from './tools/tool-executor';
 import { AIGovernance } from './ai/governance';
 import { OpenAIService } from './ai/openai-service';
 import { AnthropicService } from './ai/anthropic-service';
+import { GeminiService } from './ai/gemini-service';
 import { AIServiceConfig, BaseAIService } from './ai/base-ai-service';
 
 // Interfaces
@@ -76,6 +77,7 @@ export function setupDependencyInjection() {
   // Register AI services based on available API keys
   const openaiApiKey = process.env.OPENAI_API_KEY;
   const anthropicApiKey = process.env.ANTHROPIC_API_KEY;
+  const geminiApiKey = process.env.GEMINI_API_KEY;
   
   // Default to OpenAI if the API key is available
   if (openaiApiKey) {
