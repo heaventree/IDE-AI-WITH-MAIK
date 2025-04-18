@@ -4,6 +4,7 @@ import NotFound from "@/pages/not-found";
 import IDELayout from "./components/layout/IDELayout";
 import Editor from "./components/editor/Editor";
 import Terminal from "./components/terminal/Terminal";
+import EntryPage from "./pages/EntryPage";
 
 // HomePage component with IDE layout
 const HomePage = () => {
@@ -28,6 +29,9 @@ function App() {
     <Switch>
       <Route path="/">
         <HomePage />
+      </Route>
+      <Route path="/entry">
+        <EntryPage />
       </Route>
       <Route path="*">
         <NotFound />

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { Link, useLocation } from 'wouter';
 import { 
   FolderTree, FileCode, FileJson, FileText, 
   Search, Users, GitBranch, Code, Database, Settings,
   ChevronDown, ChevronRight, FilePlus, FolderPlus, 
   AlertCircle, Coffee, Globe, Package, PlusCircle, 
-  ServerCrash, Zap, Diamond
+  ServerCrash, Zap, Diamond, Home, Layout
 } from 'lucide-react';
 
 // Vertical sidebar component in FlutterFlow style
@@ -369,6 +370,7 @@ const CollaborationPanel: React.FC = () => (
 
 const Sidebar: React.FC<SidebarProps> = () => {
   const [activeSidebarIcon, setActiveSidebarIcon] = useState<string>('files');
+  const [location, setLocation] = useLocation();
   
   // Render appropriate content based on active sidebar icon
   const renderSidebarContent = () => {
@@ -476,6 +478,19 @@ const Sidebar: React.FC<SidebarProps> = () => {
         </div>
         
         <div className="activity-bar-bottom">
+          {/* Toggle between IDE and Entry page */}
+          <Link href={location === "/" ? "/entry" : "/"}>
+            <button 
+              className="activity-bar-item"
+              title={location === "/" ? "Go to Entry Page" : "Go to IDE"}
+            >
+              {location === "/" ? 
+                <Home size={22} /> : 
+                <Layout size={22} />
+              }
+            </button>
+          </Link>
+
           <button 
             className={`activity-bar-item ${activeSidebarIcon === 'settings' ? 'active' : ''}`}
             onClick={() => setActiveSidebarIcon('settings')}
