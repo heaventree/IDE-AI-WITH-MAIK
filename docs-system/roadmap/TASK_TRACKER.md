@@ -25,7 +25,7 @@
 - None currently identified
 
 ### High Priority Bugs
-- [ ] Fix Gemini service implementation for proper tool calling format
+- [x] Fix Gemini service implementation for proper tool calling format
 
 ### Medium Priority Bugs
 - None currently identified

@@ -398,6 +398,75 @@ export default DataFetcher;
       console.log('Capability checking not available on the Gemini service');
     }
     
+    // Demonstrate tool calling with Gemini
+    if (supportsFn && supportsFn.call(geminiService, 'function_calling')) {
+      console.log('\nDemonstrating Gemini Tool Calling:');
+      
+      // Define some tools for Gemini to use
+      const tools = [
+        {
+          type: 'function',
+          function: {
+            name: 'getWeatherByLocation',
+            description: 'Get the current weather for a location',
+            parameters: {
+              type: 'object',
+              properties: {
+                location: {
+                  type: 'string',
+                  description: 'The city and state or country, e.g. San Francisco, CA'
+                },
+                unit: {
+                  type: 'string',
+                  enum: ['celsius', 'fahrenheit'],
+                  description: 'The unit of temperature to return'
+                }
+              },
+              required: ['location']
+            }
+          }
+        },
+        {
+          type: 'function',
+          function: {
+            name: 'findRestaurants',
+            description: 'Search for restaurants in a specific location',
+            parameters: {
+              type: 'object',
+              properties: {
+                location: {
+                  type: 'string',
+                  description: 'The city and state or country'
+                },
+                cuisine: {
+                  type: 'string',
+                  description: 'Type of cuisine, e.g. Italian, Thai, etc.'
+                },
+                priceRange: {
+                  type: 'string',
+                  enum: ['$', '$$', '$$$', '$$$$'],
+                  description: 'Price range from $ (inexpensive) to $$$$ (very expensive)'
+                }
+              },
+              required: ['location']
+            }
+          }
+        }
+      ];
+      
+      // Generate a response with function calling
+      const toolPrompt = "What's the weather like in San Francisco today? Also, can you recommend some good Italian restaurants there?";
+      console.log(`Tool Prompt: "${toolPrompt}"`);
+      
+      const toolResponse = await geminiService.generateWithTools(toolPrompt, tools, {
+        temperature: 0.2,
+        systemPrompt: 'You are a helpful assistant that uses tools when appropriate.'
+      });
+      
+      console.log('\nGemini Response with Tool Calls:');
+      console.log(JSON.stringify(toolResponse, null, 2));
+    }
+    
   } catch (error) {
     console.error('Error demonstrating Gemini Service:', error);
   }

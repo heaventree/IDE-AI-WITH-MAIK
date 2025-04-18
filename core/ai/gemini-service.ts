@@ -164,6 +164,9 @@ export class GeminiService extends AbstractAIService {
       
       console.log(`Calling Gemini with tools, model: ${model}`);
       
+      // Convert tools from our common format to Gemini's expected format
+      const geminiTools = this.convertToolsToGeminiFormat(tools);
+      
       // Initialize the model
       const genModel = this.generativeAI.getGenerativeModel({
         model,
@@ -173,18 +176,7 @@ export class GeminiService extends AbstractAIService {
           topP: 0.95,
           topK: 40,
         },
-        // Format tools according to GoogleGenerativeAI library requirements
-        tools: [{
-          functionDeclarations: tools.map(tool => ({
-            name: tool.function.name,
-            description: tool.function.description,
-            parameters: {
-              type: SchemaType.OBJECT,
-              properties: tool.function.parameters.properties || {},
-              required: tool.function.parameters.required || []
-            }
-          }))
-        }]
+        tools: geminiTools
       });
       
       // Create the prompt parts
@@ -223,7 +215,7 @@ export class GeminiService extends AbstractAIService {
           message: {
             content: result.response.text(),
             tool_calls: functionCalls.map(fc => ({
-              id: `call-${Date.now()}`,
+              id: `call-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
               type: 'function',
               function: {
                 name: fc.name,
@@ -246,6 +238,27 @@ export class GeminiService extends AbstractAIService {
       console.error(`Gemini API call with tools failed: ${errorMessage}`);
       throw new LLMAPIError(`Gemini API call with tools failed: ${errorMessage}`);
     }
+  }
+  
+  /**
+   * Convert our common tool format to Gemini's expected format
+   * 
+   * @param tools - Tools in our common format
+   * @returns Tools in Gemini's format
+   */
+  private convertToolsToGeminiFormat(tools: AITool[]): GeminiTool[] {
+    // Gemini expects a single tool object with an array of function declarations
+    return [{
+      functionDeclarations: tools.map(tool => ({
+        name: tool.function.name,
+        description: tool.function.description,
+        parameters: {
+          type: SchemaType.OBJECT,
+          properties: tool.function.parameters.properties || {},
+          required: tool.function.parameters.required || []
+        }
+      }))
+    }];
   }
   
   /**
