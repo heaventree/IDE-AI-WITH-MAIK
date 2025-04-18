@@ -403,9 +403,9 @@ export default DataFetcher;
       console.log('\nDemonstrating Gemini Tool Calling:');
       
       // Define some tools for Gemini to use
-      const tools: AITool[] = [
+      const tools = [
         {
-          type: 'function',
+          type: 'function' as const,
           function: {
             name: 'getWeatherByLocation',
             description: 'Get the current weather for a location',
@@ -425,9 +425,9 @@ export default DataFetcher;
               required: ['location']
             }
           }
-        } as AITool,
+        },
         {
-          type: 'function',
+          type: 'function' as const,
           function: {
             name: 'findRestaurants',
             description: 'Search for restaurants in a specific location',
@@ -451,7 +451,7 @@ export default DataFetcher;
               required: ['location']
             }
           }
-        } as AITool
+        }
       ];
       
       // Generate a response with function calling

@@ -31,7 +31,6 @@ export interface Tool {
 /**
  * Implementation of Tool Executor
  */
-@injectable()
 export class ToolExecutor implements IToolExecutor {
   private tools: Map<string, Tool> = new Map();
   private stateManager: IStateManager;
@@ -40,7 +39,7 @@ export class ToolExecutor implements IToolExecutor {
    * Create a new tool executor
    * @param stateManager - State manager for accessing application state
    */
-  constructor(@inject('IStateManager') stateManager: IStateManager) {
+  constructor(stateManager: IStateManager) {
     this.stateManager = stateManager;
   }
   
