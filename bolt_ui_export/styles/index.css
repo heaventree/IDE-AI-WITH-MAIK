@@ -1,0 +1,23 @@
+/**
+ * MAIK IDE - Master Stylesheet
+ * 
+ * This file imports all CSS files in the correct order,
+ * similar to how WordPress enqueues stylesheets.
+ */
+
+/* First import variables to establish design tokens */
+@import './variables.css';
+
+/* Import base styles and layout */
+@import './main.css';
+
+/* Import component styles */
+@import './components.css';
+
+/* Import IDE-specific styles */
+@import './ide.css';
+
+/**
+ * Additional theme overrides can be added below if needed
+ * e.g., dark/light mode specific adjustments that aren't handled by CSS variables
+ */
