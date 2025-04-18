@@ -230,9 +230,7 @@ export function setupDependencyInjection() {
   // ===== MAIN AGENT =====
   
   // Register the main agent with all dependencies injected automatically
-  container.register(Agent, {
-    useClass: Agent
-  }, { lifecycle: Lifecycle.Singleton });
+  container.registerSingleton('Agent', Agent);
   
   return container;
 }

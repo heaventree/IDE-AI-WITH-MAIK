@@ -52,7 +52,7 @@ export function initializeSystem() {
   setupDependencyInjection();
   
   // Resolve and return the agent
-  return container.resolve(Agent);
+  return container.resolve<Agent>('Agent');
 }
 
 /**
@@ -62,5 +62,5 @@ export function initializeSystem() {
  * @returns Initialized Agent instance
  */
 export function getAgent(): Agent {
-  return container.resolve(Agent);
+  return container.resolve<Agent>('Agent');
 }
